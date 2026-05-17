@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{6e68769a-3168-4eee-81d8-25251544ed96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{b10c1def-7dea-404d-b2f4-9eb9ae3b0d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Task">
+      <UniqueIdentifier>{aabff147-6ba4-4a25-9ebe-128259a19da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Collision">
+      <UniqueIdentifier>{0ddbecd1-c752-4c92-b1ea-8bcc810fd701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Commons">
+      <UniqueIdentifier>{3b7ba475-dfad-4c19-8b58-5fb90312882e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Renderable">
+      <UniqueIdentifier>{445956af-fe0e-47d3-81f6-ff96199ffe4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Image">
+      <UniqueIdentifier>{31f9b0ca-8ef0-4f28-a501-fcbafb48505c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Sound">
+      <UniqueIdentifier>{d39ccaac-8731-41a1-b5ca-1ffef4fcc5e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Animation">
+      <UniqueIdentifier>{e940d9fb-bc24-4f39-9c88-b0ee7b88ef75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Key">
+      <UniqueIdentifier>{7fa86c13-c0b9-4629-9f15-869f24738193}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationData.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationDataSet.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationPlayer.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationRepository.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>System\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>System\Key</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="const.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationData.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationDataElem.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationDataSet.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationPlayer.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationRepository.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>System\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>System\Key</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

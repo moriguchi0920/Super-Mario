@@ -1,0 +1,25 @@
+﻿  AnimationData.cpp
+  AnimationDataSet.cpp
+  AnimationPlayer.cpp
+  AnimationRepository.cpp
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\ImageManager.h(20,28): error C2065: 'IMAGE_INFO_LENGTH': 定義されていない識別子です。
+  (ソース ファイル 'AnimationRepository.cpp' をコンパイルしています)
+  
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\AnimationRepository.h(15,14): warning C4091: 'static ': 変数が何も宣言されていないときは、'AnimationRepository::AnimationObjectType' の左辺を無視します。
+  (ソース ファイル 'AnimationRepository.cpp' をコンパイルしています)
+  
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\AnimationRepository.h(24,19): warning C4200: 非標準の拡張機能が使用されています: 構造体または共用体中にサイズが 0 の配列があります。
+  (ソース ファイル 'AnimationRepository.cpp' をコンパイルしています)
+      D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\AnimationRepository.h(24,19):
+      このメンバーは、既定のコンストラクターまたはコピー/移動代入演算子により無視されます
+  
+  imageManager.cpp
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\imageManager.h(20,28): error C2065: 'IMAGE_INFO_LENGTH': 定義されていない識別子です。
+  (ソース ファイル 'imageManager.cpp' をコンパイルしています)
+  
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\imageManager.cpp(14,21): error C2065: 'IMAGE_INFO_LENGTH': 定義されていない識別子です。
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\imageManager.cpp(24,22): error C2065: 'IMAGE_INFO_LENGTH': 定義されていない識別子です。
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\imageManager.cpp(61,22): error C2065: 'IMAGE_INFO_LENGTH': 定義されていない識別子です。
+D:\moriguchihiroto\2026\cpp_develop\SuperMario\DxLibTemplate_ver0.1\DxLibTemplate_ver0.1\imageManager.cpp(99,22): error C2065: 'IMAGE_INFO_LENGTH': 定義されていない識別子です。
+  keyManager.cpp
+  コードを生成中...
