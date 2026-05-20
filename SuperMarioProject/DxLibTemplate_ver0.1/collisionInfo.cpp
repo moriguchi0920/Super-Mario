@@ -2,44 +2,59 @@
 
 
 
-CollisionInfo::CollisionInfo(CollisionObject* pBase, CollisionObject* pTarget, int newId)
+CollisionInfo::CollisionInfo(std::weak_ptr<ComponentCollisionShape> pColBase, std::weak_ptr<ComponentCollisionShape> pColTarget, int newInfoId)
 {
-	pCol1 = pBase;
-	pCol2 = pTarget;
-	crosswise = INFO_VAR_DEFAULT;
+	col1 = pColBase;
+	col2 = pColTarget;
 	intersection = { 0.0, 0.0 };
 	intersection = { 0.0, 0.0 };
 	isColliding = false;
 	isEnter = false;
-	rectCollideSide = INFO_VAR_DEFAULT;
-	lineColVector1 = { INFO_VAR_DEFAULT, INFO_VAR_DEFAULT };
-	lineColVector2 = { INFO_VAR_DEFAULT, INFO_VAR_DEFAULT };
-	id = newId;
+	id = newInfoId;
 }
 
 // CollisionInfoにアクセスする際に当たった相手をもらうための関数
-CollisionObject* CollisionInfo::getTarget(CollisionObject* pBase)
+std::weak_ptr<ComponentCollisionShape> CollisionInfo::getTarget(int idBase)
 {
-	if (pBase == getColPtr1())
-	{
-		return getColPtr2();
-	}
-	else if (pBase == getColPtr2())
-	{
-		return getColPtr1();
-	}
-	return nullptr;
+	 if (idBase = getObjectIdCol1())
+	 {
+		 return col2;
+	 }
+	 else if(idBase == getObjectIdCol2())
+	 {
+		 return col1;
+	 }
+	 else
+	 {
+		 return std::weak_ptr<ComponentCollisionShape>();
+	 }
+
 }
 
-CollisionObject* CollisionInfo::getColPtr1()
-{
+ int CollisionInfo::getObjectIdCol1()
+ {
+	 if (col1.expired()) return -1;
+	 return col1.lock()->getParentId();
+ }
 
-	return pCol1;
-}
-CollisionObject* CollisionInfo::getColPtr2()
-{
-	return pCol2;
-}
+ int CollisionInfo::getObjectIdCol2()
+ {
+	 if (col2.expired()) return -1;
+	 return col2.lock()->getParentId();
+ }
+
+ std::weak_ptr<ComponentCollisionShape> CollisionInfo::getCol1()
+ {
+	 return col1;
+ }
+
+ std::weak_ptr<ComponentCollisionShape> CollisionInfo::getCol2()
+ {
+	 return col2;
+ }
+
+
+
 void CollisionInfo::setStatus(ContactInfo contact)
 {
 	crosswise = contact.crosswise;
@@ -50,18 +65,7 @@ void CollisionInfo::setStatus(ContactInfo contact)
 	intersection = contact.position;
 	rectCollideSide = contact.side;
 }
-void CollisionInfo::removeCol(CollisionObject* pCol)
-{
-	if (this->getColPtr1() == pCol)
-	{
-		pCol1 = nullptr;
 
-	}
-	if (this->getColPtr2() == pCol)
-	{
-		pCol2 = nullptr;
-	}
-}
 
 void CollisionInfo::secondCollision()
 {

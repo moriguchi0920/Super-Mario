@@ -1,14 +1,16 @@
+#include"componentRenderable.h"
 #include"renderableManager.h"
+#include"componentManager.h"
+#include<memory>
+#include<vector>
+#include<algorithm>
 #include"DxLib.h"
 
 //#define IS_DEBUG
 
 RenderableManager::RenderableManager()
 {
-	for (int i = 0; i < RENDERABLE_ARRAY_LENGTH; i++)
-	{
-		pRenderableArray[i] = NULL;
-	}
+
 }
 
 RenderableManager* RenderableManager::getInstance()
@@ -17,57 +19,17 @@ RenderableManager* RenderableManager::getInstance()
 	return &instance;
 }
 
-bool RenderableManager::isAlreadyExist(Renderable* pObj)
-{
-	for (int i = 0; i < RENDERABLE_ARRAY_LENGTH; i++)
-	{
-		if (pRenderableArray[i] == pObj)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool RenderableManager::addObject(Renderable* pObj)
-{
-	if (isAlreadyExist(pObj))
-	{
-		return false;
-	}
-	for (int i = 0; i < RENDERABLE_ARRAY_LENGTH; i++)
-	{
-		if (pRenderableArray[i] == NULL)
-		{
-			pRenderableArray[i] = pObj;
-			return true;
-		}
-	}
-	return false;
-}
-
-bool RenderableManager::removeObject(Renderable* pObj)
-{
-	for (int i = 0; i < RENDERABLE_ARRAY_LENGTH; i++)
-	{
-		if (pRenderableArray[i] == pObj)
-		{
-			pRenderableArray[i] = NULL;
-			return true;
-		}
-	}
-	return false;
-}
 
 void RenderableManager::renderAll()
 {
-	fillGap();
-	sortByPriority();
-	for (int i = 0; i < RENDERABLE_ARRAY_LENGTH; i++)
+	ComponentManager* pComManager = ComponentManager::getInstance();
+	std::vector<std::weak_ptr<ComponentRenderable>> comRenders = pComManager->getComponentsByBase<ComponentRenderable>();
+	sortByPriority(comRenders);
+	for (auto& com : comRenders)
 	{
-		if (pRenderableArray[i] != NULL)
+		if (!com.expired())
 		{
-			pRenderableArray[i]->render();
+			com.lock()->render();
 		}
 	}
 #ifdef IS_DEBUG
@@ -78,72 +40,17 @@ void RenderableManager::renderAll()
 #endif
 }
 
-void RenderableManager::fillGap()
-{
-	//---------------------------------------
-	// 表示物の空きを詰める(この後並び替えをスムーズに行うため)
-	//---------------------------------------
-	int head = 0;
-	int tail = RENDERABLE_ARRAY_LENGTH - 1;
-	bool loopEnd = false;
-	while (loopEnd == false)
-	{
-		// 現在headが参照している場所はNULLか？
-		if (tail <= head)
-		{
-			loopEnd = true;
-		}
-		Renderable** ppHead = &pRenderableArray[head];
-		if (*ppHead == NULL)
-		{
-			// 現在の場所がNULLなので、後ろからデータを詰める処理を行う。
-			while (true)
-			{
-				if (tail == head)
-				{
-					loopEnd = true;
-					break;
-				}
-				// 現在tailが見ている場所にデータがあるか
-				Renderable** ppTail = &pRenderableArray[tail];
-				if (*ppTail == NULL)
-				{
-					// 今tailが見ている場所にデータはないので、
-					// tailの位置を進めて比較を続ける
-					tail--;
-					continue;
-				}
-
-				// 現在のtailの場所にデータが見つかったので、
-				// 入れ替えを行う
-				*ppHead = *ppTail;
-				*ppTail = NULL;
-				break;
-
-			}
-		}
-
-		head++;
-	}
 
 
-}
-
-void RenderableManager::sortByPriority()
+void RenderableManager::sortByPriority(std::vector<std::weak_ptr<ComponentRenderable>> coms)
 {
 	//---------------------------------------
 	// 表示物の並び替え(小さい順)
 	//---------------------------------------
 
 	// まず入れ替える回数をとる
-	int dataNum = 0;
-	for (int i = 0; i < RENDERABLE_ARRAY_LENGTH; i++)
-	{
-		if (pRenderableArray[i] != NULL)
-		{
-			dataNum++;
-		}
-	}
+	size_t dataNum = coms.size();
+
 	// 入れ替える必要がある(要素数が2以上)
 	if (2 <= dataNum)
 	{
@@ -156,19 +63,13 @@ void RenderableManager::sortByPriority()
 			for (int i = 0; i < dataNum - 1; i++)
 			{
 				// ポインタ配列の左の要素のポインタ
-				Renderable** ppLeft = &pRenderableArray[i];
+				ComponentRenderable* pComRenderLeft = coms[i].lock().get();
 				// ポインタ配列の右の要素のポインタ
-				Renderable** ppRight = &pRenderableArray[i + 1];
+				ComponentRenderable* pComRenderRight = coms[i + 1].lock().get();
 				// プライオリティの値の大小を比較
-				if ((*ppRight)->getPriority() < (*ppLeft)->getPriority())
+				if (pComRenderLeft->getPriority() < pComRenderRight->getPriority())
 				{
-					// 左右の入れ替え
-					Renderable* tmp = *ppLeft;
-					// ダブルポインタ経由での入れ替えのため
-					// ループカウンタが不要
-					*ppLeft = *ppRight;
-					*ppRight = tmp;
-
+					std::swap(coms[i], coms[i + 1]);
 					// 入れ替えが発生したので回数をカウントアップ
 					flipCount++;
 				}

@@ -3,6 +3,7 @@
 #include"DxLib.h"
 
 
+
 AnimationPlayer::AnimationPlayer(AnimationDataSet* pAdc)
 {
 	pAnimDataSet = pAdc;
@@ -52,6 +53,7 @@ void AnimationPlayer::changeAnimation(int no)
 	animNo = no;
 	state = AP_PLAY;
 }
+
 
 // アニメーションの更新
 void AnimationPlayer::update()

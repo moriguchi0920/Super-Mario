@@ -1,7 +1,10 @@
 #ifndef __RENDERABLEMANAGER_H__
 #define __RENDERABLEMANAGER_H__
 
-#include "renderable.h"
+#include<memory>
+#include<vector>
+
+class ComponentRenderable;
 
 // 表示物管理クラス
 // このクラスは表示物のポインタを内部で持ち、
@@ -24,32 +27,22 @@ private :
 
 
 private:
-	// 登録可能数
-	static const int RENDERABLE_ARRAY_LENGTH = 3200;
 
-	// Renderableクラスオブジェクトのポインタ配列
-	Renderable* pRenderableArray[RENDERABLE_ARRAY_LENGTH];
+
+
 
 
 public :
-	// 表示物の登録
-	bool addObject(Renderable* pObj);
 
 	// 登録された全描画物を表示
 	void renderAll();
 
-	// 表示物の登録解除
-	bool removeObject(Renderable* pObj);
 
 private:
-	// 登録時同じオブジェクトを間違えて登録しないための安全措置
-	bool isAlreadyExist(Renderable* pObj);
 
 	// 描画優先順位順に並び替え
-	void sortByPriority();
+	void sortByPriority(std::vector<std::weak_ptr<ComponentRenderable>> coms);
 
-	// 空きを詰める
-	void fillGap();
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 
 // コンストラクタの初期化リストでタスクのvectorの要素数を指定
-TaskManager::TaskManager() : pTaskArray(ALL_OBJECT_MAX)
+TaskManager::TaskManager()
 {
 
 	// 現在のIDを初期化

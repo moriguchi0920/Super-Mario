@@ -1,5 +1,5 @@
 #pragma once
-#include"collision.h"
+#include"componentCollision.h"
 
 // 当たり判定の接触情報をまとめて一時保存するクラス
 // 当たり判定が発生するときにこのクラスのオブジェクトを作り、
@@ -9,17 +9,17 @@ class CollisionInfo
 {
 public:
 	// コンストラクタ
-	CollisionInfo(CollisionObject* pBase, CollisionObject* pTarget,int _newId);
+	CollisionInfo(std::weak_ptr<ComponentCollisionShape> pColBase, std::weak_ptr<ComponentCollisionShape> pColTarget, int _newInfoId);
 
 	// あたった相手を検索する関数
-	CollisionObject* getTarget(CollisionObject* pBase);
-	// 当たり判定情報に保存されている当たり判定オブジェクトの一つ目を返す関数
-	CollisionObject* getColPtr1();
-	// 当たり判定情報に保存されている当たり判定オブジェクトの二つ目を返す関数
-	CollisionObject* getColPtr2();
+	std::weak_ptr<ComponentCollisionShape>  getTarget(int idBase);
 
-	// 指定されたポインタがあった場合当たり判定情報から取り除き、削除する準備をする
-	void removeCol(CollisionObject* pCol);
+	int getObjectIdCol1();
+	int getObjectIdCol2();
+
+	std::weak_ptr<ComponentCollisionShape> getCol1();
+	std::weak_ptr<ComponentCollisionShape> getCol2();
+
 	// 初期作成時値を設定する関数
 	void setStatus(ContactInfo contact);
 	// 二回目以降に当たった場合に、Enterをfalseにする
@@ -40,8 +40,9 @@ public:
 
 private:
 	// 当たったオブジェクト同士
-	CollisionObject* pCol1;
-	CollisionObject* pCol2;
+	std::weak_ptr<ComponentCollisionShape> col1;
+	std::weak_ptr<ComponentCollisionShape> col2;
+
 	// 今当たっているか
 	bool isColliding;
 	// 当たった瞬間かどうか

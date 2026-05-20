@@ -1,7 +1,9 @@
+#include"common_func.h"
 #include"const.h"
 #include"dxlib.h"
 #include<math.h>
-#include"common_func.h"
+
+
 
 
 //---------------------------------------------------------------------------------
@@ -274,11 +276,11 @@ bool CheckLineHit(Line l1, Line l2, ContactInfo* pContact)
 
 		// 当たり判定先が横か縦かの保存
 		// (反射板の向きを変更できるようにする準備)
-		//if (abs(l2.begin.x - l2.end.x) < 0.01 || abs(l1.begin.x - l1.end.x) < 0.01)
+		//if (fabsf(l2.begin.x - l2.end.x) < 0.01 || fabsf(l1.begin.x - l1.end.x) < 0.01)
 		//{
 		//	pContact->crosswise = ContactInfo::CROSSWISE::CROSS_VERTICAL;
 		//}
-		//else if (abs(l2.begin.y - l2.end.y) < 0.01 || abs(l1.begin.y - l1.end.y) < 0.01)
+		//else if (fabsf(l2.begin.y - l2.end.y) < 0.01 || fabsf(l1.begin.y - l1.end.y) < 0.01)
 		//{
 		//	pContact->crosswise = ContactInfo::CROSSWISE::CROSS_HORIZONTAL;
 		//}
@@ -358,11 +360,11 @@ bool CheckLineCircleHit(Line l1, Circle c1, ContactInfo* pContact)
 		float theta = dotS / (lengthStoC * lengthStoE);
 		Point roughIntersection(c1.pos.x + shortest_dis * cos(theta), c1.pos.y + shortest_dis * sin(theta));
 		pContact->position = roughIntersection;
-		if (abs(l1.begin.x - l1.end.x) < 0.01)
+		if (fabsf(l1.begin.x - l1.end.x) < 0.01)
 		{
 			pContact->crosswise = ContactInfo::CROSSWISE::CROSS_VERTICAL;
 		}
-		else if (abs(l1.begin.y - l1.end.y) < 0.01)
+		else if (fabsf(l1.begin.y - l1.end.y) < 0.01)
 		{
 			pContact->crosswise = ContactInfo::CROSSWISE::CROSS_HORIZONTAL;
 		}
@@ -370,7 +372,7 @@ bool CheckLineCircleHit(Line l1, Circle c1, ContactInfo* pContact)
 	}
 
 	// 最短距離ベクトルの絶対値が円の半径より大きかったら当たっていない
-	if (  c1.radius < abs(shortest_dis))
+	if (  c1.radius < fabsf(shortest_dis))
 	{
 		return false;
 	}
@@ -418,7 +420,7 @@ bool CheckLinePointHit(Line l1, Point p1, ContactInfo* pContact)
 	// 上で求めた内積は始点から点 * 始点から終点の長さ * cos始点から点への角度
 	// 内積の公式よりベクトルのなす角θを求めるには内積 / 各ベクトルの長さを掛けたもの
 	float theta = dot / (lengthStoP * lengthStoE);
-	float perpendicular = abs(lengthStoP * sin(theta));
+	float perpendicular = fabsf(lengthStoP * sin(theta));
 
 	if (0.1 < perpendicular)
 	{
@@ -456,16 +458,7 @@ void smoothMoving(Point* pMovingPos, Point* pEndPos, float speed)
 	pMovingPos->x += cos(angle) * speed;
 	pMovingPos->y += sin(angle) * speed;
 }
-// その点が画面外に出ているかの判定
-bool isOutScreen(Point pos)
-{
-	if (pos.x <= -SPRITE_SIZE || WINDOW_WIDTH <= pos.x + SPRITE_SIZE
-		|| pos.y <= -SPRITE_SIZE || WINDOW_HEIGHT <= pos.y + SPRITE_SIZE)
-	{
-		return true;
-	}
-	return false;
-}
+
 //その点が画面外に出ているかの判定(矩形バージョン)
 bool isOutScreen(Point pos, Point size)
 {
@@ -553,7 +546,7 @@ Vector2D specularReflection(Vector2D refVec, Vector2D baseVec)
 	}
 	// 法線ベクトルの長さを内積で取り、それを正規化ベクトルに掛けることで
 	// 反射に使う横移動量のベクトルを出すための対象軸のベクトルを出す
-	Vector2D baseNormal = NormalizedBaseNormal * abs(GetDot(refVec, NormalizedBaseNormal));
+	Vector2D baseNormal = NormalizedBaseNormal * fabsf(GetDot(refVec, NormalizedBaseNormal));
 
 	// 法線ベクトルと反射元ベクトルを足すことで、鏡面ベクトルに平行なベクトルができる。
 	Vector2D parallel = refVec + baseNormal;
@@ -570,11 +563,19 @@ Vector2D specularReflection(Vector2D refVec, Vector2D baseVec)
 bool isSameOrNegativeVector(Vector2D vec1, Vector2D vec2)
 {
 	bool ret = false;
-	if (abs(vec1.x) - abs(vec2.x) <= 0.01 && abs(vec1.y) - abs(vec2.y) <= 0.01)
+	if (fabsf(vec1.x) - fabsf(vec2.x) <= 0.01 && fabsf(vec1.y) - fabsf(vec2.y) <= 0.01)
 	{
 		ret = true;
 	}
 	return ret;
 }
 
-
+ContactInfo::ContactInfo()
+{
+	position.Clear();
+	lineColVector1.Clear();
+	lineColVector2.Clear();
+	hadContact = false;
+	crosswise = CROSSWISE::CROSS_DEFAULT;
+	side = RECTCOLLIDESIDE::SIDE_DEFAULT;
+}

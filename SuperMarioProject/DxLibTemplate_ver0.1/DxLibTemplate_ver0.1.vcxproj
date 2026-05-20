@@ -127,6 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)..\dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,9 +158,28 @@
     <ClCompile Include="AnimationDataSet.cpp" />
     <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="AnimationRepository.cpp" />
+    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="componentCollision.cpp" />
+    <ClCompile Include="collisionInfo.cpp" />
+    <ClCompile Include="collisionManager.cpp" />
+    <ClCompile Include="common_func.cpp" />
+    <ClCompile Include="componentBase.cpp" />
+    <ClCompile Include="componentStorage.cpp" />
+    <ClCompile Include="componentTransform.cpp" />
+    <ClCompile Include="debug_color.cpp" />
+    <ClCompile Include="entityObject.cpp" />
+    <ClCompile Include="Float2.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="componentRenderable.cpp" />
+    <ClCompile Include="renderableManager.cpp" />
+    <ClCompile Include="sampleObject.cpp" />
+    <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="task.cpp" />
+    <ClCompile Include="taskManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h" />
@@ -167,9 +187,30 @@
     <ClInclude Include="AnimationDataSet.h" />
     <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="AnimationRepository.h" />
+    <ClInclude Include="Circle.h" />
+    <ClInclude Include="componentCollision.h" />
+    <ClInclude Include="collisionInfo.h" />
+    <ClInclude Include="collisionManager.h" />
+    <ClInclude Include="common_func.h" />
+    <ClInclude Include="componentBase.h" />
+    <ClInclude Include="componentManager.h" />
+    <ClInclude Include="componentStorage.h" />
+    <ClInclude Include="componentTransform.h" />
     <ClInclude Include="const.h" />
+    <ClInclude Include="debug_color.h" />
+    <ClInclude Include="entityObject.h" />
+    <ClInclude Include="Float2.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="objectManager.h" />
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="componentRenderable.h" />
+    <ClInclude Include="renderableManager.h" />
+    <ClInclude Include="sampleObject.h" />
+    <ClInclude Include="soundManager.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="taskManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

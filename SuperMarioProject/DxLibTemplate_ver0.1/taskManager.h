@@ -38,7 +38,7 @@ public:
 	void removeObject(Task* _pObject);
 	void taskUpdateAll();
 	void taskRenderAll();
-	//void destroyUpdate();
+
 	void destroyAll();
 
 	int generateId();

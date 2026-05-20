@@ -1,6 +1,14 @@
-#include "dxlib.h"
+
 #include "const.h"
 #include "keyManager.h"
+#include"componentManager.h"
+#include"objectManager.h"
+#include"collisionManager.h"
+#include"componentRenderable.h"
+#include"componentTransform.h"
+#include"renderableManager.h"
+#include"sampleObject.h"
+#include "dxlib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -19,6 +27,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	KeyManager::getInstance().initKeyManager();
 	// ↑ システム初期化 ↑
 	//---------------------------------------
+	
+	ObjectManager::createObject<SampleObject>();
+
 
 
 
@@ -31,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// ↑ システム更新 ↑
 		//---------------------------------------
 
-
+		ObjectManager::updateAll();
 
 		//---------------------------------------
 		// 描画
@@ -40,6 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 		// ↑ 画面消去 ↑
 		//---------------------------------------
+		RenderableManager::getInstance()->renderAll();
 
 		if (KeyManager::pullUpKey(KEY_INPUT_SPACE))
 		{
@@ -48,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ScreenFlip();
 	}
-
+	ObjectManager::creanUpAll();
 
 	DxLib_End();
 

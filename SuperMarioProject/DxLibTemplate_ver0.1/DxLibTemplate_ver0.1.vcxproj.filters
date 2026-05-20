@@ -22,14 +22,8 @@
     <Filter Include="System\Task">
       <UniqueIdentifier>{aabff147-6ba4-4a25-9ebe-128259a19da9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Collision">
-      <UniqueIdentifier>{0ddbecd1-c752-4c92-b1ea-8bcc810fd701}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Commons">
       <UniqueIdentifier>{3b7ba475-dfad-4c19-8b58-5fb90312882e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Renderable">
-      <UniqueIdentifier>{445956af-fe0e-47d3-81f6-ff96199ffe4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="System\Image">
       <UniqueIdentifier>{31f9b0ca-8ef0-4f28-a501-fcbafb48505c}</UniqueIdentifier>
@@ -42,6 +36,27 @@
     </Filter>
     <Filter Include="System\Key">
       <UniqueIdentifier>{7fa86c13-c0b9-4629-9f15-869f24738193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component">
+      <UniqueIdentifier>{6c0702d2-de94-4163-89b9-ef366ece969a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Transfrom">
+      <UniqueIdentifier>{754aa2e7-4aad-41ce-97d5-571b0cd4b29e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Collision">
+      <UniqueIdentifier>{0ddbecd1-c752-4c92-b1ea-8bcc810fd701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Object">
+      <UniqueIdentifier>{e0e0bbea-05c2-4812-a53f-f758e8075a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Renderable">
+      <UniqueIdentifier>{445956af-fe0e-47d3-81f6-ff96199ffe4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Manager">
+      <UniqueIdentifier>{dcb3be85-b883-4dc7-a179-1d184515693c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Base">
+      <UniqueIdentifier>{1d519f0e-f703-4868-8e94-83770ac9b1f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +80,63 @@
     </ClCompile>
     <ClCompile Include="keyManager.cpp">
       <Filter>System\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="common_func.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Float2.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="componentCollision.cpp">
+      <Filter>System\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionInfo.cpp">
+      <Filter>System\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionManager.cpp">
+      <Filter>System\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="task.cpp">
+      <Filter>System\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="taskManager.cpp">
+      <Filter>System\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="componentRenderable.cpp">
+      <Filter>System\Component\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="renderableManager.cpp">
+      <Filter>System\Component\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="componentTransform.cpp">
+      <Filter>System\Component\Transfrom</Filter>
+    </ClCompile>
+    <ClCompile Include="entityObject.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="componentStorage.cpp">
+      <Filter>System\Component\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="debug_color.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="componentBase.cpp">
+      <Filter>System\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="sampleObject.cpp">
+      <Filter>System\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +163,69 @@
     </ClInclude>
     <ClInclude Include="keyManager.h">
       <Filter>System\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="common_func.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Float2.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="componentCollision.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionInfo.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionManager.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="task.h">
+      <Filter>System\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="taskManager.h">
+      <Filter>System\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="componentRenderable.h">
+      <Filter>System\Component\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="renderableManager.h">
+      <Filter>System\Component\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="componentTransform.h">
+      <Filter>System\Component\Transfrom</Filter>
+    </ClInclude>
+    <ClInclude Include="entityObject.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="componentManager.h">
+      <Filter>System\Component\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="componentStorage.h">
+      <Filter>System\Component\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="objectManager.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="debug_color.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="componentBase.h">
+      <Filter>System\Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="sampleObject.h">
+      <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

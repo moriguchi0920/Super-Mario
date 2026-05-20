@@ -3,7 +3,7 @@
 
 #include "stdlib.h"
 #include"common_func.h"
-#include"collision.h"
+
 #include"collisionManager.h"
 
 
@@ -20,29 +20,18 @@ public:
 		INACTIVE
 	};
 
-	enum Priority
-	{
-		PR_BG,
-		PR_GAMEOBJECT,
-		PR_MAP,
-		PR_UI
-	};
+
 protected: 
-	// 当たっているか(CollisionManagerに権限を委譲したため使わない)
-	bool isHit;
+
 	// 死んだかどうか
 	bool isDead;
 
-	// TaskManagerでCollisionManagerのremoveObject()を動かすためのCollisionObjectのポインタ
-	//CollisionObject* pColTask;
 
 public:
 	Task(int id);
 	virtual ~Task();
 
 	virtual void Update() = 0;
-
-	//virtual void Render() = 0;
 
 	virtual bool Destroy() = 0;
 

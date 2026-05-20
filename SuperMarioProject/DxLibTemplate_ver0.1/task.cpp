@@ -1,7 +1,7 @@
 #include"task.h"
 
 
-Task::Task(int id) : isHit(false), isDead(false)
+Task::Task(int id): isDead(false)
 {
 	taskId = id;
 	taskState = TaskState::READY;
