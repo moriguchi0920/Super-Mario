@@ -17,7 +17,7 @@ protected:
 	// コンポーネントの可変長配列
 	std::vector<std::shared_ptr<Component>> components;
 
-
+	int state;
 public:
 	enum ObjectState
 	{
@@ -28,17 +28,54 @@ public:
 	};
 
 public:
-
+	// 仮想関数update(更新処理)
 	virtual void update()
 	{
 
 	}
+	// オブジェクトを更新状態に
+	void activate()
+	{
+		state = ObjectState::ACTIVE;
+		activateProc();
+	}
+	// 更新開始時に行う処理
+	virtual void activateProc()
+	{
+
+	}
+	// オブジェクトを非更新状態に
+	void deactivate()
+	{
+		state = ObjectState::INACTIVE;
+		deactivateProc();
+	}
+	// 非更新開始時行う処理
+	virtual void deactivateProc()
+	{
+		
+	}
+	// オブジェクトを死亡状態に
+	void die()
+	{
+		state = ObjectState::DEAD;
+		deathProc();
+	}
+	// 死亡時行う処理
+	virtual void deathProc()
+	{
+
+	}
+
+
+
 
 	// コンストラクタ
 	inline Object(int _id)
 	{
 		id = _id;
 		components.clear();
+		state = ObjectState::READY;
 	}
 	// デストラクタ
 	inline virtual ~Object()
@@ -102,6 +139,11 @@ public:
 		components.erase(std::remove_if(components.begin(), components.end(), [](std::shared_ptr<Component>& ptr) { return std::dynamic_pointer_cast<_T_>(ptr) != nullptr; }), components.end());
 
 		ComponentManager::getInstance().removeComponent(this->id);
+	}
+
+	inline int getState()
+	{
+		return state;
 	}
 
 

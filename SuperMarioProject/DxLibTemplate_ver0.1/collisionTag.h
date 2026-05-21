@@ -1,0 +1,185 @@
+#pragma once
+
+class ICollisionTag
+{
+public:
+	static enum TAG
+	{
+		DEFAULT = -1,
+		MARIO,
+		FIREBALL,
+		SHELL,
+		ENEMY,
+		BLOCK,
+		NUM
+	};
+	int tag;
+
+public:
+	inline ICollisionTag()
+	{
+		tag = DEFAULT;
+	}
+	virtual bool canCollide(int othertag) = 0;
+};
+class CollisionTagMario : public ICollisionTag
+{
+public:
+	inline CollisionTagMario()
+	{
+		tag = TAG::MARIO;
+	}
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+		switch (othertag)
+		{
+		case MARIO:
+			ret = false;
+			break;
+		case FIREBALL:
+			ret = false;
+			break;
+		case ENEMY:
+			ret = true;
+			break;
+		case SHELL:
+			ret = true;
+			break;
+		case BLOCK:
+			ret = true;
+			break;
+		}
+
+		return ret;
+	}
+};
+class CollisionTagFireBall : public ICollisionTag
+{
+public:
+	inline CollisionTagFireBall()
+	{
+		tag = TAG::FIREBALL;
+	}
+
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+		switch (othertag)
+		{
+		case MARIO:
+			ret = false;
+			break;
+		case FIREBALL:
+			ret = false;
+			break;
+		case ENEMY:
+			ret = true;
+			break;
+		case SHELL:
+			ret = true;
+			break;
+		case BLOCK:
+			ret = true;
+			break;
+		}
+		return ret;
+	}
+};
+class CollisionTagShell : public ICollisionTag
+{
+public:
+	inline CollisionTagShell()
+	{
+		tag = TAG::SHELL;
+	}
+
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+		switch (othertag)
+		{
+		case MARIO:
+			ret = true;
+			break;
+		case FIREBALL:
+			ret = true;
+			break;
+		case ENEMY:
+			ret = true;
+			break;
+		case SHELL:
+			ret = true;
+			break;
+		case BLOCK:
+			ret = true;
+			break;
+		}
+		return ret;
+	}
+};
+class CollisionTagEnemy : public ICollisionTag
+{
+public:
+	inline CollisionTagEnemy()
+	{
+		tag = TAG::ENEMY;
+	}
+
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+		switch (othertag)
+		{
+		case MARIO:
+			ret = true;
+			break;
+		case FIREBALL:
+			ret = true;
+			break;
+		case ENEMY:
+			ret = false;
+			break;
+		case SHELL:
+			ret = true;
+			break;
+		case BLOCK:
+			ret = true;
+			break;
+		}
+		return ret;
+	}
+};
+class CollisionTagBlock : public ICollisionTag
+{
+public:
+	inline CollisionTagBlock()
+	{
+		tag = TAG::BLOCK;
+	}
+
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+		switch (othertag)
+		{
+		case MARIO:
+			ret = true;
+			break;
+		case FIREBALL:
+			ret = true;
+			break;
+		case ENEMY:
+			ret = true;
+			break;
+		case SHELL:
+			ret = true;
+			break;
+		case BLOCK:
+			ret = false;
+			break;
+
+		}
+		return ret;
+	}
+};

@@ -58,6 +58,12 @@
     <Filter Include="System\Component\Base">
       <UniqueIdentifier>{1d519f0e-f703-4868-8e94-83770ac9b1f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Component\Gravity">
+      <UniqueIdentifier>{70e26ad3-e7e4-4dad-8596-5f5674a867cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Object\State">
+      <UniqueIdentifier>{9b75501e-e550-485d-bb6c-2eb4ec131b1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -136,6 +142,15 @@
       <Filter>System\Component\Base</Filter>
     </ClCompile>
     <ClCompile Include="sampleObject.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="componentGravity.cpp">
+      <Filter>System\Component\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="blockBase.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="mario.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -225,6 +240,21 @@
       <Filter>System\Component\Base</Filter>
     </ClInclude>
     <ClInclude Include="sampleObject.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="componentGravity.h">
+      <Filter>System\Component\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>System\Object\State</Filter>
+    </ClInclude>
+    <ClInclude Include="blockBase.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionTag.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="mario.h">
       <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>

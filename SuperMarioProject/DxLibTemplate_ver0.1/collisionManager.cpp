@@ -2,6 +2,8 @@
 #include"componentManager.h"
 
 
+std::vector<std::shared_ptr<CollisionInfo>> CollisionManager::collisionInfoArray;
+
 // コンストラクタ
 CollisionManager::CollisionManager()
 {
@@ -41,19 +43,32 @@ void CollisionManager::flexibleCollision()
 	// 配列の走査
 	for (size_t i = 0; i < vector.size(); i++)
 	{
-		// 二重forで総当たり(初期値をi + 1にすることで重複を発生させない)
-		for (size_t j = i + 1; j < vector.size(); j++)
+		if (!vector[i].expired())
 		{
-			// どちらも存在したら(nullチェック)
-			if (!vector[i].expired() && !vector[j].expired())
+			if (!vector[i].lock()->getIsActive())
 			{
-				// 同じCollisionInfoがあったらcontinueで弾く
-				if (knownReject(vector[i].lock()->getParentId(), vector[j].lock()->getParentId())) continue;
-				// 判定用変数にcheckCollideの結果を代入
-				isCollide = vector[i].lock()->checkCollide(vector[j].lock().get());
-				// あたっていたら
-				if (isCollide)
+				continue;
+			}
+			// 二重forで総当たり(初期値をi + 1にすることで重複を発生させない)
+			for (size_t j = i + 1; j < vector.size(); j++)
+			{
+				// どちらも存在したら(nullチェック)
+				if (!vector[j].expired())
 				{
+					if (!vector[j].lock()->getIsActive())
+					{
+						continue;
+					}
+					if (!(vector[i].lock()->getTag()->canCollide(vector[j].lock()->getTag()->tag))) continue;
+
+					// 同じCollisionInfoがあったらcontinueで弾く
+					if (knownReject(vector[i].lock()->getParentId(), vector[j].lock()->getParentId())) continue;
+
+					// 判定用変数にcheckCollideの結果を代入
+					isCollide = vector[i].lock()->checkCollide(vector[j].lock().get());
+					// あたっていたら
+					if (isCollide)
+					{
 						// 接触情報保存用変数を宣言
 						ContactInfo contact;
 
@@ -70,9 +85,12 @@ void CollisionManager::flexibleCollision()
 
 
 
+					}
 				}
 			}
 		}
+
+
 	}
 
 

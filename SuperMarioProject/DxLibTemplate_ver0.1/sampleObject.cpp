@@ -1,11 +1,14 @@
 #include "sampleObject.h"
 #include"componentRenderable.h"
 #include"componentTransform.h"
+#include"componentGravity.h"
 
 SampleObject::SampleObject() : Object(ObjectManager::makeId())
 {
-	this->addComponent<ComponentTransform>(this->id);
+	this->addComponent<ComponentGravity>(this->id);
 	this->addComponent<ComponentRenderableCircle>(this->id, 0.5f, Point(100.0f, 100.0f), 10.0f);
+	auto transformG = this->getComponent<ComponentGravity>().lock();
+	transformG->setLanding(false);
 }
 
 SampleObject::~SampleObject()
@@ -14,9 +17,13 @@ SampleObject::~SampleObject()
 
 void SampleObject::update()
 {
-	auto transform = this->getComponent<ComponentTransform>().lock();
+	auto transformG = this->getComponent<ComponentGravity>().lock();
 
-	transform->translate(Float2(1.0f, 1.0f), 2.0f);
-	this->getComponent<ComponentRenderableCircle>().lock()->set(transform->getPosition(), 10.0f);
+	transformG->gravityUpdate();
+	transformG->translate(Float2(1.0f, 0.0f), 2.0f);
+	this->getComponent<ComponentRenderableCircle>().lock()->set(transformG->getPosition(), 10.0f);
+
+
+
 
 }

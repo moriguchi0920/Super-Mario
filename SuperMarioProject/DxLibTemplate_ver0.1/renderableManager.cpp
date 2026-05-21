@@ -29,7 +29,11 @@ void RenderableManager::renderAll()
 	{
 		if (!com.expired())
 		{
-			com.lock()->render();
+			if (com.lock()->getIsActive())
+			{
+				com.lock()->render();
+			}
+			
 		}
 	}
 #ifdef IS_DEBUG

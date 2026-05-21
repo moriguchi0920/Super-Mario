@@ -6,13 +6,39 @@
 ComponentCollisionShape::ComponentCollisionShape(int objectId) : Component(objectId)
 {
 
-	isCollide = true;
 }
 // デストラクタ
 ComponentCollisionShape::~ComponentCollisionShape()
 {
 
 
+}
+
+void ComponentCollisionShape::addTag(int _tag)
+{
+	switch (_tag)
+	{
+	case ICollisionTag::TAG::MARIO:
+		collisionTag = std::make_unique<CollisionTagMario>();
+		break;
+	case ICollisionTag::TAG::FIREBALL:
+		collisionTag = std::make_unique<CollisionTagFireBall>();
+		break;
+	case ICollisionTag::TAG::ENEMY:
+		collisionTag = std::make_unique<CollisionTagEnemy>();
+		break;
+	case ICollisionTag::TAG::SHELL:
+		collisionTag = std::make_unique<CollisionTagShell>();
+		break;
+	case ICollisionTag::TAG::BLOCK:
+		collisionTag = std::make_unique<CollisionTagBlock>();
+		break;
+	}
+}
+
+ICollisionTag* ComponentCollisionShape::getTag()
+{
+	return collisionTag.get();
 }
 
 void ComponentCollisionShape::setInfoId(int id)
@@ -38,15 +64,7 @@ std::vector<int> ComponentCollisionShape::getInfoId()
 
 
 
-void ComponentCollisionShape::setIsCollide(bool _isCollide)
-{
-	isCollide = _isCollide;
-}
 
-bool ComponentCollisionShape::getIsCollide()
-{
-	return isCollide;
-}
 
 
 

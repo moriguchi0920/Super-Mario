@@ -19,7 +19,7 @@ private:
 	
 
 	// 接触情報保存配列
-	std::vector<std::shared_ptr<CollisionInfo>> collisionInfoArray;
+	static std::vector<std::shared_ptr<CollisionInfo>> collisionInfoArray;
 
 
 	int infoId;
@@ -40,7 +40,7 @@ public:
 	void updateInfo();
 
 	// インデックスから当たり判定情報を検索する関数
-	std::weak_ptr<CollisionInfo> getColInfoFromId(int id);
+	static std::weak_ptr<CollisionInfo> getColInfoFromId(int id);
 
 	// すでに情報として保存されている当たり判定を弾く関数
 	bool knownReject(int idBase, int idTarget);

@@ -12,6 +12,7 @@
 #include"Rect.h"
 #include"Circle.h"
 #include"componentBase.h"
+#include"collisionTag.h"
 #include<cmath>
 #include<vector>
 #include<memory>
@@ -19,6 +20,10 @@
 
 class ShapeSetParam;
 struct ContactInfo;
+
+
+
+
 
 // 当たり判定用の形クラスたちの基底となるクラス
 class ComponentCollisionShape : public Component
@@ -34,16 +39,24 @@ public:
 
 	};
 
+
+
+
 	ComponentCollisionShape(int objectId);
 	~ComponentCollisionShape();
 
 protected:
+	std::unique_ptr<ICollisionTag> collisionTag;
+
 	// CollisionInfo検索用の配列インデックス
 	std::vector<int> colInfoId;
 
-	bool isCollide;
 
 public:
+	void addTag(int _tag);
+
+	ICollisionTag* getTag();
+
 	// どんな形をしているかを返す関数
 	virtual int getShapeType() = 0;
 	// 位置および形ごとのパラメータを更新する関数(最新)
@@ -55,8 +68,7 @@ public:
 	void removeInfoId(int id);
 	std::vector<int> getInfoId();
 
-	bool getIsCollide();
-	void setIsCollide(bool _isCollide);
+
 };
 
 
@@ -70,6 +82,7 @@ public:
 	ComponentCollisionPoint(int objectId);
 	ComponentCollisionPoint(int objectId,float _x, float _y);
 	ComponentCollisionPoint(int objectId,const Point& pos);
+
 
 	virtual int getShapeType()
 	{

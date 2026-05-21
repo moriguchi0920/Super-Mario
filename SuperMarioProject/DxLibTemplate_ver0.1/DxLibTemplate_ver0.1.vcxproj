@@ -158,12 +158,14 @@
     <ClCompile Include="AnimationDataSet.cpp" />
     <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="AnimationRepository.cpp" />
+    <ClCompile Include="blockBase.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="componentCollision.cpp" />
     <ClCompile Include="collisionInfo.cpp" />
     <ClCompile Include="collisionManager.cpp" />
     <ClCompile Include="common_func.cpp" />
     <ClCompile Include="componentBase.cpp" />
+    <ClCompile Include="componentGravity.cpp" />
     <ClCompile Include="componentStorage.cpp" />
     <ClCompile Include="componentTransform.cpp" />
     <ClCompile Include="debug_color.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mario.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="componentRenderable.cpp" />
     <ClCompile Include="renderableManager.cpp" />
@@ -187,12 +190,15 @@
     <ClInclude Include="AnimationDataSet.h" />
     <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="AnimationRepository.h" />
+    <ClInclude Include="blockBase.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="collisionTag.h" />
     <ClInclude Include="componentCollision.h" />
     <ClInclude Include="collisionInfo.h" />
     <ClInclude Include="collisionManager.h" />
     <ClInclude Include="common_func.h" />
     <ClInclude Include="componentBase.h" />
+    <ClInclude Include="componentGravity.h" />
     <ClInclude Include="componentManager.h" />
     <ClInclude Include="componentStorage.h" />
     <ClInclude Include="componentTransform.h" />
@@ -203,12 +209,14 @@
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="mario.h" />
     <ClInclude Include="objectManager.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="componentRenderable.h" />
     <ClInclude Include="renderableManager.h" />
     <ClInclude Include="sampleObject.h" />
     <ClInclude Include="soundManager.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="task.h" />
     <ClInclude Include="taskManager.h" />
   </ItemGroup>
