@@ -11,7 +11,7 @@ BlockBase::BlockBase(int id, const Rect& rect) : Object(id)
 	Point lineEnd(rect.begin.x + rect.size.x, rect.begin.y);
 	Line line(lineBegin, lineEnd);
 	this->addComponent<ComponentCollisionLine>(this->id, line);
-	this->addComponent<ComponentRenderableRect>(this->id, rect);
+	this->addComponent<ComponentRenderableRect>(this->id,0.5f, rect);
 
 }
 

@@ -60,7 +60,7 @@ public:
 			if (0 <= curState)
 			{
 				State* pPrevState = &stateMap[curState];
-				if (pPrevState->pExit != NULL)
+				if (pPrevState->pExit != nullptr)
 				{
 					CallBackFuncPtr pExit = pPrevState->pExit;
 					(pObject->*pExit)();
@@ -68,7 +68,7 @@ public:
 			}
 			// ŽŸ‚Ìó‘Ô‚Ì‰Šú‰»ˆ—‚ðŽÀs
 			State* pNextState = &stateMap[nextState];
-			if (pNextState->pInit != NULL)
+			if (pNextState->pInit != nullptr)
 			{
 				CallBackFuncPtr pInit = pNextState->pInit;
 				(pObject->*pInit)();
@@ -80,7 +80,7 @@ public:
 
 		// XVˆ—
 		State* pCurState = &stateMap[curState];
-		if (pCurState->pUpdate != NULL)
+		if (pCurState->pUpdate != nullptr)
 		{
 			CallBackFuncPtr pUpdate = pCurState->pUpdate;
 			(pObject->*pUpdate)();

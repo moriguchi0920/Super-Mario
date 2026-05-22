@@ -76,6 +76,7 @@ public:
 public:
 	ComponentRenderableRect(int objectId);
 	ComponentRenderableRect(int objectId, float _priority, Float2 _leftTop, Float2 _size);
+	ComponentRenderableRect(int objectId, float _priority, Rect _rect);
 	void set(Float2 _leftTop, Float2 _size);
 	void setColor(int r, int g, int b, int a = 255);
 	DebugColor& getColor();
@@ -92,6 +93,7 @@ public:
 public:
 	ComponentRenderableCircle(int objectId);
 	ComponentRenderableCircle(int objectId, float _priority, Float2 _pos, float _radius);
+	ComponentRenderableCircle(int objectId, float _priority, Circle _cir);
 	void set(Float2 _pos, float _radius);
 	void setColor(int r, int g, int b, int a = 255);
 	DebugColor& getColor();

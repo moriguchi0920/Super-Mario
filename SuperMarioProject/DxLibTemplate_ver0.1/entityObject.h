@@ -98,7 +98,7 @@ public:
 	{
 		// 基底クラスComponentを継承していないクラスを指定した場合は弾く
 		// 学習要素：static_assert(条件式, エラーメッセージ)で、条件式がfalseのときにコンパイルエラーを発生させることができる
-		//static_assert(std::is_base_of<Component, _T_>, "Componentクラスを継承していないクラスがaddComponentに指定されています");
+		static_assert(std::is_base_of<Component, _T_>::value, "Componentクラスを継承していないクラスがaddComponentに指定されています");
 
 		auto spCom = std::make_shared<_T_>(std::forward<Arg>(arg)...);
 

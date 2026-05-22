@@ -19,9 +19,6 @@
     <Filter Include="System">
       <UniqueIdentifier>{b10c1def-7dea-404d-b2f4-9eb9ae3b0d10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Task">
-      <UniqueIdentifier>{aabff147-6ba4-4a25-9ebe-128259a19da9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Commons">
       <UniqueIdentifier>{3b7ba475-dfad-4c19-8b58-5fb90312882e}</UniqueIdentifier>
     </Filter>
@@ -111,12 +108,6 @@
     <ClCompile Include="collisionManager.cpp">
       <Filter>System\Component\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="task.cpp">
-      <Filter>System\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="taskManager.cpp">
-      <Filter>System\Task</Filter>
-    </ClCompile>
     <ClCompile Include="soundManager.cpp">
       <Filter>System\Sound</Filter>
     </ClCompile>
@@ -155,9 +146,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="const.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationData.h">
       <Filter>System\Animation</Filter>
     </ClInclude>
@@ -202,12 +190,6 @@
     </ClInclude>
     <ClInclude Include="collisionManager.h">
       <Filter>System\Component\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="task.h">
-      <Filter>System\Task</Filter>
-    </ClInclude>
-    <ClInclude Include="taskManager.h">
-      <Filter>System\Task</Filter>
     </ClInclude>
     <ClInclude Include="soundManager.h">
       <Filter>System\Sound</Filter>
@@ -256,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="mario.h">
       <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="const.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

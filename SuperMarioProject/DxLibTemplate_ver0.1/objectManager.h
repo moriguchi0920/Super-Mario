@@ -59,7 +59,7 @@ public:
 	// オブジェクト生成
 	static _T_* createObject(Arg&&... args)
 	{
-		//static_assert(std::is_base_of(Object, _T_), "Objectを継承していないクラスは生成出来ません");
+		static_assert(std::is_base_of<Object, _T_>::value, "Objectを継承していないクラスは生成出来ません");
 		// 新しいオブジェクトを引数に指定された可変長テンプレート変数から値を出しコンストラクタに代入
 		// ただしコンストラクタの引数は正しい順番、型を入れること！
 		auto newObject = std::make_shared<_T_>(std::forward<Arg>(args...));

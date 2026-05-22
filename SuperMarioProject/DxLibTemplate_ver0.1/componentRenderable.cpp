@@ -95,6 +95,10 @@ ComponentRenderableRect::ComponentRenderableRect(int objectId, float _priority, 
 {
 }
 
+ComponentRenderableRect::ComponentRenderableRect(int objectId, float _priority, Rect _rect) : ComponentRenderable(objectId, _priority), rect(_rect)
+{
+}
+
 void ComponentRenderableRect::set(Float2 _leftTop, Float2 _size)
 {
 	rect.begin = _leftTop;
@@ -122,6 +126,10 @@ ComponentRenderableCircle::ComponentRenderableCircle(int objectId) : ComponentRe
 }
 
 ComponentRenderableCircle::ComponentRenderableCircle(int objectId, float _priority, Float2 _pos, float _radius) : ComponentRenderable(objectId, _priority), circle(_pos, _radius)
+{
+}
+
+ComponentRenderableCircle::ComponentRenderableCircle(int objectId, float _priority, Circle _cir) : ComponentRenderable(objectId, _priority), circle(_cir)
 {
 }
 
