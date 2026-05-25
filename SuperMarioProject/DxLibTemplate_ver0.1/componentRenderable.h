@@ -9,6 +9,8 @@
 #include"componentBase.h"
 #include"DxLib.h"
 
+class ComponentTransform;
+
 // 描画物を表現する基底クラス
 // 0.0 ~ 1.0の範囲の描画順変数を保持し、
 // 純粋仮想関数render()を継承先でオーバーライドさせることで描画を一括管理する
@@ -42,6 +44,8 @@ protected :
 	// 描画座標
 	RenderPosition position;
 
+	std::weak_ptr<ComponentTransform> transformRef;
+
 public :
 	ComponentRenderable(int objectId, float _priority = 0.0f);
 	virtual ~ComponentRenderable();
@@ -49,6 +53,11 @@ public :
 
 	float getPriority();
 	virtual void render() = 0;
+
+	void bindToTransform(std::weak_ptr<ComponentTransform> wpTransform);
+
+	virtual void syncFromTransform();
+
 };
 
 // 描画できる線
@@ -64,7 +73,7 @@ public:
 	void setColor(int r, int g, int b, int a = 255);
 	DebugColor& getColor();
 	virtual void render() override;
-
+	void syncFromTransform() override;
 };
 
 // 描画できる四角
@@ -81,7 +90,7 @@ public:
 	void setColor(int r, int g, int b, int a = 255);
 	DebugColor& getColor();
 	virtual void render() override;
-
+	void syncFromTransform()override;
 };
 
 // 描画できる円
@@ -98,7 +107,7 @@ public:
 	void setColor(int r, int g, int b, int a = 255);
 	DebugColor& getColor();
 	virtual void render() override;
-
+	void syncFromTransform()override;
 };
 
 
@@ -115,6 +124,7 @@ public :
 	void setPos(Float2 _pos);
 	void setRot(float _rot);
 	virtual void render() override;
+	void syncFromTransform()override;
 };
 
 // 描画できるアニメーション
@@ -130,4 +140,5 @@ public :
 	void setPos(Float2 _pos);	
 	AnimationPlayer& getAP();
 	virtual void render() override;
+	void syncFromTransform()override;
 };

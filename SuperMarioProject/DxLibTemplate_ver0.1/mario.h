@@ -13,7 +13,7 @@ private:
 	StateMachine<Mario> starStateMachine;
 
 public:
-	Mario(int id, Circle cir);
+	Mario();
 	~Mario();
 
 	void update() override;

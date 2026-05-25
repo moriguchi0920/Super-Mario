@@ -6,6 +6,7 @@ public:
 	static enum TAG
 	{
 		DEFAULT = -1,
+		FLOOR,
 		MARIO,
 		FIREBALL,
 		SHELL,
@@ -22,6 +23,42 @@ public:
 	}
 	virtual bool canCollide(int othertag) = 0;
 };
+class CollisionTagFloor : public ICollisionTag
+{
+public:
+	inline CollisionTagFloor()
+	{
+		tag = TAG::FLOOR;
+	}
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+		switch (othertag)
+		{
+		case FLOOR:
+			ret = true;
+			break;
+		case MARIO:
+			ret = true;
+			break;
+		case FIREBALL:
+			ret = true;
+			break;
+		case ENEMY:
+			ret = true;
+			break;
+		case SHELL:
+			ret = true;
+			break;
+		case BLOCK:
+			ret = true;
+			break;
+		}
+
+		return ret;
+	}
+};
+
 class CollisionTagMario : public ICollisionTag
 {
 public:
@@ -34,6 +71,9 @@ public:
 		bool ret = false;
 		switch (othertag)
 		{
+		case FLOOR:
+			ret = true;
+			break;
 		case MARIO:
 			ret = false;
 			break;
@@ -67,6 +107,10 @@ public:
 		bool ret = false;
 		switch (othertag)
 		{
+		case FLOOR:
+			ret = true;
+			break;
+
 		case MARIO:
 			ret = false;
 			break;
@@ -99,6 +143,10 @@ public:
 		bool ret = false;
 		switch (othertag)
 		{
+		case FLOOR:
+			ret = true;
+			break;
+
 		case MARIO:
 			ret = true;
 			break;
@@ -131,6 +179,10 @@ public:
 		bool ret = false;
 		switch (othertag)
 		{
+		case FLOOR:
+			ret = true;
+			break;
+
 		case MARIO:
 			ret = true;
 			break;
@@ -163,6 +215,10 @@ public:
 		bool ret = false;
 		switch (othertag)
 		{
+		case FLOOR:
+			ret = true;
+			break;
+
 		case MARIO:
 			ret = true;
 			break;

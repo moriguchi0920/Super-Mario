@@ -8,6 +8,8 @@
 #include"componentTransform.h"
 #include"renderableManager.h"
 #include"sampleObject.h"
+#include"mario.h"
+#include"floor.h"
 #include "dxlib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -28,8 +30,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ª ƒVƒXƒeƒ€‰Šú‰» ª
 	//---------------------------------------
 	
-	ObjectManager::createObject<SampleObject>();
-
+	ObjectManager::createObject<Floor>();
+	ObjectManager::createObject<Mario>();
 
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
@@ -42,6 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//---------------------------------------
 
 		ObjectManager::updateAll();
+		CollisionManager::getInstance()->collisionUpdate();
 
 		//---------------------------------------
 		// •`‰æ

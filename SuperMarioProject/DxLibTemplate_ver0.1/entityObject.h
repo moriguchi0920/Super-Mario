@@ -2,6 +2,10 @@
 
 #include<vector>
 #include"componentManager.h"
+#include"componentTransform.h"
+#include"componentCollision.h"
+#include"componentRenderable.h"
+#include"componentGravity.h"
 #include<memory>
 #include<algorithm>
 #include<type_traits>
@@ -89,6 +93,36 @@ public:
 		return id;
 	}
 
+	inline void bindComponentToTransformComponent(std::shared_ptr<Component> com)
+	{
+		auto wpTransform = getComponent<ComponentTransform>();
+		if (wpTransform.expired())
+		{
+			return;
+		}
+		auto wpGravity = getComponent<ComponentGravity>();
+		if (wpGravity.expired())
+		{
+			return;
+		}
+		else
+		{
+			wpTransform = static_cast<std::weak_ptr<ComponentTransform>>(wpGravity);
+		}
+		
+
+		if (auto renderable = std::dynamic_pointer_cast<ComponentCollisionShape>(com))
+		{
+			renderable->bindToTransform(wpTransform);
+		}
+		if (auto renderable = std::dynamic_pointer_cast<ComponentRenderable>(com))
+		{
+			renderable->bindToTransform(wpTransform);
+		}
+
+
+	}
+
 	// テンプレート関数(コンポーネントのコンストラクタを動かすために引数用の可変長テンプレート使用)
 	template <typename _T_, typename... Arg>
 	// コンポーネント追加
@@ -106,6 +140,8 @@ public:
 
 
 		ComponentManager::getInstance()->addComponent(this->id, spCom);
+
+		bindComponentToTransformComponent(spCom);
 
 		return std::weak_ptr<_T_>(spCom);
 	}
@@ -125,8 +161,29 @@ public:
 			}
 		}
 		// なければ空のweak_ptrを返す
-		return std::weak_ptr<_T_>();;
+		return std::weak_ptr<_T_>();
 	}
+	// テンプレート関数
+	template <typename _T_>
+	// 同じコンポーネントが複数ある場合のコンポーネント取得
+	std::vector<std::weak_ptr<_T_>> getComponentArray()
+	{
+		std::vector<std::weak_ptr<_T_>> coms;
+		// 範囲for文でコンポーネントの配列を回し、指定された型のコンポーネントがあれば返す
+		for (auto& ptr : components)
+		{
+			// dynamic_pointer_cast(shared_ptr版アップキャスト)でnullptrでなければ指定された型のコンポーネントがあると判断して返す
+			auto casted = std::dynamic_pointer_cast<_T_>(ptr);
+			if (casted)
+			{
+				coms.push_back(std::weak_ptr<_T_>(casted));
+			}
+		}
+		// なければ空のweak_ptrを返す
+		return coms;
+	}
+
+
 
 	// テンプレート関数
 	template <typename _T_>

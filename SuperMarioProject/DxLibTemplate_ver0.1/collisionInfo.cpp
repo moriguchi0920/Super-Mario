@@ -16,7 +16,7 @@ CollisionInfo::CollisionInfo(std::weak_ptr<ComponentCollisionShape> pColBase, st
 // CollisionInfoにアクセスする際に当たった相手をもらうための関数
 std::weak_ptr<ComponentCollisionShape> CollisionInfo::getTarget(int idBase)
 {
-	 if (idBase = getObjectIdCol1())
+	 if (idBase == getObjectIdCol1())
 	 {
 		 return col2;
 	 }

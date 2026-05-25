@@ -1,6 +1,6 @@
-#include"ComponentCollision.h"
-
-
+#include"componentCollision.h"
+#include"componentTransform.h"
+#include"collisionManager.h"
 
 // コンストラクタ
 ComponentCollisionShape::ComponentCollisionShape(int objectId) : Component(objectId)
@@ -18,6 +18,9 @@ void ComponentCollisionShape::addTag(int _tag)
 {
 	switch (_tag)
 	{
+	case ICollisionTag::TAG::FLOOR:
+		collisionTag = std::make_unique<CollisionTagFloor>();
+		break;
 	case ICollisionTag::TAG::MARIO:
 		collisionTag = std::make_unique<CollisionTagMario>();
 		break;
@@ -60,6 +63,61 @@ std::vector<int> ComponentCollisionShape::getInfoId()
 
 	return colInfoId;
 }
+
+void ComponentCollisionShape::bindToTransform(std::weak_ptr<ComponentTransform> wpTransform)
+{
+	transformRef = wpTransform;
+
+	if (!transformRef.expired())
+	{
+		syncFromTransform();
+	}
+}
+
+bool ComponentCollisionShape::getEnterByTag(int collisionTag)
+{
+	auto infoIds = getInfoId();
+	for (int i = 0; i < infoIds.size(); i++)
+	{
+		auto info = CollisionManager::getColInfoFromId(infoIds[i]);
+		auto target = info.lock()->getTarget(getParentId());
+		if (info.lock()->getEnter())
+		{
+			if (!target.expired())
+			{
+				if (target.lock()->getTag()->tag == collisionTag)
+				{
+					return true;
+				}
+
+			}
+		}
+	}
+	return false;
+}
+
+bool ComponentCollisionShape::getStayByTag(int collisionTag)
+{
+	auto infoIds = getInfoId();
+	for (int i = 0; i < infoIds.size(); i++)
+	{
+		auto info = CollisionManager::getColInfoFromId(infoIds[i]);
+		auto target = info.lock()->getTarget(getParentId());
+		if (info.lock()->getColliding())
+		{
+			if (!target.expired())
+			{
+				if (target.lock()->getTag()->tag == collisionTag)
+				{
+					return true;
+				}
+
+			}
+		}
+	}
+	return false;
+}
+
 
 
 
@@ -117,6 +175,14 @@ bool ComponentCollisionPoint::checkCollide(ComponentCollisionShape* shape, Conta
 		return CheckLinePointHit(pTarget->line, this->point);
 	}
 	return false;
+}
+
+void ComponentCollisionPoint::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		point = transformRef.lock()->getPosition();
+	}
 }
 
 
@@ -187,6 +253,18 @@ bool ComponentCollisionLine::checkCollide(ComponentCollisionShape* shape, Contac
 	return false;
 }
 
+void ComponentCollisionLine::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		Point beginPos = transformRef.lock()->getPosition();
+		Point endPos = beginPos + (line.end - line.begin);
+
+		line.begin = beginPos;
+		line.end = endPos;
+	}
+}
+
 
 ComponentCollisionCircle::ComponentCollisionCircle(int objectId) : ComponentCollisionShape(objectId), circle()
 {
@@ -253,6 +331,14 @@ bool ComponentCollisionCircle::checkCollide(ComponentCollisionShape* shape, Cont
 	return false;
 }
 
+void ComponentCollisionCircle::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		circle.pos = transformRef.lock()->getPosition();
+	}
+}
+
 
 
 
@@ -316,6 +402,14 @@ bool ComponentCollisionRect::checkCollide(ComponentCollisionShape* shape, Contac
 		return CheckLineBoxHit(pTarget->line, this->rect);
 	}
 	return false;
+}
+
+void ComponentCollisionRect::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		rect.begin = transformRef.lock()->getPosition();
+	}
 }
 
 

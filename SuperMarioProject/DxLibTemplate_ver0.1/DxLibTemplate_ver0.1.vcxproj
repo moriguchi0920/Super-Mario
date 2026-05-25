@@ -171,6 +171,7 @@
     <ClCompile Include="debug_color.cpp" />
     <ClCompile Include="entityObject.cpp" />
     <ClCompile Include="Float2.cpp" />
+    <ClCompile Include="floor.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="Line.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="debug_color.h" />
     <ClInclude Include="entityObject.h" />
     <ClInclude Include="Float2.h" />
+    <ClInclude Include="floor.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="Line.h" />

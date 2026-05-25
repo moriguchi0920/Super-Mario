@@ -21,7 +21,7 @@
 class ShapeSetParam;
 struct ContactInfo;
 
-
+class ComponentTransform;
 
 
 
@@ -51,6 +51,7 @@ protected:
 	// CollisionInfo検索用の配列インデックス
 	std::vector<int> colInfoId;
 
+	std::weak_ptr<ComponentTransform> transformRef;
 
 public:
 	void addTag(int _tag);
@@ -67,6 +68,18 @@ public:
 	void setInfoId(int id);
 	void removeInfoId(int id);
 	std::vector<int> getInfoId();
+
+	// 座標コンポーネントに連携
+	void bindToTransform(std::weak_ptr<ComponentTransform> wpTransform);
+
+	// 連携した座標コンポーネントに座標を合わせる
+	virtual void syncFromTransform() = 0;
+
+	// 当たった瞬間をtagから種別して取得
+	bool getEnterByTag(int collisionTag);
+
+	// 当たっているかどうかをtagから種別して取得
+	bool getStayByTag(int collisionTag);
 
 
 };
@@ -92,6 +105,7 @@ public:
 	virtual void paramUpdate(ShapeSetParam* param);
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
+	void syncFromTransform() override;
 };
 
 typedef  Point Vector2D;
@@ -113,6 +127,7 @@ public:
 	virtual void paramUpdate(ShapeSetParam* param);
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
+	void syncFromTransform() override;
 };
 
 // 円の当たり判定
@@ -133,6 +148,8 @@ public:
 
 	virtual void paramUpdate(ShapeSetParam* param);
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
+
+	void syncFromTransform() override;
 };
 
 
@@ -155,6 +172,7 @@ public:
 	virtual void paramUpdate(ShapeSetParam* param);
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
+	void syncFromTransform() override;
 };
 
 // 形ごとのパラメータ

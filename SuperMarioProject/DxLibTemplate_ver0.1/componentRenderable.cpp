@@ -1,5 +1,6 @@
 #include"componentRenderable.h"
 #include"DxLib.h"
+#include"componentTransform.h"
 
 const float ComponentRenderable::PRIORITY_DEFAULT = 0.5f;
 const float ComponentRenderable::PRIORITY_MIN = 0.0f;
@@ -10,6 +11,7 @@ ComponentRenderable::ComponentRenderable(int objectId, float _priority) : Compon
 {
 	setPriority(_priority);
 	position.center = { 0.0f, 0.0f };
+	transformRef = std::weak_ptr<ComponentTransform>();
 }
 
 ComponentRenderable::~ComponentRenderable()
@@ -35,6 +37,19 @@ float ComponentRenderable::getPriority()
 	return priority;
 }
 
+void ComponentRenderable::bindToTransform(std::weak_ptr<ComponentTransform> wpTransform)
+{
+	transformRef = wpTransform;
+	if (!transformRef.expired())
+	{
+		syncFromTransform();
+	}
+}
+
+void ComponentRenderable::syncFromTransform()
+{
+}
+
 
 ComponentRenderableImage::ComponentRenderableImage(int objectId, float _priority, int _imageHandle) : ComponentRenderable(objectId, _priority)
 {
@@ -55,6 +70,14 @@ void ComponentRenderableImage::setRot(float _rot)
 void ComponentRenderableImage::render()
 {
 	DrawRotaGraph(pos.x, pos.y, 1.0, rotation , imageHandle, true);
+}
+
+void ComponentRenderableImage::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		pos = transformRef.lock()->getPosition();
+	}
 }
 
 
@@ -84,6 +107,15 @@ AnimationPlayer& ComponentRenderableAnimation::getAP()
 void ComponentRenderableAnimation::render()
 {
 	AP.render(base.x, base.y);
+}
+
+void ComponentRenderableAnimation::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		pos = transformRef.lock()->getPosition();
+	}
+
 }
 
 ComponentRenderableRect::ComponentRenderableRect(int objectId) : ComponentRenderable(objectId)
@@ -118,6 +150,14 @@ DebugColor& ComponentRenderableRect::getColor()
 void ComponentRenderableRect::render()
 {
 	DrawBox(rect.begin.x, rect.begin.y, rect.begin.x + rect.size.x, rect.begin.y + rect.size.y, GetColor(color.r, color.g, color.b), true);
+}
+
+void ComponentRenderableRect::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		rect.begin = transformRef.lock()->getPosition();
+	}
 }
 
 ComponentRenderableCircle::ComponentRenderableCircle(int objectId) : ComponentRenderable(objectId)
@@ -157,6 +197,15 @@ void ComponentRenderableCircle::render()
 
 }
 
+void ComponentRenderableCircle::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		circle.pos = transformRef.lock()->getPosition();
+	}
+
+}
+
 ComponentRenderableLine::ComponentRenderableLine(int objectId) : ComponentRenderable(objectId)
 {
 	priority = PRIORITY_DEFAULT;
@@ -189,4 +238,19 @@ DebugColor& ComponentRenderableLine::getColor()
 void ComponentRenderableLine::render()
 {
 	DrawLine(line.begin.x, line.begin.y, line.end.x, line.end.y, GetColor(color.r, color.g, color.b), 1);
+}
+
+void ComponentRenderableLine::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		Point beginPos = transformRef.lock()->getPosition();
+		Point endPos = beginPos + (line.end - line.begin);
+
+		line.begin = beginPos;
+		line.end = endPos;
+	}
+
+
+
 }

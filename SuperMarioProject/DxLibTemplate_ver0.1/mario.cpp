@@ -2,16 +2,33 @@
 #include"componentGravity.h"
 #include"componentCollision.h"
 #include"componentRenderable.h"
+#include"collisionManager.h"
+#include"floor.h"
+#include"objectManager.h"
 
-Mario::Mario(int id, Circle cir) : Object(id)
+Mario::Mario() : Object(ObjectManager::makeId())
 {
-	this->addComponent<ComponentCollisionCircle>(id, cir);
+	Circle cir(Point(0, 0), MARIO_RADIUS);
+
 	this->addComponent<ComponentGravity>(id);
+	auto transformG = this->getComponent<ComponentGravity>().lock();
+	transformG->setLanding(false);
+
+	this->addComponent<ComponentCollisionCircle>(id, cir).lock()->addTag(ICollisionTag::MARIO);
+
+	Circle cirTop(Point(0, 0 - MARIO_RADIUS), MARIO_COL_TOP_RADIUS);
+	this->addComponent<ComponentCollisionCircle>(id, cirTop);
+
+	
+
 	this->addComponent<ComponentRenderableCircle>(id,0.5f, cir);
+
+
 
 	moveStateMachine.addState(MOVESTATE::MOV_WALK, nullptr, &Mario::walk, nullptr);
 	moveStateMachine.addState(MOVESTATE::MOV_DASH, nullptr, &Mario::dash, nullptr);
 	moveStateMachine.addState(MOVESTATE::MOV_JUMP, nullptr, &Mario::jump, nullptr);
+	moveStateMachine.changeState(MOVESTATE::MOV_WALK);
 
 	varyStateMachine.addState(VARYSTATE::VARY_DEFAULT, &Mario::defaultStateInit, &Mario::defaultStateUpdate, nullptr);
 	varyStateMachine.addState(VARYSTATE::VARY_TALL, &Mario::tallStateInit, &Mario::tallStateUpdate, nullptr);
@@ -34,22 +51,32 @@ void Mario::update()
 	moveStateMachine.update(this);
 	varyStateMachine.update(this);
 	starStateMachine.update(this);
+
+	auto comCC = getComponent<ComponentCollisionCircle>();
+	auto comT = getComponent<ComponentGravity>();
+	auto comR = getComponent<ComponentRenderableCircle>();
+	comT.lock()->gravityUpdate();
+
+	comR.lock()->syncFromTransform();
+
+	if (comCC.lock())
+	{
+		comCC.lock()->syncFromTransform();
+		if (comCC.lock()->getEnterByTag(ICollisionTag::FLOOR))
+		{
+			comT.lock()->setLanding(true);
+		}
+		
+	}
+	
 }
 
 void Mario::walk()
 {
 	Float2 vec(0.0f, 0.0f);
-	if (KeyManager::checkHitKey(KEY_INPUT_W))
-	{
-		vec.y = 1.0f;
-	}
 	if (KeyManager::checkHitKey(KEY_INPUT_A))
 	{
 		vec.x = -1.0f;
-	}
-	if (KeyManager::checkHitKey(KEY_INPUT_S))
-	{
-		vec.y = -1.0f;
 	}
 	if (KeyManager::checkHitKey(KEY_INPUT_D))
 	{

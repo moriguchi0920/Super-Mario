@@ -144,6 +144,9 @@
     <ClCompile Include="mario.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
+    <ClCompile Include="floor.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="const.h">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="floor.h">
+      <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
