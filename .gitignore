@@ -1,0 +1,17 @@
+dxlib/
+*.db
+*.db-shm
+*.db-wal
+*.vsidx
+*.suo
+*.opendb
+*.ipch
+*.json
+*.obj
+*.recipe
+*.ilk
+*.log
+*.idb
+*.pdb
+*.tlog
+*.lastbuildstate

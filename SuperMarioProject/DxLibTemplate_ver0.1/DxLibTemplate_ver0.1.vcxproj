@@ -181,6 +181,7 @@
     <ClCompile Include="componentRenderable.cpp" />
     <ClCompile Include="renderableManager.cpp" />
     <ClCompile Include="sampleObject.cpp" />
+    <ClCompile Include="scrollManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@
     <ClInclude Include="componentRenderable.h" />
     <ClInclude Include="renderableManager.h" />
     <ClInclude Include="sampleObject.h" />
+    <ClInclude Include="scrollManager.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="StateMachine.h" />
   </ItemGroup>

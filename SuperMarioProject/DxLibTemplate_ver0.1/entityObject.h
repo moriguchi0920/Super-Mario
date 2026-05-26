@@ -93,6 +93,7 @@ public:
 		return id;
 	}
 
+	// 一部座標が必要なコンポーネントを座標コンポーネントと連携
 	inline void bindComponentToTransformComponent(std::shared_ptr<Component> com)
 	{
 		auto wpTransform = getComponent<ComponentTransform>();

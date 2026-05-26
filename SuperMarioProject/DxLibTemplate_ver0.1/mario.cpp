@@ -75,7 +75,7 @@ void Mario::update()
 		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
 		{
 			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
-			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, -10.0f));
+			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, JUMP_FIRST_SPEED));
 			comG.lock()->setLanding(false);
 			
 		}

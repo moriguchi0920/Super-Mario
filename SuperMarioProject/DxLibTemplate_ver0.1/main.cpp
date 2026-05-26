@@ -23,6 +23,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 描画先画面を裏画面にする
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	SetWindowSizeExtendRate(EXTEND_RATE);
+
 	//---------------------------------------
 	// 変数の作成や初期化、その他初期設定
 	// ↓ システム初期化 ↓

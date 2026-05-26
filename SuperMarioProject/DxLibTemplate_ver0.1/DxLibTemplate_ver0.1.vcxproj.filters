@@ -61,6 +61,12 @@
     <Filter Include="System\Object\State">
       <UniqueIdentifier>{9b75501e-e550-485d-bb6c-2eb4ec131b1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Scene">
+      <UniqueIdentifier>{f4569626-768e-4fa4-ac2b-70ad5ce1315b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Scroll">
+      <UniqueIdentifier>{e0278458-8173-446d-ae0f-9fa19e82bb94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -146,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="floor.cpp">
       <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollManager.cpp">
+      <Filter>System\Scroll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="floor.h">
       <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollManager.h">
+      <Filter>System\Scroll</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
