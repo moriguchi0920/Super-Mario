@@ -7,6 +7,7 @@ class ComponentTransform : public Component
 protected:
 	Float2 position;
 	float speed;
+	Float2 translation;
 
 public:
 	ComponentTransform(int id);
@@ -17,9 +18,17 @@ public:
 
 	void translate(Float2 _normalizedVector);
 
+	void translate();
+
 	void setSpeed(float _speed);
 
+	void setTranslation(Float2 _translation);
+
 	void setPosition(Float2 _position);
+
+	Float2 getTranslation();
+
+	float getSpeed();
 
 	Float2 getPosition();
 

@@ -44,3 +44,13 @@ void ComponentGravity::gravityUpdate()
 		nowVelocity = 0.0f;
 	}
 }
+
+void ComponentGravity::setBaseY(float y)
+{
+	position.y = y;
+}
+
+bool ComponentGravity::getLanding()
+{
+	return isLanding;
+}

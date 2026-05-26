@@ -12,6 +12,7 @@ private:
 
 	StateMachine<Mario> starStateMachine;
 
+
 public:
 	Mario();
 	~Mario();

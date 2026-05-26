@@ -127,7 +127,7 @@ void CollisionManager::updateInfo()
 			if (pColInfo->getCol1().expired())
 			{
 				// getCol2()‚ªŽc‚Á‚Ä‚¢‚½ê‡
-				if (pColInfo->getCol2().expired())
+				if (!pColInfo->getCol2().expired())
 				{
 					pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
 				}
@@ -139,7 +139,7 @@ void CollisionManager::updateInfo()
 			if (pColInfo->getCol1().expired())
 			{
 				// getCol1()‚ªŽc‚Á‚Ä‚¢‚½ê‡
-				if (pColInfo->getCol2().expired())
+				if (!pColInfo->getCol2().expired())
 				{
 					pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
 				}
@@ -165,7 +165,8 @@ void CollisionManager::updateInfo()
 			// “–‚½‚Á‚Ä‚¢‚È‚¢ê‡
 			else
 			{
-
+				pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
+				pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
 				collisionInfoArray.erase(collisionInfoArray.begin() + i);
 			}
 		}

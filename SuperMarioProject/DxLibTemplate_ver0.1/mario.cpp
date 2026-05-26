@@ -8,20 +8,21 @@
 
 Mario::Mario() : Object(ObjectManager::makeId())
 {
-	Circle cir(Point(0, 0), MARIO_RADIUS);
+	Rect rect(Point(0, 0), Point(MARIO_SIZE, MARIO_SIZE));
 
 	this->addComponent<ComponentGravity>(id);
 	auto transformG = this->getComponent<ComponentGravity>().lock();
 	transformG->setLanding(false);
+	transformG->setSpeed(1.0f);
 
-	this->addComponent<ComponentCollisionCircle>(id, cir).lock()->addTag(ICollisionTag::MARIO);
+	this->addComponent<ComponentCollisionRect>(id, rect).lock()->addTag(ICollisionTag::MARIO);
 
-	Circle cirTop(Point(0, 0 - MARIO_RADIUS), MARIO_COL_TOP_RADIUS);
-	this->addComponent<ComponentCollisionCircle>(id, cirTop);
+	//Circle cirTop(Point(0, 0 - MARIO_RADIUS), MARIO_COL_TOP_RADIUS);
+	//this->addComponent<ComponentCollisionCircle>(id, cirTop).lock()->addTag(ICollisionTag::MARIO);
 
 	
 
-	this->addComponent<ComponentRenderableCircle>(id,0.5f, cir);
+	this->addComponent<ComponentRenderableRect>(id,0.5f, rect);
 
 
 
@@ -48,27 +49,55 @@ Mario::~Mario()
 
 void Mario::update()
 {
+
+
+	auto comCR = getComponent<ComponentCollisionRect>();
+	auto comG = getComponent<ComponentGravity>();
+	auto comR = getComponent<ComponentRenderableRect>();
+
+
+	comR.lock()->syncFromTransform();
+
+	if (comCR.lock())
+	{
+		comCR.lock()->syncFromTransform();
+		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR))
+		{
+			comG.lock()->setLanding(true);
+			comG.lock()->setBaseY(FLOOR_BASE_Y - MARIO_SIZE);
+		}
+		
+	}
+	comG.lock()->gravityUpdate();
+
+	if (comG.lock()->getLanding())
+	{
+		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
+		{
+			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
+			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, -10.0f));
+			comG.lock()->setLanding(false);
+			
+		}
+		else if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT))
+		{
+
+			moveStateMachine.changeState(MOVESTATE::MOV_DASH);
+		}
+		else
+		{
+
+			moveStateMachine.changeState(MOVESTATE::MOV_WALK);
+		}
+
+	}
+
+
 	moveStateMachine.update(this);
 	varyStateMachine.update(this);
 	starStateMachine.update(this);
 
-	auto comCC = getComponent<ComponentCollisionCircle>();
-	auto comT = getComponent<ComponentGravity>();
-	auto comR = getComponent<ComponentRenderableCircle>();
-	comT.lock()->gravityUpdate();
 
-	comR.lock()->syncFromTransform();
-
-	if (comCC.lock())
-	{
-		comCC.lock()->syncFromTransform();
-		if (comCC.lock()->getEnterByTag(ICollisionTag::FLOOR))
-		{
-			comT.lock()->setLanding(true);
-		}
-		
-	}
-	
 }
 
 void Mario::walk()
@@ -76,25 +105,53 @@ void Mario::walk()
 	Float2 vec(0.0f, 0.0f);
 	if (KeyManager::checkHitKey(KEY_INPUT_A))
 	{
-		vec.x = -1.0f;
+		vec.x = -MARIO_WALK_SPEED;
 	}
 	if (KeyManager::checkHitKey(KEY_INPUT_D))
 	{
-		vec.x = 1.0f;
+		vec.x = MARIO_WALK_SPEED;
 	}
 
 	auto comG = this->getComponent<ComponentGravity>();
 
-	comG.lock()->translate(vec, 2.0f);
+	if (!comG.expired())
+	{
+		comG.lock()->setTranslation(vec);
+		comG.lock()->translate();
+	}
+	
 
 }
 
 void Mario::jump()
 {
+	auto comG = getComponent<ComponentGravity>();
+	if (!comG.expired())
+	{
+		comG.lock()->translate();
+	}
+
 }
 
 void Mario::dash()
 {
+	Float2 vec(0.0f, 0.0f);
+	if (KeyManager::checkHitKey(KEY_INPUT_A))
+	{
+		vec.x = -MARIO_DASH_SPEED;
+	}
+	if (KeyManager::checkHitKey(KEY_INPUT_D))
+	{
+		vec.x = MARIO_DASH_SPEED;
+	}
+
+	auto comG = this->getComponent<ComponentGravity>();
+
+	if (!comG.expired())
+	{
+		comG.lock()->setTranslation(vec);
+		comG.lock()->translate();
+	}
 }
 
 void Mario::starStateUpdate()

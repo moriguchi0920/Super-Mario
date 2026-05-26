@@ -5,7 +5,7 @@
 class ComponentGravity : public ComponentTransform
 {
 public:
-	ComponentGravity(int id, float acceleration = 0.10f, float terminal = 15.0f);
+	ComponentGravity(int id, float acceleration = 0.25f, float terminal = 25.0f);
 	virtual ~ComponentGravity();
 
 protected:
@@ -25,4 +25,8 @@ public:
 	void setLanding(bool isLand);
 
 	void gravityUpdate();
+
+	void setBaseY(float y);
+
+	bool getLanding();
 };

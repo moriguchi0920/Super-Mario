@@ -55,10 +55,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//---------------------------------------
 		RenderableManager::getInstance()->renderAll();
 
-		if (KeyManager::pullUpKey(KEY_INPUT_SPACE))
-		{
-			DrawString(0, 0, "スペースキーが離された瞬間", GetColor(255, 255, 255));
-		}
+		//if (KeyManager::pullUpKey(KEY_INPUT_SPACE))
+		//{
+		//	DrawString(0, 0, "スペースキーが離された瞬間", GetColor(255, 255, 255));
+		//}
 
 		ScreenFlip();
 	}
