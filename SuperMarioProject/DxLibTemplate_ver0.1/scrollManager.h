@@ -8,7 +8,7 @@ class ScrollManager
 private:
 	float scrollOffset;
 	
-	Float2* standardPos;
+
 
 public:
 	static ScrollManager* getInstance();
@@ -16,7 +16,7 @@ public:
 	void scrollAll();
 	void setScrollOffset(float offset);
 
-	void setStandard(Float2* pos);
+
 
 
 private:

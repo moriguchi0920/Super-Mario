@@ -5,6 +5,7 @@
 #include"collisionManager.h"
 #include"floor.h"
 #include"objectManager.h"
+#include"scrollManager.h"
 
 Mario::Mario() : Object(ObjectManager::makeId())
 {
@@ -14,6 +15,7 @@ Mario::Mario() : Object(ObjectManager::makeId())
 	auto transformG = this->getComponent<ComponentGravity>().lock();
 	transformG->setLanding(false);
 	transformG->setSpeed(1.0f);
+
 
 	this->addComponent<ComponentCollisionRect>(id, rect).lock()->addTag(ICollisionTag::MARIO);
 
@@ -56,19 +58,10 @@ void Mario::update()
 	auto comR = getComponent<ComponentRenderableRect>();
 
 
-	comR.lock()->syncFromTransform();
 
-	if (comCR.lock())
-	{
-		comCR.lock()->syncFromTransform();
-		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR))
-		{
-			comG.lock()->setLanding(true);
-			comG.lock()->setBaseY(FLOOR_BASE_Y - MARIO_SIZE);
-		}
-		
-	}
 	comG.lock()->gravityUpdate();
+
+
 
 	if (comG.lock()->getLanding())
 	{
@@ -98,6 +91,23 @@ void Mario::update()
 	starStateMachine.update(this);
 
 
+
+	comR.lock()->syncFromTransform();
+
+	if (comCR.lock())
+	{
+		comCR.lock()->syncFromTransform();
+		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR) && comG.lock()->getPosition().y <= FLOOR_BASE_Y)
+		{
+			comG.lock()->setLanding(true);
+			comG.lock()->setBaseY(FLOOR_BASE_Y - MARIO_SIZE);
+		}
+		if (!comCR.lock()->getStayByTag(ICollisionTag::FLOOR))
+		{
+			comG.lock()->setLanding(false);
+		}
+
+	}
 }
 
 void Mario::walk()
@@ -118,8 +128,17 @@ void Mario::walk()
 	{
 		comG.lock()->setTranslation(vec);
 		comG.lock()->translate();
+		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
+		{
+			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
+			ScrollManager::getInstance()->setScrollOffset(-vec.x);
+		}
+		else
+		{
+			ScrollManager::getInstance()->setScrollOffset(0.0f);
+		}
 	}
-	
+
 
 }
 
@@ -129,6 +148,15 @@ void Mario::jump()
 	if (!comG.expired())
 	{
 		comG.lock()->translate();
+		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
+		{
+			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
+			ScrollManager::getInstance()->setScrollOffset(-comG.lock()->getTranslation().x);
+		}
+		else
+		{
+			ScrollManager::getInstance()->setScrollOffset(0.0f);
+		}
 	}
 
 }
@@ -151,6 +179,15 @@ void Mario::dash()
 	{
 		comG.lock()->setTranslation(vec);
 		comG.lock()->translate();
+		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
+		{
+			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
+			ScrollManager::getInstance()->setScrollOffset(-vec.x);
+		}
+		else
+		{
+			ScrollManager::getInstance()->setScrollOffset(0.0f);
+		}
 	}
 }
 

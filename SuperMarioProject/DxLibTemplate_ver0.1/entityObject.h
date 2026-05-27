@@ -102,14 +102,11 @@ public:
 			return;
 		}
 		auto wpGravity = getComponent<ComponentGravity>();
-		if (wpGravity.expired())
-		{
-			return;
-		}
-		else
+		if (!wpGravity.expired())
 		{
 			wpTransform = static_cast<std::weak_ptr<ComponentTransform>>(wpGravity);
 		}
+
 		
 
 		if (auto renderable = std::dynamic_pointer_cast<ComponentCollisionShape>(com))

@@ -5,6 +5,7 @@ ComponentTransform::ComponentTransform(int id) : Component(id)
 	position.Clear();
 	speed = 0.0f;
 	translation.Clear();
+	isScroll = false;
 }
 
 ComponentTransform::~ComponentTransform()
@@ -45,6 +46,11 @@ void ComponentTransform::setPosition(Float2 _position)
 	position = _position;
 }
 
+void ComponentTransform::setScroll(bool _isScroll)
+{
+	isScroll = _isScroll;
+}
+
 Float2 ComponentTransform::getTranslation()
 {
 	return translation;
@@ -58,4 +64,9 @@ float ComponentTransform::getSpeed()
 Float2 ComponentTransform::getPosition()
 {
 	return position;
+}
+
+bool ComponentTransform::getIsScroll()
+{
+	return isScroll;
 }

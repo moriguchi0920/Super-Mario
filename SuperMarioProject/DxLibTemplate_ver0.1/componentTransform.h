@@ -9,6 +9,8 @@ protected:
 	float speed;
 	Float2 translation;
 
+	bool isScroll;
+
 public:
 	ComponentTransform(int id);
 	virtual ~ComponentTransform();
@@ -26,10 +28,14 @@ public:
 
 	void setPosition(Float2 _position);
 
+	void setScroll(bool _isScroll);
+
 	Float2 getTranslation();
 
 	float getSpeed();
 
 	Float2 getPosition();
+
+	bool getIsScroll();
 
 };

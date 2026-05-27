@@ -8,6 +8,7 @@
 #include"componentTransform.h"
 #include"renderableManager.h"
 #include"sampleObject.h"
+#include"scrollManager.h"
 #include"mario.h"
 #include"floor.h"
 #include "dxlib.h"
@@ -47,6 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ObjectManager::updateAll();
 		CollisionManager::getInstance()->collisionUpdate();
+		ScrollManager::getInstance()->scrollAll();
 
 		//---------------------------------------
 		// •`‰æ
