@@ -11,7 +11,8 @@
 #include"scrollManager.h"
 #include"mario.h"
 #include"floor.h"
-#include "dxlib.h"
+#include "rengablock.h"
+#include "DxLib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -35,6 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	ObjectManager::createObject<Floor>();
 	ObjectManager::createObject<Mario>();
+	ObjectManager::createObject<rengablock>(50.0f, 130.0f);
 
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
