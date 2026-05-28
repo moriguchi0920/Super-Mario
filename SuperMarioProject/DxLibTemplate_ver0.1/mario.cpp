@@ -76,11 +76,13 @@ void Mario::update()
 		{
 
 			moveStateMachine.changeState(MOVESTATE::MOV_DASH);
+			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, 0.0f));
 		}
 		else
 		{
 
 			moveStateMachine.changeState(MOVESTATE::MOV_WALK);
+			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, 0.0f));
 		}
 
 	}
@@ -112,26 +114,43 @@ void Mario::update()
 
 void Mario::walk()
 {
-	Float2 vec(0.0f, 0.0f);
-	if (KeyManager::checkHitKey(KEY_INPUT_A))
-	{
-		vec.x = -MARIO_WALK_SPEED;
-	}
-	if (KeyManager::checkHitKey(KEY_INPUT_D))
-	{
-		vec.x = MARIO_WALK_SPEED;
-	}
 
 	auto comG = this->getComponent<ComponentGravity>();
 
 	if (!comG.expired())
 	{
-		comG.lock()->setTranslation(vec);
+		if (KeyManager::checkHitKey(KEY_INPUT_A))
+		{
+			if (-MARIO_WALK_SPEED_MAX < comG.lock()->getTranslation().x)
+			{
+				comG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
+			}
+		}
+		else if (comG.lock()->getTranslation().x < 0)
+		{
+			comG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
+		}
+		if (KeyManager::checkHitKey(KEY_INPUT_D))
+		{
+			if (comG.lock()->getTranslation().x < MARIO_WALK_SPEED_MAX)
+			{
+				comG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
+			}
+
+		}
+		else if (0 < comG.lock()->getTranslation().x)
+		{
+			comG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
+		}
+
+
+
+
 		comG.lock()->translate();
 		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
-			ScrollManager::getInstance()->setScrollOffset(-vec.x);
+			ScrollManager::getInstance()->setScrollOffset(-comG.lock()->getTranslation().x);
 		}
 		else
 		{
@@ -163,26 +182,39 @@ void Mario::jump()
 
 void Mario::dash()
 {
-	Float2 vec(0.0f, 0.0f);
-	if (KeyManager::checkHitKey(KEY_INPUT_A))
-	{
-		vec.x = -MARIO_DASH_SPEED;
-	}
-	if (KeyManager::checkHitKey(KEY_INPUT_D))
-	{
-		vec.x = MARIO_DASH_SPEED;
-	}
 
 	auto comG = this->getComponent<ComponentGravity>();
 
 	if (!comG.expired())
 	{
-		comG.lock()->setTranslation(vec);
+		if (KeyManager::checkHitKey(KEY_INPUT_A))
+		{
+			if (-MARIO_DASH_SPEED_MAX <= comG.lock()->getTranslation().x)
+			{
+				comG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
+			}
+		}
+		else if (comG.lock()->getTranslation().x < 0)
+		{
+			comG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
+		}
+		if (KeyManager::checkHitKey(KEY_INPUT_D))
+		{
+			if (comG.lock()->getTranslation().x <= MARIO_DASH_SPEED_MAX)
+			{
+				comG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
+			}
+
+		}
+		else if (0 < comG.lock()->getTranslation().x)
+		{
+			comG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
+		}
 		comG.lock()->translate();
 		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
-			ScrollManager::getInstance()->setScrollOffset(-vec.x);
+			ScrollManager::getInstance()->setScrollOffset(comG.lock()->getTranslation().x);
 		}
 		else
 		{
