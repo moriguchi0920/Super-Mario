@@ -130,7 +130,7 @@ void Mario::walk()
 				comG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
 			}
 		}
-		else if (comG.lock()->getTranslation().x < 0)
+		else if (comG.lock()->getTranslation().x < 0.0f)
 		{
 			comG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
 		}
@@ -142,12 +142,15 @@ void Mario::walk()
 			}
 
 		}
-		else if (0 < comG.lock()->getTranslation().x)
+		else if (0.0f < comG.lock()->getTranslation().x)
 		{
 			comG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
 		}
 
-
+		if (fabsf(comG.lock()->getTranslation().x) <= 0.1)
+		{
+			comG.lock()->setTranslation(Point(0.0f, 0.0f));
+		}
 
 
 		comG.lock()->translate();
@@ -212,7 +215,7 @@ void Mario::dash()
 				comG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
 			}
 		}
-		else if (comG.lock()->getTranslation().x < 0)
+		else if (comG.lock()->getTranslation().x < 0.0f)
 		{
 			comG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
 		}
@@ -224,15 +227,23 @@ void Mario::dash()
 			}
 
 		}
-		else if (0 < comG.lock()->getTranslation().x)
+		else if (0.0f < comG.lock()->getTranslation().x)
 		{
 			comG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
 		}
+
+
+		if (fabsf(comG.lock()->getTranslation().x) <= 0.1)
+		{
+			comG.lock()->setTranslation(Point(0.0f, 0.0f));
+		}
+
+
 		comG.lock()->translate();
 		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
-			ScrollManager::getInstance()->setScrollOffset(comG.lock()->getTranslation().x);
+			ScrollManager::getInstance()->setScrollOffset(-comG.lock()->getTranslation().x);
 		}
 		else
 		{
