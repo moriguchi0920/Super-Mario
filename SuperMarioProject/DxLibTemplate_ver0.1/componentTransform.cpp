@@ -39,11 +39,6 @@ void ComponentTransform::setTranslation(Float2 _translation)
 	translation = _translation;
 }
 
-void ComponentTransform::addTranslation(Float2 add)
-{
-	translation += add;
-}
-
 
 
 void ComponentTransform::setPosition(Float2 _position)
