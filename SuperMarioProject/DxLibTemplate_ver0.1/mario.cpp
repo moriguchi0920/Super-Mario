@@ -16,6 +16,8 @@ Mario::Mario() : Object(ObjectManager::makeId())
 	transformG->setLanding(false);
 	transformG->setSpeed(1.0f);
 
+	jumpTranslationY = JUMP_FIRST_SPEED;
+	jumpHoldCount = 0;
 
 	this->addComponent<ComponentCollisionRect>(id, rect).lock()->addTag(ICollisionTag::MARIO);
 
@@ -67,8 +69,10 @@ void Mario::update()
 	{
 		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
 		{
+			jumpHoldCount = 0;
+			jumpTranslationY = JUMP_FIRST_SPEED;
 			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
-			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, JUMP_FIRST_SPEED));
+			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, jumpTranslationY));
 			comG.lock()->setLanding(false);
 			
 		}
@@ -163,9 +167,23 @@ void Mario::walk()
 
 void Mario::jump()
 {
+	if (KeyManager::checkHitKey(KEY_INPUT_SPACE) && jumpHoldCount <= 30)
+	{
+		jumpHoldCount++;
+	}
+	else
+	{
+		if (jumpTranslationY <= 0)
+		{
+			jumpTranslationY += 0.35;
+		}
+		
+	}
+
 	auto comG = getComponent<ComponentGravity>();
 	if (!comG.expired())
 	{
+		comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, jumpTranslationY));
 		comG.lock()->translate();
 		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
