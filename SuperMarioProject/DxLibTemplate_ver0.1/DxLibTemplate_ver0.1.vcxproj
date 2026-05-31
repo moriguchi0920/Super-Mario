@@ -170,6 +170,7 @@
     <ClCompile Include="componentTransform.cpp" />
     <ClCompile Include="debug_color.cpp" />
     <ClCompile Include="entityObject.cpp" />
+    <ClCompile Include="eventServer.cpp" />
     <ClCompile Include="Float2.cpp" />
     <ClCompile Include="floor.cpp" />
     <ClCompile Include="imageManager.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="const.h" />
     <ClInclude Include="debug_color.h" />
     <ClInclude Include="entityObject.h" />
+    <ClInclude Include="eventServer.h" />
     <ClInclude Include="Float2.h" />
     <ClInclude Include="floor.h" />
     <ClInclude Include="imageManager.h" />

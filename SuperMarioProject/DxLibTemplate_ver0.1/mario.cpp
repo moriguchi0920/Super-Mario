@@ -54,17 +54,17 @@ Mario::~Mario()
 void Mario::update()
 {
 
-
+	// コンポーネント取得
 	auto comCR = getComponent<ComponentCollisionRect>();
 	auto comG = getComponent<ComponentGravity>();
 	auto comR = getComponent<ComponentRenderableRect>();
 
 
-
+	// 重力更新
 	comG.lock()->gravityUpdate();
 
 
-
+	// 接地しているときのダッシュ、ジャンプ切り替え処理
 	if (comG.lock()->getLanding())
 	{
 		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
@@ -97,9 +97,10 @@ void Mario::update()
 	starStateMachine.update(this);
 
 
-
+	// 描画の座標更新
 	comR.lock()->syncFromTransform();
 
+	// 当たり判定座標更新と当たった時の処理
 	if (comCR.lock())
 	{
 		comCR.lock()->syncFromTransform();

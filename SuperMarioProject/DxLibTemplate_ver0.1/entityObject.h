@@ -6,10 +6,16 @@
 #include"componentCollision.h"
 #include"componentRenderable.h"
 #include"componentGravity.h"
+// スマートポインタ
 #include<memory>
+// イテレータを扱うため
 #include<algorithm>
+// アサートで型判定を行う用
 #include<type_traits>
+// 可変長テンプレートの完全転送のためにstd::forwardを使う
 #include<utility>
+// イベントに文字列型を使用するため
+#include<string>
 
 
 // コンポーネントを追加し、ゲーム用オブジェクトを完成させていくための基底となるクラス
@@ -201,5 +207,10 @@ public:
 		return state;
 	}
 
+
+	virtual void eventProc(int from, std::string name)
+	{
+
+	}
 
 };
