@@ -9,6 +9,7 @@
 #include"renderableManager.h"
 #include"sampleObject.h"
 #include"scrollManager.h"
+#include"eventServer.h"
 #include"mario.h"
 #include"floor.h"
 #include "dxlib.h"

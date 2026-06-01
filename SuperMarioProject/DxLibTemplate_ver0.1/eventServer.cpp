@@ -21,7 +21,7 @@ void EventServer::dequeueEventsAll()
 		std::weak_ptr<Object> to = pObjManager->getObjectById(event.to);
 		if (!to.expired())
 		{
-			to.lock()->eventProc(event.from, event.eventName);
+			to.lock()->eventProc(event.from, event.eventName, event.datas);
 		}
 		events.pop();
 	}

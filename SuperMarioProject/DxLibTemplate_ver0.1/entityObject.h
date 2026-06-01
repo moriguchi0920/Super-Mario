@@ -208,7 +208,7 @@ public:
 	}
 
 
-	virtual void eventProc(int from, std::string name)
+	virtual void eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 	{
 
 	}
