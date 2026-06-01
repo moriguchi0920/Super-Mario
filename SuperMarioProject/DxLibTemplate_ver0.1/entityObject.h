@@ -6,6 +6,7 @@
 #include"componentCollision.h"
 #include"componentRenderable.h"
 #include"componentGravity.h"
+#include"eventServer.h"
 // スマートポインタ
 #include<memory>
 // イテレータを扱うため

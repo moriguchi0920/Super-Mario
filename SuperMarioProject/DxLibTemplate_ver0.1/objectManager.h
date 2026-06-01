@@ -125,10 +125,14 @@ public:
 				{
 					continue;
 				}
+				
+
 				// XV
 				object->update();
 			}
 		}
+		objects.erase(std::remove_if(objects.begin(), objects.end(), [](std::shared_ptr<Object> obj) {return obj->getState() == Object::ObjectState::DEAD; }), objects.end());
+
 	}
 
 	// ‘Síœ
