@@ -16,9 +16,13 @@ const int FLOOR_BASE_Y = WINDOW_HEIGHT - SPRITE_SIZE * 2;
 
 const int MARIO_SIZE = 16;
 
-const float MARIO_WALK_SPEED = 2.0f;
+const float MARIO_WALK_SPEED_MAX = 2.0f;
 
-const float MARIO_DASH_SPEED = 3.0f;
+const float MARIO_WALK_ACCELERATION = 0.1f;
+
+const float MARIO_DASH_SPEED_MAX = 3.0f;
+
+const float MARIO_DASH_ACCELERATION = 0.15f;
 
 const float JUMP_FIRST_SPEED = -6.0f;
 

@@ -1,5 +1,5 @@
 #include"collisionInfo.h"
-
+#include"objectManager.h"
 
 
 CollisionInfo::CollisionInfo(std::weak_ptr<ComponentCollisionShape> pColBase, std::weak_ptr<ComponentCollisionShape> pColTarget, int newInfoId)
@@ -30,6 +30,8 @@ std::weak_ptr<ComponentCollisionShape> CollisionInfo::getTarget(int idBase)
 	 }
 
 }
+
+
 
  int CollisionInfo::getObjectIdCol1()
  {

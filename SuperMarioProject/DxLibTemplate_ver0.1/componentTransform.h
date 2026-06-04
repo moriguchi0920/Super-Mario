@@ -26,6 +26,8 @@ public:
 
 	void setTranslation(Float2 _translation);
 
+	void addTranslation(Float2 add);
+
 	void setPosition(Float2 _position);
 
 	void setScroll(bool _isScroll);

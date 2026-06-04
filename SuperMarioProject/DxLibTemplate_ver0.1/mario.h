@@ -12,6 +12,9 @@ private:
 
 	StateMachine<Mario> starStateMachine;
 
+	float jumpTranslationY;
+
+	int jumpHoldCount;
 
 public:
 	Mario();

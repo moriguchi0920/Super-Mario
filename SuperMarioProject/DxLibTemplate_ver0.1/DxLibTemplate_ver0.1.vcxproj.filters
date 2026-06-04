@@ -67,6 +67,9 @@
     <Filter Include="System\Scroll">
       <UniqueIdentifier>{e0278458-8173-446d-ae0f-9fa19e82bb94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Event">
+      <UniqueIdentifier>{fd7de2ec-4043-42fc-9064-d62be4f52617}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -155,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="scrollManager.cpp">
       <Filter>System\Scroll</Filter>
+    </ClCompile>
+    <ClCompile Include="eventServer.cpp">
+      <Filter>System\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="scrollManager.h">
       <Filter>System\Scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="eventServer.h">
+      <Filter>System\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
