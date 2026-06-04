@@ -181,6 +181,7 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="componentRenderable.cpp" />
     <ClCompile Include="renderableManager.cpp" />
+    <ClCompile Include="rengablock.cpp" />
     <ClCompile Include="sampleObject.cpp" />
     <ClCompile Include="scrollManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Rect.h" />
     <ClInclude Include="componentRenderable.h" />
     <ClInclude Include="renderableManager.h" />
+    <ClInclude Include="rengablock.h" />
     <ClInclude Include="sampleObject.h" />
     <ClInclude Include="scrollManager.h" />
     <ClInclude Include="soundManager.h" />
