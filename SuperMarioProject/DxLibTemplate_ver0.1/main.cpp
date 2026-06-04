@@ -12,7 +12,8 @@
 #include"eventServer.h"
 #include"mario.h"
 #include"floor.h"
-#include "dxlib.h"
+#include "rengablock.h"
+#include "DxLib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -34,8 +35,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ª ƒVƒXƒeƒ€‰Šú‰» ª
 	//---------------------------------------
 	
-	ObjectManager::createObject<Floor>();
+	ObjectManager::createObject<Floor>(0.0f, 1000.0f);
+	ObjectManager::createObject<Floor>(1050.0f, 200.0f);
+	ObjectManager::createObject<Floor>(1300.0f, 1000.0f);
+	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
+
 	ObjectManager::createObject<Mario>();
+	ObjectManager::createObject<rengablock>(50.0f, 130.0f);
+	
 
 
 

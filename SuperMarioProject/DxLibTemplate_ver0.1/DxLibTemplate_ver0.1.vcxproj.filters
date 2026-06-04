@@ -162,6 +162,9 @@
     <ClCompile Include="eventServer.cpp">
       <Filter>System\Event</Filter>
     </ClCompile>
+    <ClCompile Include="rengablock.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="eventServer.h">
       <Filter>System\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="rengablock.h">
+      <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

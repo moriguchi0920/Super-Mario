@@ -5,9 +5,8 @@
 class Floor : public Object
 {
 public:
-	Floor();
-	virtual ~Floor();
+    Floor(float x, float width);
+    virtual ~Floor();
 
-	void update() override;
-
+    void update() override;
 };

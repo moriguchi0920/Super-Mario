@@ -165,7 +165,7 @@ void CollisionManager::updateInfo()
 			// “–‚½‚Á‚Ä‚¢‚È‚¢ê‡
 			else
 			{
-				pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
+				pColInfo->getCol1().lock()->removeInfoId(pColInfo->getId());
 				pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
 				collisionInfoArray.erase(collisionInfoArray.begin() + i);
 			}
