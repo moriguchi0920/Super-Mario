@@ -8,8 +8,11 @@ CollisionInfo::CollisionInfo(std::weak_ptr<ComponentCollisionShape> pColBase, st
 	col2 = pColTarget;
 	intersection = { 0.0, 0.0 };
 	intersection = { 0.0, 0.0 };
+	rectCollideSide = -1;
+	crosswise = -1;
 	isColliding = false;
 	isEnter = false;
+	penetrateRate = 1.0f;
 	id = newInfoId;
 }
 
@@ -62,6 +65,7 @@ void CollisionInfo::setStatus(ContactInfo contact)
 	crosswise = contact.crosswise;
 	isColliding = true;
 	isEnter = true;
+	penetrateRate = contact.penetrateRate;
 	lineColVector1 = contact.lineColVector1;
 	lineColVector2 = contact.lineColVector2;
 	intersection = contact.position;
@@ -98,6 +102,11 @@ Point CollisionInfo::getLineColVector1()
 Point CollisionInfo::getLineColVector2()
 {
 	return lineColVector2;
+}
+
+int CollisionInfo::getRectCollideSide()
+{
+	return rectCollideSide;
 }
 
 

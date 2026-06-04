@@ -103,7 +103,7 @@ void Mario::update()
 	// “–‚½‚è”»’èÀ•WXV‚Æ“–‚½‚Á‚½Žž‚Ìˆ—
 	if (comCR.lock())
 	{
-		comCR.lock()->syncFromTransform();
+		comCR.lock()->update();
 		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR) && comG.lock()->getPosition().y <= FLOOR_BASE_Y)
 		{
 			comG.lock()->setLanding(true);

@@ -5,7 +5,7 @@
 // コンストラクタ
 ComponentCollisionShape::ComponentCollisionShape(int objectId) : Component(objectId)
 {
-
+	prevPos = Point(0.0f, 0.0f);
 }
 // デストラクタ
 ComponentCollisionShape::~ComponentCollisionShape()
@@ -185,6 +185,17 @@ void ComponentCollisionPoint::syncFromTransform()
 	}
 }
 
+void ComponentCollisionPoint::update()
+{
+	prevPos = point;
+	syncFromTransform();
+}
+
+Point ComponentCollisionPoint::getTranslation()
+{
+	return point - prevPos;
+}
+
 
 
 
@@ -265,6 +276,17 @@ void ComponentCollisionLine::syncFromTransform()
 	}
 }
 
+void ComponentCollisionLine::update()
+{
+	prevPos = line.begin;
+	syncFromTransform();
+}
+
+Point ComponentCollisionLine::getTranslation()
+{
+	return line.begin - prevPos;
+}
+
 
 ComponentCollisionCircle::ComponentCollisionCircle(int objectId) : ComponentCollisionShape(objectId), circle()
 {
@@ -339,6 +361,17 @@ void ComponentCollisionCircle::syncFromTransform()
 	}
 }
 
+void ComponentCollisionCircle::update()
+{
+	prevPos = circle.pos;
+	syncFromTransform();
+}
+
+Point ComponentCollisionCircle::getTranslation()
+{
+	return circle.pos - prevPos;
+}
+
 
 
 
@@ -392,7 +425,7 @@ bool ComponentCollisionRect::checkCollide(ComponentCollisionShape* shape, Contac
 	if (shape->getShapeType() == OBJECTSHAPE::RECT)
 	{
 		ComponentCollisionRect* pTarget = dynamic_cast<ComponentCollisionRect*>(shape);
-		if (pContact)return CheckBoxHit(pTarget->rect, this->rect, pContact);
+		if (pContact)return CheckBoxHit(pTarget->rect, this->rect,pTarget->getTranslation(), this->getTranslation(), pContact);
 		return CheckBoxHit(this->rect, pTarget->rect);
 	}
 	if (shape->getShapeType() == OBJECTSHAPE::LINE)
@@ -410,6 +443,22 @@ void ComponentCollisionRect::syncFromTransform()
 	{
 		rect.begin = transformRef.lock()->getPosition();
 	}
+}
+
+void ComponentCollisionRect::update()
+{
+	prevPos = rect.begin;
+	syncFromTransform();
+}
+
+Point ComponentCollisionRect::getTranslation()
+{
+	return rect.begin - prevPos;
+}
+
+Rect ComponentCollisionRect::get()
+{
+	return rect;
 }
 
 

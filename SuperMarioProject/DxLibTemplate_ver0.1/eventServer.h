@@ -31,6 +31,7 @@ struct Event
 	{
 		int dataType;
 		EventData data;
+		DataMap(int type, EventData _data) : dataType(type), data(_data) {}
 	};
 
 

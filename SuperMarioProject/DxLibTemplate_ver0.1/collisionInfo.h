@@ -35,6 +35,7 @@ public:
 
 	Point getLineColVector2();
 
+	int getRectCollideSide();
 
 	int getId();
 
@@ -53,6 +54,8 @@ private:
 	int rectCollideSide;
 	// ‰¡üAcü‚Ì‚Ç‚¿‚ç‚É“–‚½‚Á‚½‚©(”½Ë”Â‚â•Ç‚Å‚Ì”½Ë—p)
 	int crosswise;
+
+	float penetrateRate;
 
 	Point lineColVector1;
 	Point lineColVector2;

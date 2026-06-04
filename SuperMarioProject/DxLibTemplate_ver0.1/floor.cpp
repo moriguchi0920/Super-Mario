@@ -32,5 +32,5 @@ void Floor::update()
 	auto comC = getComponent<ComponentCollisionRect>();
 
 	comR.lock()->syncFromTransform();
-	comC.lock()->syncFromTransform();
+	comC.lock()->update();
 }

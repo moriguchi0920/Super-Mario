@@ -53,6 +53,8 @@ protected:
 
 	std::weak_ptr<ComponentTransform> transformRef;
 
+	Point prevPos;
+
 public:
 	void addTag(int _tag);
 
@@ -81,6 +83,13 @@ public:
 	// 当たっているかどうかをtagから種別して取得
 	bool getStayByTag(int collisionTag);
 
+	virtual void update() = 0;
+
+
+	virtual Point getTranslation() = 0;
+
+
+
 
 };
 
@@ -106,6 +115,9 @@ public:
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
 	void syncFromTransform() override;
+	void update() override;
+
+	Point getTranslation() override;
 };
 
 typedef  Point Vector2D;
@@ -128,6 +140,8 @@ public:
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
 	void syncFromTransform() override;
+	void update() override;
+	Point getTranslation() override;
 };
 
 // 円の当たり判定
@@ -150,6 +164,8 @@ public:
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
 	void syncFromTransform() override;
+	void update() override;
+	Point getTranslation() override;
 };
 
 
@@ -173,6 +189,9 @@ public:
 	virtual bool checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact = NULL);
 
 	void syncFromTransform() override;
+	void update() override;
+	Point getTranslation() override;
+	Rect get();
 };
 
 // 形ごとのパラメータ

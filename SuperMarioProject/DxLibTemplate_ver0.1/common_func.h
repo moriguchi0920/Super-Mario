@@ -27,6 +27,9 @@ struct ContactInfo
 	ContactInfo();
 
 	Point position;
+	float penetrateRate;
+
+
 	bool hadContact;
 	int side;
 	int crosswise;
@@ -58,6 +61,7 @@ bool CheckCircleHit(Circle c1, Circle c2, ContactInfo* pContact = nullptr);
 bool CheckPointCircleHit(float point_x, float point_y, float circle_x, float circle_y, float circle_r);
 bool CheckPointCircleHit(Point p1, Circle c1, ContactInfo* pContact = nullptr);
 bool CheckBoxHit(Rect b1, Rect b2, ContactInfo* pContact = nullptr);
+bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, ContactInfo* pContact = nullptr);
 bool CheckBoxHit(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2);
 bool CheckPointBoxHit(Point p1, Rect b1, ContactInfo* pContact = nullptr);
 bool CheckPointBoxHit(float point_x, float point_y, float box_x, float box_y, float box_w, float box_h);

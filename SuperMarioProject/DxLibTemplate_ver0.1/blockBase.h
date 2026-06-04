@@ -6,10 +6,11 @@
 class BlockBase : public Object
 {
 public: 
-	BlockBase(int id, const Rect& rect);
+	BlockBase( const Rect& rect);
 	virtual ~BlockBase();
 
 	virtual void update() override;
+	virtual void eventProc(int from, std::string name, std::vector<Event::DataMap> datas) override;
 
 };
 

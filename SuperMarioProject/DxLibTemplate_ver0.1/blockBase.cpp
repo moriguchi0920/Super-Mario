@@ -2,15 +2,13 @@
 #include"componentCollision.h"
 #include"componentRenderable.h"
 #include"componentTransform.h"
+#include"objectManager.h"
+#include"collisionManager.h"
 
-BlockBase::BlockBase(int id, const Rect& rect) : Object(id)
+BlockBase::BlockBase(const Rect& rect) : Object(ObjectManager::makeId())
 {
 	this->addComponent<ComponentTransform>(this->id);
 	this->addComponent<ComponentCollisionRect>(this->id, rect);
-	Point lineBegin = rect.begin;
-	Point lineEnd(rect.begin.x + rect.size.x, rect.begin.y);
-	Line line(lineBegin, lineEnd);
-	this->addComponent<ComponentCollisionLine>(this->id, line);
 	this->addComponent<ComponentRenderableRect>(this->id,0.5f, rect);
 
 }
@@ -20,5 +18,84 @@ BlockBase::~BlockBase()
 }
 
 void BlockBase::update()
+{
+	auto comCR = getComponent<ComponentCollisionRect>();
+	auto comT = getComponent<ComponentTransform>();
+
+	if (!comCR.expired() && !comT.expired())
+	{
+		if (comCR.lock()->getEnterByTag(ICollisionTag::MARIO))
+		{
+			CollisionManager* pColManager = CollisionManager::getInstance();
+			std::vector<int> infoIds = comCR.lock()->getInfoId();
+			for (int i = 0; i < infoIds.size(); i++)
+			{
+				auto wpColInfo = pColManager->getColInfoFromId(infoIds[i]);
+				if (!wpColInfo.expired())
+				{
+					auto target = wpColInfo.lock()->getTarget(id);
+					if (!target.expired())
+					{
+						if (target.lock()->getTag()->tag == ICollisionTag::MARIO)
+						{
+							Rect colRect = comCR.lock()->get();
+							Event event;
+							if((wpColInfo.lock()->getIntersection().y - colRect.begin.y) <= 0.01f)
+							{
+
+								Event::EventData dataPos;
+								dataPos.position = comT.lock()->getPosition();
+								int dataTypePos = Event::DATA_POS;
+								Event::DataMap dataMapPos(dataTypePos, dataPos);
+								event.datas.push_back(dataMapPos);
+								event.eventName = "HitTop";
+								event.to = target.lock()->getParentId();
+								event.from = id;
+							}
+							else if((wpColInfo.lock()->getIntersection().y - colRect.begin.y + colRect.size.y) <= 0.01f)
+							{
+								Event::EventData dataPos;
+								dataPos.position = comT.lock()->getPosition();
+								int dataTypePos = Event::DATA_POS;
+								Event::DataMap dataMapPos(dataTypePos, dataPos);
+								event.datas.push_back(dataMapPos);
+								event.eventName = "HitBottom";
+								event.to = target.lock()->getParentId();
+								event.from = id;
+							}
+							else if ((wpColInfo.lock()->getIntersection().x - colRect.begin.x ) <= 0.01f)
+							{
+								Event::EventData dataPos;
+								dataPos.position = comT.lock()->getPosition();
+								int dataTypePos = Event::DATA_POS;
+								Event::DataMap dataMapPos(dataTypePos, dataPos);
+								event.datas.push_back(dataMapPos);
+								event.eventName = "HitLeft";
+								event.to = target.lock()->getParentId();
+								event.from = id;
+							}
+							else if ((wpColInfo.lock()->getIntersection().x - colRect.begin.x + colRect.size.x) <= 0.01f)
+							{
+								Event::EventData dataPos;
+								dataPos.position = comT.lock()->getPosition();
+								int dataTypePos = Event::DATA_POS;
+								Event::DataMap dataMapPos(dataTypePos, dataPos);
+								event.datas.push_back(dataMapPos);
+								event.eventName = "HitRight";
+								event.to = target.lock()->getParentId();
+								event.from = id;
+							}
+
+							EventServer::getInstance()->enqueueEvent(event);
+						}
+
+					}
+				}
+			}
+		}
+	}
+}
+
+void BlockBase::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 {
 }
