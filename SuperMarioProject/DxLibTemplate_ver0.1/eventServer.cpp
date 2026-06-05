@@ -7,6 +7,12 @@ EventServer::EventServer()
 	
 }
 
+EventServer* EventServer::getInstance()
+{
+	static EventServer instance;
+	return &instance;
+}
+
 void EventServer::enqueueEvent(const Event& event)
 {
 	events.push(event);

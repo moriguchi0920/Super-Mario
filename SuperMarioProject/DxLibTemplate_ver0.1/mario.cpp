@@ -101,19 +101,25 @@ void Mario::update()
 	comR.lock()->syncFromTransform();
 
 	// 当たり判定座標更新と当たった時の処理
+	// 当たり判定更新
 	if (comCR.lock())
 	{
 		comCR.lock()->update();
-		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR) && comG.lock()->getPosition().y <= FLOOR_BASE_Y)
+
+		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR))
 		{
 			comG.lock()->setLanding(true);
-			comG.lock()->setBaseY(FLOOR_BASE_Y - MARIO_SIZE);
+
+			// ★ここだけ：1回だけ補正
+			comG.lock()->setPosition(
+				Point(comG.lock()->getPosition().x, FLOOR_BASE_Y - MARIO_SIZE)
+			);
 		}
+
 		if (!comCR.lock()->getStayByTag(ICollisionTag::FLOOR))
 		{
 			comG.lock()->setLanding(false);
 		}
-
 	}
 }
 
