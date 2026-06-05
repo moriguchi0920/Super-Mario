@@ -13,6 +13,7 @@
 #include"mario.h"
 #include"floor.h"
 #include "rengablock.h"
+#include "dokan.h"
 #include "DxLib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -40,8 +41,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Floor>(1300.0f, 1000.0f);
 	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
 
+	ObjectManager::createObject<Dokan>(100.0f, 160.0f);
+
 	ObjectManager::createObject<Mario>();
 	ObjectManager::createObject<rengablock>(50.0f, 130.0f);
+
 	
 
 
