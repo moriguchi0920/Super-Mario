@@ -165,6 +165,9 @@
     <ClCompile Include="rengablock.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
+    <ClCompile Include="dokan.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -273,6 +276,9 @@
       <Filter>System\Event</Filter>
     </ClInclude>
     <ClInclude Include="rengablock.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="dokan.h">
       <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>
