@@ -45,10 +45,6 @@ void ComponentGravity::gravityUpdate()
 	}
 }
 
-void ComponentGravity::setBaseY(float y)
-{
-	position.y = y;
-}
 
 bool ComponentGravity::getLanding()
 {

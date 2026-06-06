@@ -13,6 +13,7 @@ protected:
 
 public:
 	ComponentTransform(int id);
+	
 	virtual ~ComponentTransform();
 
 
@@ -30,6 +31,9 @@ public:
 
 	void setPosition(Float2 _position);
 
+	void setPosX(float x);
+	void setPosY(float y);
+
 	void setScroll(bool _isScroll);
 
 	Float2 getTranslation();
@@ -39,5 +43,7 @@ public:
 	Float2 getPosition();
 
 	bool getIsScroll();
+
+	void revertTranslation(float revertRate);
 
 };

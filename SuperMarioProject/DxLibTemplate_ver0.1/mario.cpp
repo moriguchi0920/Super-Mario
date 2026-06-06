@@ -6,6 +6,8 @@
 #include"floor.h"
 #include"objectManager.h"
 #include"scrollManager.h"
+#include"DxLib.h"
+
 
 Mario::Mario() : Object(ObjectManager::makeId())
 {
@@ -121,6 +123,48 @@ void Mario::update()
 			comG.lock()->setLanding(false);
 		}
 	}
+}
+
+void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
+{
+	auto comG = getComponent<ComponentGravity>();
+
+	for (auto& data : datas)
+	{
+		if (data.dataType == Event::DATA_POS)
+		{
+			if (name == "HitTop")
+			{
+				if (!comG.expired())
+				{
+					comG.lock()->setPosY(data.data.position.y - MARIO_SIZE);
+				}
+			}
+			else if (name == "HitBottom")
+			{
+				if (!comG.expired())
+				{
+					comG.lock()->setPosY(data.data.position.y + MARIO_SIZE);
+				}
+			}
+			else if (name == "HitLeft")
+			{
+				if (!comG.expired())
+				{
+					comG.lock()->setPosX(data.data.position.x - MARIO_SIZE);
+				}
+			}
+			else if (name == "HitRight")
+			{
+				if (!comG.expired())
+				{
+					comG.lock()->setPosY(data.data.position.x);
+				}
+			}
+
+		}
+	}
+
 }
 
 void Mario::walk()

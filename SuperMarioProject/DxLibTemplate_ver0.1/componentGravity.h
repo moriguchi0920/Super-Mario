@@ -26,7 +26,6 @@ public:
 
 	void gravityUpdate();
 
-	void setBaseY(float y);
 
 	bool getLanding();
 };

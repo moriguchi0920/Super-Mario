@@ -64,13 +64,14 @@ void CollisionManager::flexibleCollision()
 					// 同じCollisionInfoがあったらcontinueで弾く
 					if (knownReject(vector[i].lock()->getParentId(), vector[j].lock()->getParentId())) continue;
 
+					// 接触情報保存用変数を宣言
+					ContactInfo contact;
 					// 判定用変数にcheckCollideの結果を代入
-					isCollide = vector[i].lock()->checkCollide(vector[j].lock().get());
+					isCollide = vector[i].lock()->checkCollide(vector[j].lock().get(), &contact);
 					// あたっていたら
 					if (isCollide)
 					{
-						// 接触情報保存用変数を宣言
-						ContactInfo contact;
+
 
 						// CollisionInfoの動的生成
 						int id = generateInfoId();

@@ -51,6 +51,16 @@ void ComponentTransform::setPosition(Float2 _position)
 	position = _position;
 }
 
+void ComponentTransform::setPosX(float x)
+{
+	position.x = x;
+}
+
+void ComponentTransform::setPosY(float y)
+{
+	position.y = y;
+}
+
 void ComponentTransform::setScroll(bool _isScroll)
 {
 	isScroll = _isScroll;
@@ -74,4 +84,9 @@ Float2 ComponentTransform::getPosition()
 bool ComponentTransform::getIsScroll()
 {
 	return isScroll;
+}
+
+void ComponentTransform::revertTranslation(float revertRate)
+{
+	position -= translation * speed * revertRate;
 }

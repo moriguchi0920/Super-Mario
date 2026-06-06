@@ -1,15 +1,14 @@
 #pragma once
 
 #include "entityObject.h"
+#include"blockBase.h"
 
-class rengablock : public Object
+class rengablock : public BlockBase
 {
 private:
-    float x;
-    float y;
 
 public:
-    rengablock(float x, float y);
+    rengablock(Rect rect);
 
     void update() override;
 

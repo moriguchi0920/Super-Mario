@@ -4,7 +4,6 @@
 
 EventServer::EventServer()
 {
-	
 }
 
 EventServer* EventServer::getInstance()

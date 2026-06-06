@@ -8,8 +8,9 @@
 BlockBase::BlockBase(const Rect& rect) : Object(ObjectManager::makeId())
 {
 	this->addComponent<ComponentTransform>(this->id);
+	auto transform = getComponent<ComponentTransform>();
+	transform.lock()->setPosition(rect.begin);
 	this->addComponent<ComponentCollisionRect>(this->id, rect);
-	this->addComponent<ComponentRenderableRect>(this->id,0.5f, rect);
 
 }
 
@@ -24,7 +25,7 @@ void BlockBase::update()
 
 	if (!comCR.expired() && !comT.expired())
 	{
-		if (comCR.lock()->getEnterByTag(ICollisionTag::MARIO))
+		if (comCR.lock()->getStayByTag(ICollisionTag::MARIO))
 		{
 			CollisionManager* pColManager = CollisionManager::getInstance();
 			std::vector<int> infoIds = comCR.lock()->getInfoId();
@@ -40,11 +41,11 @@ void BlockBase::update()
 						{
 							Rect colRect = comCR.lock()->get();
 							Event event;
-							if((wpColInfo.lock()->getIntersection().y - colRect.begin.y) <= 0.01f)
+							if(fabsf(wpColInfo.lock()->getIntersection().y - colRect.begin.y) <= 0.01f)
 							{
 
 								Event::EventData dataPos;
-								dataPos.position = comT.lock()->getPosition();
+								dataPos.position = wpColInfo.lock()->getIntersection();
 								int dataTypePos = Event::DATA_POS;
 								Event::DataMap dataMapPos(dataTypePos, dataPos);
 								event.datas.push_back(dataMapPos);
@@ -52,10 +53,10 @@ void BlockBase::update()
 								event.to = target.lock()->getParentId();
 								event.from = id;
 							}
-							else if((wpColInfo.lock()->getIntersection().y - colRect.begin.y + colRect.size.y) <= 0.01f)
+							else if(fabsf(wpColInfo.lock()->getIntersection().y - colRect.begin.y + colRect.size.y) <= 0.01f)
 							{
 								Event::EventData dataPos;
-								dataPos.position = comT.lock()->getPosition();
+								dataPos.position = wpColInfo.lock()->getIntersection();
 								int dataTypePos = Event::DATA_POS;
 								Event::DataMap dataMapPos(dataTypePos, dataPos);
 								event.datas.push_back(dataMapPos);
@@ -63,10 +64,10 @@ void BlockBase::update()
 								event.to = target.lock()->getParentId();
 								event.from = id;
 							}
-							else if ((wpColInfo.lock()->getIntersection().x - colRect.begin.x ) <= 0.01f)
+							else if (fabsf(wpColInfo.lock()->getIntersection().x - colRect.begin.x ) <= 0.01f)
 							{
 								Event::EventData dataPos;
-								dataPos.position = comT.lock()->getPosition();
+								dataPos.position = wpColInfo.lock()->getIntersection();
 								int dataTypePos = Event::DATA_POS;
 								Event::DataMap dataMapPos(dataTypePos, dataPos);
 								event.datas.push_back(dataMapPos);
@@ -74,10 +75,10 @@ void BlockBase::update()
 								event.to = target.lock()->getParentId();
 								event.from = id;
 							}
-							else if ((wpColInfo.lock()->getIntersection().x - colRect.begin.x + colRect.size.x) <= 0.01f)
+							else if (fabsf(wpColInfo.lock()->getIntersection().x - colRect.begin.x + colRect.size.x) <= 0.01f)
 							{
 								Event::EventData dataPos;
-								dataPos.position = comT.lock()->getPosition();
+								dataPos.position = wpColInfo.lock()->getIntersection();
 								int dataTypePos = Event::DATA_POS;
 								Event::DataMap dataMapPos(dataTypePos, dataPos);
 								event.datas.push_back(dataMapPos);

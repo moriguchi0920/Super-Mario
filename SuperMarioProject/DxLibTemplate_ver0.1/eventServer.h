@@ -14,6 +14,7 @@ struct Event
 	enum DATA_TYPE
 	{
 		DATA_POS,
+		DATA_RATE,
 		DATA_ROT,
 		DATA_FLAG,
 	};
@@ -22,6 +23,7 @@ struct Event
 	{
 		Float2 position;
 		float rotation;
+		float rate;
 		bool flag;
 		EventData() : position() {}
 		~EventData() {}

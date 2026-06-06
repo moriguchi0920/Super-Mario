@@ -3,15 +3,24 @@
 #include"componentTransform.h"
 #include "componentRenderable.h"
 
-rengablock::rengablock(float x, float y): Object(ObjectManager::makeId())
+rengablock::rengablock(Rect rect) : BlockBase(rect)
 {
-    // 四角描画コンポーネント追加
-    auto rect = addComponent<ComponentRenderableRect>(getId(),0.5f,Float2(x, y),Float2(SPRITE_SIZE, SPRITE_SIZE));
+    auto colRect = getComponent<ComponentCollisionRect>();
+    if (!colRect.expired())
+    {
+        colRect.lock()->addTag(ICollisionTag::BLOCK);
+    }
 
-    // 茶色設定
-    rect.lock()->setColor(139, 69, 19);
+    auto renderRect = addComponent<ComponentRenderableRect>(id, 0.5, rect);
+
+    if (!renderRect.expired())
+    {
+        // 茶色設定
+        renderRect.lock()->setColor(139, 69, 19);
+    }
 }
 
 void rengablock::update()
 {
+    BlockBase::update();
 }

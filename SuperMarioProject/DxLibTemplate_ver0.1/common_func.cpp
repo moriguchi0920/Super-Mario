@@ -294,8 +294,7 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 		}
 
 
-
-		pContact->penetrateRate = start;
+    		pContact->penetrateRate = start;
 
 	}
 

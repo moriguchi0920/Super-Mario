@@ -36,6 +36,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ª ƒVƒXƒeƒ€‰Šú‰» ª
 	//---------------------------------------
 	
+	ObjectManager::getInstance();
+
 	ObjectManager::createObject<Floor>(0.0f, 1000.0f);
 	ObjectManager::createObject<Floor>(1050.0f, 200.0f);
 	ObjectManager::createObject<Floor>(1300.0f, 1000.0f);
@@ -44,7 +46,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Dokan>(100.0f, 160.0f);
 
 	ObjectManager::createObject<Mario>();
-	ObjectManager::createObject<rengablock>(50.0f, 130.0f);
+
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 3, SPRITE_SIZE * 8), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 
 	
 
@@ -60,6 +63,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//---------------------------------------
 
 		ObjectManager::updateAll();
+		EventServer::getInstance()->dequeueEventsAll();
 		CollisionManager::getInstance()->collisionUpdate();
 		ScrollManager::getInstance()->scrollAll();
 
