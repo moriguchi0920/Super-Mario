@@ -1,22 +1,24 @@
-#include "rengablock.h"
+#include "hatenablock.h"
 #include "objectManager.h"
-#include "componentTransform.h"
+#include"componentTransform.h"
 #include "componentRenderable.h"
 
-rengablock::rengablock(float x, float y) : Object(ObjectManager::makeId())
+hatenablock::hatenablock(float x, float y) : Object(ObjectManager::makeId())
 {
+
     addComponent<ComponentTransform>(id).lock()->setScroll(true);
 
     auto comT = getComponent<ComponentTransform>();
     comT.lock()->setPosition(Point(x, y));
 
-    addComponent<ComponentRenderableRect>(this->id,0.5f,Float2(x, y),Float2(SPRITE_SIZE, SPRITE_SIZE));
+    // 四角描画コンポーネント追加
+    auto rect = addComponent<ComponentRenderableRect>(getId(), 0.5f, Float2(x, y), Float2(SPRITE_SIZE, SPRITE_SIZE));
 
     auto comR = getComponent<ComponentRenderableRect>();
-    comR.lock()->setColor(139, 69, 19);
+    comR.lock()->setColor(250, 220, 0);
 }
 
-void rengablock::update()
+void hatenablock::update()
 {
     auto comR = getComponent<ComponentRenderableRect>();
     comR.lock()->syncFromTransform();

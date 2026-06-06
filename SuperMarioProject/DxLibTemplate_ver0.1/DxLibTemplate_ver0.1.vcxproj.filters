@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{6e68769a-3168-4eee-81d8-25251544ed96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{b10c1def-7dea-404d-b2f4-9eb9ae3b0d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Commons">
+      <UniqueIdentifier>{3b7ba475-dfad-4c19-8b58-5fb90312882e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Image">
+      <UniqueIdentifier>{31f9b0ca-8ef0-4f28-a501-fcbafb48505c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Sound">
+      <UniqueIdentifier>{d39ccaac-8731-41a1-b5ca-1ffef4fcc5e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Animation">
+      <UniqueIdentifier>{e940d9fb-bc24-4f39-9c88-b0ee7b88ef75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Key">
+      <UniqueIdentifier>{7fa86c13-c0b9-4629-9f15-869f24738193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component">
+      <UniqueIdentifier>{6c0702d2-de94-4163-89b9-ef366ece969a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Transfrom">
+      <UniqueIdentifier>{754aa2e7-4aad-41ce-97d5-571b0cd4b29e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Collision">
+      <UniqueIdentifier>{0ddbecd1-c752-4c92-b1ea-8bcc810fd701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Object">
+      <UniqueIdentifier>{e0e0bbea-05c2-4812-a53f-f758e8075a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Renderable">
+      <UniqueIdentifier>{445956af-fe0e-47d3-81f6-ff96199ffe4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Manager">
+      <UniqueIdentifier>{dcb3be85-b883-4dc7-a179-1d184515693c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Base">
+      <UniqueIdentifier>{1d519f0e-f703-4868-8e94-83770ac9b1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Gravity">
+      <UniqueIdentifier>{70e26ad3-e7e4-4dad-8596-5f5674a867cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Object\State">
+      <UniqueIdentifier>{9b75501e-e550-485d-bb6c-2eb4ec131b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Scene">
+      <UniqueIdentifier>{f4569626-768e-4fa4-ac2b-70ad5ce1315b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Scroll">
+      <UniqueIdentifier>{e0278458-8173-446d-ae0f-9fa19e82bb94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Event">
+      <UniqueIdentifier>{fd7de2ec-4043-42fc-9064-d62be4f52617}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationData.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationDataSet.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationPlayer.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationRepository.cpp">
+      <Filter>System\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>System\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>System\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="common_func.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Float2.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="componentCollision.cpp">
+      <Filter>System\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionInfo.cpp">
+      <Filter>System\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionManager.cpp">
+      <Filter>System\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="componentRenderable.cpp">
+      <Filter>System\Component\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="renderableManager.cpp">
+      <Filter>System\Component\Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="componentTransform.cpp">
+      <Filter>System\Component\Transfrom</Filter>
+    </ClCompile>
+    <ClCompile Include="entityObject.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="componentStorage.cpp">
+      <Filter>System\Component\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="debug_color.cpp">
+      <Filter>System\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="componentBase.cpp">
+      <Filter>System\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="sampleObject.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="componentGravity.cpp">
+      <Filter>System\Component\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="blockBase.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="mario.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="floor.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollManager.cpp">
+      <Filter>System\Scroll</Filter>
+    </ClCompile>
+    <ClCompile Include="eventServer.cpp">
+      <Filter>System\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="rengablock.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="dokan.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="hatenablock.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnimationData.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationDataElem.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationDataSet.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationPlayer.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationRepository.h">
+      <Filter>System\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>System\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>System\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="common_func.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Float2.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="componentCollision.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionInfo.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionManager.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="componentRenderable.h">
+      <Filter>System\Component\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="renderableManager.h">
+      <Filter>System\Component\Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="componentTransform.h">
+      <Filter>System\Component\Transfrom</Filter>
+    </ClInclude>
+    <ClInclude Include="entityObject.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="componentManager.h">
+      <Filter>System\Component\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="componentStorage.h">
+      <Filter>System\Component\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="objectManager.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="debug_color.h">
+      <Filter>System\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="componentBase.h">
+      <Filter>System\Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="sampleObject.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="componentGravity.h">
+      <Filter>System\Component\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>System\Object\State</Filter>
+    </ClInclude>
+    <ClInclude Include="blockBase.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionTag.h">
+      <Filter>System\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="mario.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="const.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="floor.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollManager.h">
+      <Filter>System\Scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="eventServer.h">
+      <Filter>System\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="rengablock.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="dokan.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="hatenablock.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
