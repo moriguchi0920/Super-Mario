@@ -5,19 +5,24 @@
 
 Dokan::Dokan(float x, float y): Object(ObjectManager::makeId())
 {
+    addComponent<ComponentTransform>(id).lock()->setScroll(true);
+    auto comT = getComponent<ComponentTransform>();
+    comT.lock()->setPosition(Point(x, 160.0f));
+
+    Rect rect(Point(x, 160.0f), Point(y, 50.0f));
+    addComponent<ComponentCollisionRect>(this->id, rect).lock()->addTag(ICollisionTag::FLOOR);
     // 緑の四角（土管ハリボテ）
-    auto rect = addComponent<ComponentRenderableRect>(
-        getId(),
-        0.5f,
-        Float2(x,y),
-        Float2(30.0f, 50.0f)   // 土管サイズ
-    );
+    addComponent<ComponentRenderableRect>(this->id, 0.5, rect);
 
     // 緑色に設定
-    rect.lock()->setColor(0, 200, 0);
+    auto comR = getComponent<ComponentRenderableRect>();
+    comR.lock()->setColor(0, 200, 0);
 }
 
 void Dokan::update()
 {
-    // 今は何もしない（ハリボテ）
+    auto comR = getComponent<ComponentRenderableRect>();
+    auto comC = getComponent<ComponentCollisionRect>();
+    comR.lock()->syncFromTransform();
+    comC.lock()->update();
 }
