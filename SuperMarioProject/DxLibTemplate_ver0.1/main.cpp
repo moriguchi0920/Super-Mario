@@ -44,7 +44,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Floor>(1300.0f, 1000.0f);
 	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
 
-	ObjectManager::createObject<Dokan>(100.0f, 160.0f);
+	ObjectManager::createObject<Dokan>(300.0f, 30.0f);
+	ObjectManager::createObject<Dokan>(500.0f, 30.0f);
+	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
+	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
 
 	ObjectManager::createObject<Mario>();
 <<<<<<< HEAD
