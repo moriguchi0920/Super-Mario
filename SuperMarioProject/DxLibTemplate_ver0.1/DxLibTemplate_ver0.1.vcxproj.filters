@@ -168,6 +168,9 @@
     <ClCompile Include="dokan.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
+    <ClCompile Include="hatenablock.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -279,6 +282,9 @@
       <Filter>System\Object</Filter>
     </ClInclude>
     <ClInclude Include="dokan.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="hatenablock.h">
       <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>
