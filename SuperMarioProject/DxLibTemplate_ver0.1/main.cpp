@@ -46,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ObjectManager::createObject<Mario>();
 	ObjectManager::createObject<rengablock>(50.0f, 130.0f);
-	ObjectManager::createObject<hatenablock>(66.0f, 130.0f);
+	ObjectManager::createObject<hatenablock>(80.0f, 130.0f);
 
 	
 
