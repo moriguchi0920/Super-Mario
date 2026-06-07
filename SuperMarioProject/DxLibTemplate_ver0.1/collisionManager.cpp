@@ -45,10 +45,13 @@ void CollisionManager::flexibleCollision()
 	{
 		if (!vector[i].expired())
 		{
+
 			if (!vector[i].lock()->getIsActive())
 			{
 				continue;
 			}
+			// Update the i-th component so prevPos is current
+			vector[i].lock()->update();
 			// “ñdfor‚Å‘“–‚½‚è(‰Šú’l‚ði + 1‚É‚·‚é‚±‚Æ‚Åd•¡‚ð”­¶‚³‚¹‚È‚¢)
 			for (size_t j = i + 1; j < vector.size(); j++)
 			{
@@ -59,6 +62,9 @@ void CollisionManager::flexibleCollision()
 					{
 						continue;
 					}
+
+					vector[j].lock()->update();
+
 					if (!(vector[i].lock()->getTag()->canCollide(vector[j].lock()->getTag()->tag))) continue;
 
 					// “¯‚¶CollisionInfo‚ª‚ ‚Á‚½‚çcontinue‚Å’e‚­
@@ -132,19 +138,19 @@ void CollisionManager::updateInfo()
 				{
 					pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
 				}
-				// ”j‰ó‚Æ“o˜^‰ðœ
+				//”j‰ó‚Æ“o˜^‰ðœ
 				collisionInfoArray.erase(collisionInfoArray.begin() + i);
 				continue;
 			}
 			// getCol2()‚ªÁ‹ŽÏ‚Ý‚Ìê‡
-			if (pColInfo->getCol1().expired())
+			if (pColInfo->getCol2().expired())
 			{
 				// getCol1()‚ªŽc‚Á‚Ä‚¢‚½ê‡
-				if (!pColInfo->getCol2().expired())
+				if (!pColInfo->getCol1().expired())
 				{
-					pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
+					pColInfo->getCol1().lock()->removeInfoId(pColInfo->getId());
 				}
-				// ”j‰ó‚Æ“o˜^‰ðœ
+				//”j‰ó‚Æ“o˜^‰ðœ
 				collisionInfoArray.erase(collisionInfoArray.begin() + i);
 				continue;
 			}
@@ -152,12 +158,15 @@ void CollisionManager::updateInfo()
 			ContactInfo contact;
 			if (pColInfo->getCol1().expired() || pColInfo->getCol2().expired()) continue;
 
+			if (!pColInfo->getCol1().expired()) pColInfo->getCol1().lock()->update();
+			if (!pColInfo->getCol2().expired()) pColInfo->getCol2().lock()->update();
+
 			// Œp‘±‚µ‚Ä“–‚½‚Á‚Ä‚¢‚½‚ç
 			if (pColInfo->getCol1().lock()->checkCollide(pColInfo->getCol2().lock().get(), &contact))
 			{
 
-				// Œp‘±”»’è‚Ítrue‚Ì‚Ü‚Ü
-				// ‰‰ñÚG‚Ífalse‚É
+				// XV‚³‚ê‚½ÚGî•ñ‚Åó‘Ô‚ðã‘‚«‚µA‚»‚ÌŒãEnter‚ðfalse‚É‚·‚é
+				pColInfo->setStatus(contact);
 				pColInfo->secondCollision();
 				// ‚»‚Ì‘¼ÚG“_‚È‚Ç‚ÌÝ’è
 				

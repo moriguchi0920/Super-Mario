@@ -90,3 +90,13 @@ void ComponentTransform::revertTranslation(float revertRate)
 {
 	position -= translation * speed * revertRate;
 }
+
+void ComponentTransform::revertTranslationX(float revertRate)
+{
+	position.x -= translation.x * speed * revertRate;
+}
+
+void ComponentTransform::revertTranslationY(float revertRate)
+{
+	position.y -= translation.y * speed * revertRate;
+}

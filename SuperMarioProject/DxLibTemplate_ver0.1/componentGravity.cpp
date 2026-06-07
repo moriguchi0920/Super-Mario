@@ -5,7 +5,7 @@ ComponentGravity::ComponentGravity(int id, float acceleration, float terminal): 
 	gravitationalAcceleration = acceleration;
 	terminalVelocity = terminal;
 	isLanding = true;
-	nowVelocity = 0.0f;
+	nowVelocity =0.0f;
 }
 
 ComponentGravity::~ComponentGravity()
@@ -28,20 +28,21 @@ void ComponentGravity::setLanding(bool isLand)
 }
 
 
-
 void ComponentGravity::gravityUpdate()
 {
 	if (!isLanding)
 	{
 		if (nowVelocity <= terminalVelocity)
 		{
-			nowVelocity += gravitationalAcceleration;
+			translation.y += gravitationalAcceleration;
 		}
-		position.y += nowVelocity;
+
+		nowVelocity = translation.y;
 	}
 	else
 	{
-		nowVelocity = 0.0f;
+		nowVelocity =0.0f;
+		translation.y =0.0f;
 	}
 }
 

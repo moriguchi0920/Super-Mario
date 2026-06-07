@@ -118,6 +118,23 @@ bool ComponentCollisionShape::getStayByTag(int collisionTag)
 	return false;
 }
 
+std::vector<std::weak_ptr<CollisionInfo>> ComponentCollisionShape::getInfo()
+{
+	std::vector<std::weak_ptr<CollisionInfo>> infoVector;
+	auto infoIds = getInfoId();
+	for (int i = 0; i < infoIds.size(); i++)
+	{
+		auto info = CollisionManager::getColInfoFromId(infoIds[i]);
+		if (!info.expired())
+		{
+			infoVector.push_back(info);
+		}
+	}
+	return infoVector;
+}
+
+
+
 
 
 
@@ -408,6 +425,14 @@ void ComponentCollisionRect::paramUpdate(ShapeSetParam* param)
 	}
 }
 
+void ComponentCollisionRect::syncFromTransform()
+{
+	if (!transformRef.expired())
+	{
+		rect.begin = transformRef.lock()->getPosition();
+	}
+}
+
 bool ComponentCollisionRect::checkCollide(ComponentCollisionShape* shape, ContactInfo* pContact)
 {
 	if (shape->getShapeType() == OBJECTSHAPE::POINT)
@@ -425,7 +450,9 @@ bool ComponentCollisionRect::checkCollide(ComponentCollisionShape* shape, Contac
 	if (shape->getShapeType() == OBJECTSHAPE::RECT)
 	{
 		ComponentCollisionRect* pTarget = dynamic_cast<ComponentCollisionRect*>(shape);
-		if (pContact)return CheckBoxHit(pTarget->rect, this->rect,pTarget->getTranslation(), this->getTranslation(), pContact);
+		Point tThis = this->getTranslation();
+		Point tTarget = pTarget->getTranslation();
+		if (pContact) return CheckBoxHit(this->rect, pTarget->rect, tThis, tTarget, pContact);
 		return CheckBoxHit(this->rect, pTarget->rect);
 	}
 	if (shape->getShapeType() == OBJECTSHAPE::LINE)
@@ -435,14 +462,6 @@ bool ComponentCollisionRect::checkCollide(ComponentCollisionShape* shape, Contac
 		return CheckLineBoxHit(pTarget->line, this->rect);
 	}
 	return false;
-}
-
-void ComponentCollisionRect::syncFromTransform()
-{
-	if (!transformRef.expired())
-	{
-		rect.begin = transformRef.lock()->getPosition();
-	}
 }
 
 void ComponentCollisionRect::update()

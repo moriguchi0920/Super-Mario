@@ -36,7 +36,7 @@ public:
 		switch (othertag)
 		{
 		case FLOOR:
-			ret = true;
+			ret = false;
 			break;
 		case MARIO:
 			ret = true;
@@ -51,7 +51,7 @@ public:
 			ret = true;
 			break;
 		case BLOCK:
-			ret = true;
+			ret = false;
 			break;
 		}
 
@@ -216,7 +216,7 @@ public:
 		switch (othertag)
 		{
 		case FLOOR:
-			ret = true;
+			ret = false;
 			break;
 
 		case MARIO:

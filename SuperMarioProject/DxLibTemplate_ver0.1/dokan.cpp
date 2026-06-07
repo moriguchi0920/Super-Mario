@@ -10,7 +10,7 @@ Dokan::Dokan(float x, float y): Object(ObjectManager::makeId())
     comT.lock()->setPosition(Point(x, 160.0f));
 
     Rect rect(Point(x, 160.0f), Point(y, 50.0f));
-    addComponent<ComponentCollisionRect>(this->id, rect).lock()->addTag(ICollisionTag::FLOOR);
+    addComponent<ComponentCollisionRect>(this->id, rect).lock()->addTag(ICollisionTag::BLOCK);
     // 緑の四角（土管ハリボテ）
     addComponent<ComponentRenderableRect>(this->id, 0.5, rect);
 

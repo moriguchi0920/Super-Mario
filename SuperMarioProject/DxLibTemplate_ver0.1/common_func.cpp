@@ -184,121 +184,201 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 {
 	bool ret = false;
 
-	float relativeTranslationX = translationB1.x - translationB2.x;
-	float relativeTranslationY = translationB1.y - translationB2.y;
-
-	float expandedWidth = b1.size.x + b2.size.x;
-	float expandedHeight = b1.size.y + b2.size.y;
-
-	float centerB2X = b2.begin.x + b2.size.x /2.0f;
-	float centerB2Y = b2.begin.y + b2.size.y /2.0f;
-
-	float expandedLeft = centerB2X - expandedWidth /2.0f;
-	float expandedRight = centerB2X + expandedWidth /2.0f;
-	float expandedTop = centerB2Y - expandedHeight /2.0f;
-	float expandedBottom = centerB2Y + expandedHeight /2.0f;
-
-	if (b1.begin.x + b1.size.x >= b2.begin.x && b1.begin.x <= b2.begin.x + b2.size.x) {
-		if (b1.begin.y + b1.size.y >= b2.begin.y && b1.begin.y <= b2.begin.y + b2.size.y) {
-			ret = true;
-		}
-	}
-
-	float xEntry =0.0f;
-	float yEntry =0.0f;
-	float xExit =1.0f;
-	float yExit =1.0f;
-
-	float centerB1X = b1.begin.x + b1.size.x /2.0f;
-	float centerB1Y = b1.begin.y + b1.size.y /2.0f;
-
-	if (relativeTranslationX >0.0f)
-	{
-		xEntry = (expandedLeft - centerB1X) / relativeTranslationX;
-		xExit = (expandedRight - centerB1X) / relativeTranslationX;
-	}
-	else if (relativeTranslationX <0.0f)
-	{
-		xEntry = (expandedRight - centerB1X) / relativeTranslationX;
-		xExit = (expandedLeft - centerB1X) / relativeTranslationX;
-
-	}
-	else
-	{
-		if (centerB1X <= expandedLeft || centerB1X >= expandedRight) ret = false;
-	}
-
-	if (relativeTranslationY >0.0f)
-	{
-		yEntry = (expandedTop - centerB1Y) / relativeTranslationY;
-		yExit = (expandedBottom - centerB1Y) / relativeTranslationY;
-	}
-	else if (relativeTranslationY <0.0f)
-	{
-		yEntry = (expandedBottom - centerB1Y) / relativeTranslationY;
-		yExit = (expandedTop - centerB1Y) / relativeTranslationY;
-
-	}
-	else
-	{
-		if (centerB1Y <= expandedTop || centerB1Y >= expandedBottom) ret = false;
-	}
-
-	float start = max(xEntry, yEntry);
-	float end = min(xExit, yExit);
-
-	if (start < end && start <=1.0f && start >=0.0f)
+	// -----まず静止時点(時刻t=0)で重なっているかをチェック -----
+	//既に重なっている場合は、時間による衝突計算に頼らず最小押し戻し方向を返す
+	if (b1.begin.x + b1.size.x >= b2.begin.x && b1.begin.x <= b2.begin.x + b2.size.x
+		&& b1.begin.y + b1.size.y >= b2.begin.y && b1.begin.y <= b2.begin.y + b2.size.y)
 	{
 		ret = true;
+		if (pContact)
+		{
+			// 各方向の押し込み量を計算して最小の方向を衝突面とする
+			float left = fabsf((b1.begin.x + b1.size.x) - b2.begin.x);
+			float right = fabsf(b1.begin.x - (b2.begin.x + b2.size.x));
+			float top = fabsf((b1.begin.y + b1.size.y) - b2.begin.y);
+			float bottom = fabsf(b1.begin.y - (b2.begin.y + b2.size.y));
+
+			float min = left;
+			int side = ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
+			if (min > right)
+			{
+				min = right;
+				side = ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT;
+			}
+			if (min > top)
+			{
+				min = top;
+				side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+			}
+			if (min > bottom)
+			{
+				min = bottom;
+				side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
+			}
+
+			pContact->side = side;
+
+			// 接触位置は重複領域の中心を使う
+			float overlapBeginX = max(b1.begin.x, b2.begin.x);
+			float overlapEndX = min(b1.begin.x + b1.size.x, b2.begin.x + b2.size.x);
+			float overlapBeginY = max(b1.begin.y, b2.begin.y);
+			float overlapEndY = min(b1.begin.y + b1.size.y, b2.begin.y + b2.size.y);
+			pContact->position.x = (overlapBeginX + overlapEndX) *0.5f;
+			pContact->position.y = (overlapBeginY + overlapEndY) *0.5f;
+
+			// penetrateRate は0で既に重なっていることを示す
+			pContact->penetrateRate =0.0f;
+		}
+
+		return ret;
 	}
 
+	// ----- swept AABB: 相対移動量を計算 -----
+	float relX = translationB1.x - translationB2.x;
+	float relY = translationB1.y - translationB2.y;
 
-	if (pContact)
+	// entry/exit の距離(移動距離ではなく位置差)
+	float xInvEntry, xInvExit;
+	float yInvEntry, yInvExit;
+
+	if (relX >0.0f)
 	{
-		float normalX =0.0f;
-		float normalY =0.0f;
-		if (xEntry > yEntry)
-		{
-			normalX = (relativeTranslationX >0.0f) ? -1.0f :1.0f;
-			normalY =0.0f;
-		}
-		else
-		{
-			normalX =0.0f;
-			normalY = (relativeTranslationY >0.0f) ? -1.0f :1.0f;
-		}
-		float b1BeginXOnHit = b1.begin.x + translationB1.x * start;
-		float b1BeginYOnHit = b1.begin.y + translationB1.y * start;
-		float b1EndXOnHit = b1BeginXOnHit + b1.size.x;
-		float b1EndYOnHit = b1BeginYOnHit + b1.size.y;
-
-		float b2BeginXOnHit = b2.begin.x + translationB2.x * start;
-		float b2BeginYOnHit = b2.begin.y + translationB2.y * start;
-		float b2EndXOnHit = b2BeginXOnHit + b2.size.x;
-		float b2EndYOnHit = b2BeginYOnHit + b2.size.y;
-
-		if (normalX !=0.0f)
-		{
-			pContact->position.x = normalX <0.0f ? b1BeginXOnHit : b1EndXOnHit;
-			float overlapBeginY = max(b1BeginYOnHit, b2BeginYOnHit);
-			float overlapEndY = min(b1EndYOnHit, b2EndYOnHit);
-			pContact->position.y = (overlapBeginY + overlapEndY) /2.0f;
-
-		}
-		else
-		{
-			pContact->position.y = normalY <0.0f ? b1EndYOnHit : b1BeginYOnHit;
-			float overlapBeginX = max(b1BeginXOnHit, b2BeginXOnHit);
-			float overlapEndX = min(b1EndXOnHit, b2EndXOnHit);
-			pContact->position.x = (overlapBeginX + overlapEndX) /2.0f;
-		}
-
-
-		pContact->penetrateRate = start;
-
+		xInvEntry = b2.begin.x - (b1.begin.x + b1.size.x);
+		xInvExit = (b2.begin.x + b2.size.x) - b1.begin.x;
+	}
+	else
+	{
+		xInvEntry = (b2.begin.x + b2.size.x) - b1.begin.x;
+		xInvExit = b2.begin.x - (b1.begin.x + b1.size.x);
 	}
 
+	if (relY >0.0f)
+	{
+		yInvEntry = b2.begin.y - (b1.begin.y + b1.size.y);
+		yInvExit = (b2.begin.y + b2.size.y) - b1.begin.y;
+	}
+	else
+	{
+		yInvEntry = (b2.begin.y + b2.size.y) - b1.begin.y;
+		yInvExit = b2.begin.y - (b1.begin.y + b1.size.y);
+	}
 
+	const float POS_INF = FLT_MAX;
+	const float NEG_INF = -FLT_MAX;
+
+	float xEntry, xExit, yEntry, yExit;
+
+	// X方向に実際の相対移動がない場合の処理
+	if (fabsf(relX) <1e-6f)
+	{
+		if (b1.begin.x + b1.size.x < b2.begin.x || b1.begin.x > b2.begin.x + b2.size.x)
+		{
+			// Xで分離しており、移動もない -> 衝突しない
+			xEntry = POS_INF;
+			xExit = NEG_INF;
+		}
+		else
+		{
+			// Xで被覆している -> entry=-inf, exit=+inf として扱う
+			xEntry = NEG_INF;
+			xExit = POS_INF;
+		}
+	}
+	else
+	{
+		xEntry = xInvEntry / relX;
+		xExit = xInvExit / relX;
+	}
+
+	// Y方向に実際の相対移動がない場合の処理
+	if (fabsf(relY) <1e-6f)
+	{
+		if (b1.begin.y + b1.size.y < b2.begin.y || b1.begin.y > b2.begin.y + b2.size.y)
+		{
+			yEntry = POS_INF;
+			yExit = NEG_INF;
+		}
+		else
+		{
+			yEntry = NEG_INF;
+			yExit = POS_INF;
+		}
+	}
+	else
+	{
+		yEntry = yInvEntry / relY;
+		yExit = yInvExit / relY;
+	}
+
+	float entryTime = max(xEntry, yEntry);
+	float exitTime = min(xExit, yExit);
+
+	// 衝突判定: entry <= exitかつ 時間区間が [0,1] と重なるか
+	if (entryTime <= exitTime && entryTime <=1.0f && exitTime >=0.0f)
+	{
+		ret = true;
+
+		if (pContact)
+		{
+			// 衝突した軸は entryTime が大きかった方
+			if (xEntry > yEntry)
+			{
+				pContact->side = (relX >0.0f) ? ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT : ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
+			}
+			else
+			{
+				pContact->side = (relY >0.0f) ? ContactInfo::RECTCOLLIDESIDE::SIDE_TOP : ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
+			}
+
+			// 衝突時刻 t を0..1 にクランプ(負なら0,1より大きいなら1)
+			float t = entryTime;
+			if (t <0.0f) t =0.0f;
+			if (t >1.0f) t =1.0f;
+
+			// 衝突時の位置を計算
+			float b1BeginXOnHit = b1.begin.x + translationB1.x * t;
+			float b1BeginYOnHit = b1.begin.y + translationB1.y * t;
+			float b1EndXOnHit = b1BeginXOnHit + b1.size.x;
+			float b1EndYOnHit = b1BeginYOnHit + b1.size.y;
+
+			float b2BeginXOnHit = b2.begin.x + translationB2.x * t;
+			float b2BeginYOnHit = b2.begin.y + translationB2.y * t;
+			float b2EndXOnHit = b2BeginXOnHit + b2.size.x;
+			float b2EndYOnHit = b2BeginYOnHit + b2.size.y;
+
+			if (pContact->side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
+			{
+				pContact->position.x = b1BeginXOnHit;
+				float overlapBeginY = max(b1BeginYOnHit, b2BeginYOnHit);
+				float overlapEndY = min(b1EndYOnHit, b2EndYOnHit);
+				pContact->position.y = (overlapBeginY + overlapEndY) *0.5f;
+			}
+			else if (pContact->side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
+			{
+				pContact->position.x = b1EndXOnHit;
+				float overlapBeginY = max(b1BeginYOnHit, b2BeginYOnHit);
+				float overlapEndY = min(b1EndYOnHit, b2EndYOnHit);
+				pContact->position.y = (overlapBeginY + overlapEndY) *0.5f;
+			}
+			else if (pContact->side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
+			{
+				pContact->position.y = b1EndYOnHit;
+				float overlapBeginX = max(b1BeginXOnHit, b2BeginXOnHit);
+				float overlapEndX = min(b1EndXOnHit, b2EndXOnHit);
+				pContact->position.x = (overlapBeginX + overlapEndX) *0.5f;
+			}
+			else // SIDE_BOTTOM
+			{
+				pContact->position.y = b1BeginYOnHit;
+				float overlapBeginX = max(b1BeginXOnHit, b2BeginXOnHit);
+				float overlapEndX = min(b1EndXOnHit, b2EndXOnHit);
+				pContact->position.x = (overlapBeginX + overlapEndX) *0.5f;
+			}
+
+			// penetraterate は衝突時刻(0=直ちに重なっている,0..1 の割合)
+			pContact->penetrateRate = entryTime <0.0f ?0.0f : entryTime;
+		}
+	}
 
 	return ret;
 }

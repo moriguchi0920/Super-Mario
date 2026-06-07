@@ -39,6 +39,8 @@ public:
 
 	int getId();
 
+	float getPenetrateRate();
+
 private:
 	// 当たったオブジェクト同士
 	std::weak_ptr<ComponentCollisionShape> col1;

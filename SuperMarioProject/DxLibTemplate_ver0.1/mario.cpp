@@ -57,38 +57,38 @@ void Mario::update()
 {
 
 	// コンポーネント取得
-	auto comCR = getComponent<ComponentCollisionRect>();
-	auto comG = getComponent<ComponentGravity>();
-	auto comR = getComponent<ComponentRenderableRect>();
+	auto colRect = getComponent<ComponentCollisionRect>();
+	auto transformG = getComponent<ComponentGravity>();
+	auto renderRect = getComponent<ComponentRenderableRect>();
 
 
 	// 重力更新
-	comG.lock()->gravityUpdate();
+	transformG.lock()->gravityUpdate();
 
 
 	// 接地しているときのダッシュ、ジャンプ切り替え処理
-	if (comG.lock()->getLanding())
+	if (transformG.lock()->getLanding())
 	{
 		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
 		{
 			jumpHoldCount = 0;
 			jumpTranslationY = JUMP_FIRST_SPEED;
 			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
-			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, jumpTranslationY));
-			comG.lock()->setLanding(false);
+			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
+			transformG.lock()->setLanding(false);
 			
 		}
 		else if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT))
 		{
 
 			moveStateMachine.changeState(MOVESTATE::MOV_DASH);
-			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, 0.0f));
+			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, 0.0f));
 		}
 		else
 		{
 
 			moveStateMachine.changeState(MOVESTATE::MOV_WALK);
-			comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, 0.0f));
+			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, 0.0f));
 		}
 
 	}
@@ -100,116 +100,162 @@ void Mario::update()
 
 
 	// 描画の座標更新
-	comR.lock()->syncFromTransform();
+	renderRect.lock()->syncFromTransform();
 
 	// 当たり判定座標更新と当たった時の処理
 	// 当たり判定更新
-	if (comCR.lock())
+	if (colRect.lock())
 	{
-		comCR.lock()->update();
+		colRect.lock()->update();
+		for (auto& colInfo : colRect.lock()->getInfo())
+		{
+			if (!colInfo.expired())
+			{
+				auto colInfoSp = colInfo.lock();
+				if (!colInfoSp->getTarget(id).expired())
+				{
+					int side = colInfoSp->getRectCollideSide();
+					if (colInfoSp->getObjectIdCol1() != id)
+					{
+						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT;
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP) side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM) side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+					}
+					
+					switch (colInfoSp->getTarget(id).lock()->getTag()->tag)
+					{
+					case ICollisionTag::FLOOR:
+					{
+						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+							if (targetRectComp)
+							{
+								Rect trect = targetRectComp->get();
+								transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+								auto cur = transformG.lock()->getTranslation();
+								transformG.lock()->setTranslation(Float2(cur.x,0.0f));
 
-		//if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR))
-		//{
-		//	comG.lock()->setLanding(true);
+									transformG.lock()->setLanding(true);
 
-		//	// ★ここだけ：1回だけ補正
-		//	comG.lock()->setPosition(
-		//		Point(comG.lock()->getPosition().x, FLOOR_BASE_Y - MARIO_SIZE)
-		//	);
-		//}
+								
+							}
+						}
+						break;
+					}
+					case ICollisionTag::BLOCK:
+					{
+						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+							if (targetRectComp)
+							{
+								Rect trect = targetRectComp->get();
+								transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+								auto cur = transformG.lock()->getTranslation();
+								transformG.lock()->setTranslation(Float2(cur.x,0.0f));
 
-		//if (!comCR.lock()->getStayByTag(ICollisionTag::FLOOR))
-		//{
-		//	comG.lock()->setLanding(false);
-		//}
+									transformG.lock()->setLanding(true);
+
+							}
+						}
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+							if (targetRectComp)
+							{
+								Rect trect = targetRectComp->get();
+								transformG.lock()->setPosY(trect.begin.y + trect.size.y);
+								auto cur = transformG.lock()->getTranslation();
+								transformG.lock()->setTranslation(Float2(cur.x,0.0f));
+							}
+						}
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+							if (targetRectComp)
+							{
+								Rect trect = targetRectComp->get();
+								transformG.lock()->setPosX(trect.begin.x + trect.size.x);
+								auto cur = transformG.lock()->getTranslation();
+								transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+							}
+						}
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+							if (targetRectComp)
+							{
+								Rect trect = targetRectComp->get();
+								transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
+								auto cur = transformG.lock()->getTranslation();
+								transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+							}
+						}
+						break;
+					}
+					}
+				}
+			}
+		}
 	}
 }
 
 void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 {
-	auto comG = getComponent<ComponentGravity>();
 
-	for (auto& data : datas)
-	{
-		if (data.dataType == Event::DATA_POS)
-		{
-			if (name == "HitTop")
-			{
-				if (!comG.expired())
-				{
-					comG.lock()->setPosY(data.data.position.y - MARIO_SIZE);
-					comG.lock()->setLanding(true);
-				}
-			}
-			else if (name == "HitBottom")
-			{
-				if (!comG.expired())
-				{
-					comG.lock()->setPosY(data.data.position.y);
-				}
-			}
-			else if (name == "HitLeft")
-			{
-				if (!comG.expired())
-				{
-					comG.lock()->setPosX(data.data.position.x - MARIO_SIZE);
-				}
-			}
-			else if (name == "HitRight")
-			{
-				if (!comG.expired())
-				{
-					comG.lock()->setPosX(data.data.position.x);
-				}
-			}
-
-		}
-	}
 
 }
 
 void Mario::walk()
 {
 
-	auto comG = this->getComponent<ComponentGravity>();
+	auto transformG = this->getComponent<ComponentGravity>();
 
-	if (!comG.expired())
+	if (!transformG.expired())
 	{
 		if (KeyManager::checkHitKey(KEY_INPUT_A))
 		{
-			if (-MARIO_WALK_SPEED_MAX < comG.lock()->getTranslation().x)
+			if (-MARIO_WALK_SPEED_MAX < transformG.lock()->getTranslation().x)
 			{
-				comG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
+				transformG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
 			}
 		}
-		else if (comG.lock()->getTranslation().x < 0.0f)
+		else if (transformG.lock()->getTranslation().x < 0.0f)
 		{
-			comG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
+			transformG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
 		}
 		if (KeyManager::checkHitKey(KEY_INPUT_D))
 		{
-			if (comG.lock()->getTranslation().x < MARIO_WALK_SPEED_MAX)
+			if (transformG.lock()->getTranslation().x < MARIO_WALK_SPEED_MAX)
 			{
-				comG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
+				transformG.lock()->addTranslation(Float2(MARIO_WALK_ACCELERATION, 0.0f));
 			}
 
 		}
-		else if (0.0f < comG.lock()->getTranslation().x)
+		else if (0.0f < transformG.lock()->getTranslation().x)
 		{
-			comG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
+			transformG.lock()->addTranslation(Float2(-MARIO_WALK_ACCELERATION, 0.0f));
 		}
 
-		if (fabsf(comG.lock()->getTranslation().x) <= 0.1)
+		if (fabsf(transformG.lock()->getTranslation().x) <= 0.05f)
 		{
-			comG.lock()->setTranslation(Point(0.0f, 0.0f));
+			auto cur = transformG.lock()->getTranslation();
+			transformG.lock()->setTranslation(Float2(0.0f, cur.y));
 		}
 
 
-		comG.lock()->translate();
-		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
+		transformG.lock()->translate();
+		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
-			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
-			ScrollManager::getInstance()->setScrollOffset(-comG.lock()->getTranslation().x);
+			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));
+			ScrollManager::getInstance()->setScrollOffset(-transformG.lock()->getTranslation().x);
 		}
 		else
 		{
@@ -235,15 +281,15 @@ void Mario::jump()
 		
 	}
 
-	auto comG = getComponent<ComponentGravity>();
-	if (!comG.expired())
+	auto transformG = getComponent<ComponentGravity>();
+	if (!transformG.expired())
 	{
-		comG.lock()->setTranslation(Float2(comG.lock()->getTranslation().x, jumpTranslationY));
-		comG.lock()->translate();
-		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
+		//transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
+		transformG.lock()->translate();
+		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
-			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
-			ScrollManager::getInstance()->setScrollOffset(-comG.lock()->getTranslation().x);
+			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));
+			ScrollManager::getInstance()->setScrollOffset(-transformG.lock()->getTranslation().x);
 		}
 		else
 		{
@@ -256,46 +302,48 @@ void Mario::jump()
 void Mario::dash()
 {
 
-	auto comG = this->getComponent<ComponentGravity>();
+	auto transformG = this->getComponent<ComponentGravity>();
 
-	if (!comG.expired())
+	if (!transformG.expired())
 	{
 		if (KeyManager::checkHitKey(KEY_INPUT_A))
 		{
-			if (-MARIO_DASH_SPEED_MAX <= comG.lock()->getTranslation().x)
+			if (-MARIO_DASH_SPEED_MAX <= transformG.lock()->getTranslation().x)
 			{
-				comG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
+				transformG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
 			}
 		}
-		else if (comG.lock()->getTranslation().x < 0.0f)
+		else if (transformG.lock()->getTranslation().x < 0.0f)
 		{
-			comG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
+			transformG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
 		}
 		if (KeyManager::checkHitKey(KEY_INPUT_D))
 		{
-			if (comG.lock()->getTranslation().x <= MARIO_DASH_SPEED_MAX)
+			if (transformG.lock()->getTranslation().x <= MARIO_DASH_SPEED_MAX)
 			{
-				comG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
+				transformG.lock()->addTranslation(Float2(MARIO_DASH_ACCELERATION, 0.0f));
 			}
 
 		}
-		else if (0.0f < comG.lock()->getTranslation().x)
+		else if (0.0f < transformG.lock()->getTranslation().x)
 		{
-			comG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
+			transformG.lock()->addTranslation(Float2(-MARIO_DASH_ACCELERATION, 0.0f));
 		}
 
 
-		if (fabsf(comG.lock()->getTranslation().x) <= 0.1)
+		if (fabsf(transformG.lock()->getTranslation().x) <= 0.1)
 		{
-			comG.lock()->setTranslation(Point(0.0f, 0.0f));
+			// Only zero horizontal translation, preserve vertical velocity set by gravity/jump
+			auto cur = transformG.lock()->getTranslation();
+			transformG.lock()->setTranslation(Float2(0.0f, cur.y));
 		}
 
 
-		comG.lock()->translate();
-		if (WINDOW_WIDTH / 2 <= comG.lock()->getPosition().x + SPRITE_SIZE / 2)
+		transformG.lock()->translate();
+		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
-			comG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, comG.lock()->getPosition().y));
-			ScrollManager::getInstance()->setScrollOffset(-comG.lock()->getTranslation().x);
+			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));
+			ScrollManager::getInstance()->setScrollOffset(-transformG.lock()->getTranslation().x);
 		}
 		else
 		{

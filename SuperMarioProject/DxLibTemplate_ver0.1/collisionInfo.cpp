@@ -115,3 +115,8 @@ int CollisionInfo::getId()
 {
 	return id;
 }
+
+float CollisionInfo::getPenetrateRate()
+{
+	return penetrateRate;
+}

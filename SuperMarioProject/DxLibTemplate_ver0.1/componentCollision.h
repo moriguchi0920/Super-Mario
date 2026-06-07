@@ -23,7 +23,7 @@ struct ContactInfo;
 
 class ComponentTransform;
 
-
+class CollisionInfo;
 
 // 当たり判定用の形クラスたちの基底となるクラス
 class ComponentCollisionShape : public Component
@@ -88,7 +88,7 @@ public:
 
 	virtual Point getTranslation() = 0;
 
-
+	std::vector<std::weak_ptr<CollisionInfo>> getInfo();
 
 
 };

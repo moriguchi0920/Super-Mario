@@ -2,10 +2,17 @@
 #include "objectManager.h"
 #include "componentTransform.h"
 #include "componentRenderable.h"
-
+#include"scrollManager.h"
 
 rengablock::rengablock(Rect rect) : BlockBase(rect)
 {
+    auto transform = getComponent<ComponentTransform>();
+
+    if (!transform.expired())
+    {
+        transform.lock()->setScroll(true);
+    }
+
     auto colRect = getComponent<ComponentCollisionRect>();
     if (!colRect.expired())
     {

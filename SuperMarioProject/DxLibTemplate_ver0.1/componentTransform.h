@@ -46,4 +46,6 @@ public:
 
 	void revertTranslation(float revertRate);
 
+	void revertTranslationX(float revertRate);
+	void revertTranslationY(float revertRate);
 };
