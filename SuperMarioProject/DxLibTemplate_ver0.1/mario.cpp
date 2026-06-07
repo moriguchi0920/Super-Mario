@@ -108,20 +108,20 @@ void Mario::update()
 	{
 		comCR.lock()->update();
 
-		if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR))
-		{
-			comG.lock()->setLanding(true);
+		//if (comCR.lock()->getEnterByTag(ICollisionTag::FLOOR))
+		//{
+		//	comG.lock()->setLanding(true);
 
-			// š‚±‚±‚¾‚¯F1‰ñ‚¾‚¯•â³
-			comG.lock()->setPosition(
-				Point(comG.lock()->getPosition().x, FLOOR_BASE_Y - MARIO_SIZE)
-			);
-		}
+		//	// š‚±‚±‚¾‚¯F1‰ñ‚¾‚¯•â³
+		//	comG.lock()->setPosition(
+		//		Point(comG.lock()->getPosition().x, FLOOR_BASE_Y - MARIO_SIZE)
+		//	);
+		//}
 
-		if (!comCR.lock()->getStayByTag(ICollisionTag::FLOOR))
-		{
-			comG.lock()->setLanding(false);
-		}
+		//if (!comCR.lock()->getStayByTag(ICollisionTag::FLOOR))
+		//{
+		//	comG.lock()->setLanding(false);
+		//}
 	}
 }
 
@@ -138,13 +138,14 @@ void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> da
 				if (!comG.expired())
 				{
 					comG.lock()->setPosY(data.data.position.y - MARIO_SIZE);
+					comG.lock()->setLanding(true);
 				}
 			}
 			else if (name == "HitBottom")
 			{
 				if (!comG.expired())
 				{
-					comG.lock()->setPosY(data.data.position.y + MARIO_SIZE);
+					comG.lock()->setPosY(data.data.position.y);
 				}
 			}
 			else if (name == "HitLeft")
@@ -158,7 +159,7 @@ void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> da
 			{
 				if (!comG.expired())
 				{
-					comG.lock()->setPosY(data.data.position.x);
+					comG.lock()->setPosX(data.data.position.x);
 				}
 			}
 

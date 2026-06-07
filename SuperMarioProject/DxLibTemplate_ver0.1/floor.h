@@ -1,8 +1,8 @@
 #pragma once
 #include"entityObject.h"
+#include"blockBase.h"
 
-
-class Floor : public Object
+class Floor : public BlockBase
 {
 public:
     Floor(float x, float width);

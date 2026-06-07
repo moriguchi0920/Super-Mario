@@ -25,7 +25,7 @@ void BlockBase::update()
 
 	if (!comCR.expired() && !comT.expired())
 	{
-		if (comCR.lock()->getStayByTag(ICollisionTag::MARIO))
+		if (comCR.lock()->getEnterByTag(ICollisionTag::MARIO))
 		{
 			CollisionManager* pColManager = CollisionManager::getInstance();
 			std::vector<int> infoIds = comCR.lock()->getInfoId();
@@ -52,8 +52,9 @@ void BlockBase::update()
 								event.eventName = "HitTop";
 								event.to = target.lock()->getParentId();
 								event.from = id;
+								EventServer::getInstance()->enqueueEvent(event);
 							}
-							else if(fabsf(wpColInfo.lock()->getIntersection().y - colRect.begin.y + colRect.size.y) <= 0.01f)
+							else if(fabsf(wpColInfo.lock()->getIntersection().y - (colRect.begin.y + colRect.size.y)) <= 0.01f)
 							{
 								Event::EventData dataPos;
 								dataPos.position = wpColInfo.lock()->getIntersection();
@@ -63,6 +64,7 @@ void BlockBase::update()
 								event.eventName = "HitBottom";
 								event.to = target.lock()->getParentId();
 								event.from = id;
+								EventServer::getInstance()->enqueueEvent(event);
 							}
 							else if (fabsf(wpColInfo.lock()->getIntersection().x - colRect.begin.x ) <= 0.01f)
 							{
@@ -74,8 +76,9 @@ void BlockBase::update()
 								event.eventName = "HitLeft";
 								event.to = target.lock()->getParentId();
 								event.from = id;
+								EventServer::getInstance()->enqueueEvent(event);
 							}
-							else if (fabsf(wpColInfo.lock()->getIntersection().x - colRect.begin.x + colRect.size.x) <= 0.01f)
+							else if (fabsf(wpColInfo.lock()->getIntersection().x - (colRect.begin.x + colRect.size.x)) <= 0.01f)
 							{
 								Event::EventData dataPos;
 								dataPos.position = wpColInfo.lock()->getIntersection();
@@ -85,9 +88,10 @@ void BlockBase::update()
 								event.eventName = "HitRight";
 								event.to = target.lock()->getParentId();
 								event.from = id;
+								EventServer::getInstance()->enqueueEvent(event);
 							}
 
-							EventServer::getInstance()->enqueueEvent(event);
+
 						}
 
 					}

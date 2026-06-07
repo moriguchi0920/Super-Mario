@@ -190,13 +190,13 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 	float expandedWidth = b1.size.x + b2.size.x;
 	float expandedHeight = b1.size.y + b2.size.y;
 
-	float centerB2X = b2.begin.x + b2.size.x / 2.0f;
-	float centerB2Y = b2.begin.y + b2.size.y / 2.0f;
+	float centerB2X = b2.begin.x + b2.size.x /2.0f;
+	float centerB2Y = b2.begin.y + b2.size.y /2.0f;
 
-	float expandedLeft = centerB2X - expandedWidth / 2.0f;
-	float expandedRight = centerB2X + expandedHeight / 2.0f;
-	float expandedTop = centerB2Y - expandedHeight / 2.0f;
-	float expandedBottom = centerB2Y + expandedHeight / 2.0f;
+	float expandedLeft = centerB2X - expandedWidth /2.0f;
+	float expandedRight = centerB2X + expandedWidth /2.0f;
+	float expandedTop = centerB2Y - expandedHeight /2.0f;
+	float expandedBottom = centerB2Y + expandedHeight /2.0f;
 
 	if (b1.begin.x + b1.size.x >= b2.begin.x && b1.begin.x <= b2.begin.x + b2.size.x) {
 		if (b1.begin.y + b1.size.y >= b2.begin.y && b1.begin.y <= b2.begin.y + b2.size.y) {
@@ -204,20 +204,20 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 		}
 	}
 
-	float xEntry = 0.0f;
-	float yEntry = 0.0f;
-	float xExit = 1.0f;
-	float yExit = 1.0f;
+	float xEntry =0.0f;
+	float yEntry =0.0f;
+	float xExit =1.0f;
+	float yExit =1.0f;
 
-	float centerB1X = b1.begin.x + b1.size.x / 2.0f;
-	float centerB1Y = b1.begin.y + b1.size.y / 2.0f;
+	float centerB1X = b1.begin.x + b1.size.x /2.0f;
+	float centerB1Y = b1.begin.y + b1.size.y /2.0f;
 
-	if (relativeTranslationX > 0.0f)
+	if (relativeTranslationX >0.0f)
 	{
 		xEntry = (expandedLeft - centerB1X) / relativeTranslationX;
 		xExit = (expandedRight - centerB1X) / relativeTranslationX;
 	}
-	else if (relativeTranslationX < 0.0f)
+	else if (relativeTranslationX <0.0f)
 	{
 		xEntry = (expandedRight - centerB1X) / relativeTranslationX;
 		xExit = (expandedLeft - centerB1X) / relativeTranslationX;
@@ -225,15 +225,15 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 	}
 	else
 	{
-		if (centerB1X <= expandedLeft || centerB1X >= expandedRight) ret =  false;
+		if (centerB1X <= expandedLeft || centerB1X >= expandedRight) ret = false;
 	}
 
-	if (relativeTranslationY > 0.0f)
+	if (relativeTranslationY >0.0f)
 	{
 		yEntry = (expandedTop - centerB1Y) / relativeTranslationY;
 		yExit = (expandedBottom - centerB1Y) / relativeTranslationY;
 	}
-	else if (relativeTranslationX < 0.0f)
+	else if (relativeTranslationY <0.0f)
 	{
 		yEntry = (expandedBottom - centerB1Y) / relativeTranslationY;
 		yExit = (expandedTop - centerB1Y) / relativeTranslationY;
@@ -247,7 +247,7 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 	float start = max(xEntry, yEntry);
 	float end = min(xExit, yExit);
 
-	if (start < end && start <= 1.0f && start >= 0.0f)
+	if (start < end && start <=1.0f && start >=0.0f)
 	{
 		ret = true;
 	}
@@ -255,49 +255,48 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 
 	if (pContact)
 	{
-		float normalX = 0.0f;
-		float normalY = 0.0f;
+		float normalX =0.0f;
+		float normalY =0.0f;
 		if (xEntry > yEntry)
 		{
-			normalX = (relativeTranslationX > 0.0f) ? -1.0f : 1.0f;
-			normalY = 0.0f;
+			normalX = (relativeTranslationX >0.0f) ? -1.0f :1.0f;
+			normalY =0.0f;
 		}
 		else
 		{
-			normalX = 0.0f;
-			normalY = (relativeTranslationY > 0.0f) ? -1.0f : 1.0f;
+			normalX =0.0f;
+			normalY = (relativeTranslationY >0.0f) ? -1.0f :1.0f;
 		}
 		float b1BeginXOnHit = b1.begin.x + translationB1.x * start;
 		float b1BeginYOnHit = b1.begin.y + translationB1.y * start;
 		float b1EndXOnHit = b1BeginXOnHit + b1.size.x;
 		float b1EndYOnHit = b1BeginYOnHit + b1.size.y;
 
-		float b2BeginXOnHit = b2.begin.x + translationB1.x * start;
-		float b2BeginYOnHit = b2.begin.y + translationB1.y * start;
+		float b2BeginXOnHit = b2.begin.x + translationB2.x * start;
+		float b2BeginYOnHit = b2.begin.y + translationB2.y * start;
 		float b2EndXOnHit = b2BeginXOnHit + b2.size.x;
 		float b2EndYOnHit = b2BeginYOnHit + b2.size.y;
 
-		if (normalX != 0.0f)
+		if (normalX !=0.0f)
 		{
-			pContact->position.x = normalX < 0.0f ? b1BeginXOnHit : b1EndXOnHit;
+			pContact->position.x = normalX <0.0f ? b1BeginXOnHit : b1EndXOnHit;
 			float overlapBeginY = max(b1BeginYOnHit, b2BeginYOnHit);
 			float overlapEndY = min(b1EndYOnHit, b2EndYOnHit);
-			pContact->position.y = (overlapBeginY + overlapEndY) / 2.0f;
+			pContact->position.y = (overlapBeginY + overlapEndY) /2.0f;
 
 		}
 		else
 		{
-			pContact->position.y = normalY < 0.0f ? b1BeginYOnHit : b1EndYOnHit;
+			pContact->position.y = normalY <0.0f ? b1EndYOnHit : b1BeginYOnHit;
 			float overlapBeginX = max(b1BeginXOnHit, b2BeginXOnHit);
 			float overlapEndX = min(b1EndXOnHit, b2EndXOnHit);
-			pContact->position.x = (overlapBeginX + overlapEndX) / 2.0f;
+			pContact->position.x = (overlapBeginX + overlapEndX) /2.0f;
 		}
 
 
-    		pContact->penetrateRate = start;
+		pContact->penetrateRate = start;
 
 	}
-
 
 
 
@@ -497,7 +496,7 @@ bool CheckLineCircleHit(Line l1, Circle c1, ContactInfo* pContact)
 	// ü•ª‚Ìn“_‚©‚çI“_‚ÌƒxƒNƒgƒ‹
 	Point start_to_end(l1.end.x - l1.begin.x, l1.end.y - l1.begin.y);
 	float dis = GetDistance(l1.begin.x, l1.begin.y, l1.end.x, l1.end.y);
-	if (dis <= 1.0) return false;
+	if (dis <=1.0) return false;
 
 	// ŠOÏ‚ğ—p‚¢‚Äü•ª‚Æ‰~‚ÌÅ’Z‹——£‚ğ‹‚ß‚é
 	float shortest_dis = (start_to_center.x * start_to_end.y - start_to_end.x * start_to_center.y) / dis;
@@ -514,11 +513,11 @@ bool CheckLineCircleHit(Line l1, Circle c1, ContactInfo* pContact)
 		float theta = dotS / (lengthStoC * lengthStoE);
 		Point roughIntersection(c1.pos.x + shortest_dis * cos(theta), c1.pos.y + shortest_dis * sin(theta));
 		pContact->position = roughIntersection;
-		if (fabsf(l1.begin.x - l1.end.x) < 0.01)
+		if (fabsf(l1.begin.x - l1.end.x) <0.01)
 		{
 			pContact->crosswise = ContactInfo::CROSSWISE::CROSS_VERTICAL;
 		}
-		else if (fabsf(l1.begin.y - l1.end.y) < 0.01)
+		else if (fabsf(l1.begin.y - l1.end.y) <0.01)
 		{
 			pContact->crosswise = ContactInfo::CROSSWISE::CROSS_HORIZONTAL;
 		}
@@ -526,18 +525,17 @@ bool CheckLineCircleHit(Line l1, Circle c1, ContactInfo* pContact)
 	}
 
 	// Å’Z‹——£ƒxƒNƒgƒ‹‚Ìâ‘Î’l‚ª‰~‚Ì”¼Œa‚æ‚è‘å‚«‚©‚Á‚½‚ç“–‚½‚Á‚Ä‚¢‚È‚¢
-	if (  c1.radius < fabsf(shortest_dis))
+	if (c1.radius < fabsf(shortest_dis))
 	{
 		return false;
 	}
 
-
 	// “àÏ“¯m‚ÌŠ|‚¯Z‚µ‚½Œ‹‰Ê‚ª0ˆÈ‰º(‚È‚·Šp‚ª‰sŠp‚Æ“İŠp‚É‚È‚Á‚Ä‚¢‚é)‚È‚ç“–‚½‚Á‚Ä‚¢‚é
-	if (dotS * dotE <= 0.0)
+	if (dotS * dotE <=0.0)
 	{
 		return true;
 	}
-	// ÅŒã‚Éü•ª‚Ì’[“_‚Æ‰~‚Ì’†S‚Ì’·‚³‚ª‰~‚Ì”¼Œa‚æ‚è‘å‚«‚©‚Á‚½‚ç“–‚½‚Á‚Ä‚¢‚é
+	// ÅŒã‚Éü•ª‚Ì’[“_‚Æ‰~‚Ì’†S‚Ì’·‚³‚ª‰~‚Ì”¼Œa‚æ‚è¬‚³‚©‚Á‚½‚ç“–‚½‚Á‚Ä‚¢‚é
 	if (GetDistance(l1.begin.x, l1.begin.y, c1.pos.x, c1.pos.y) < c1.radius)
 	{
 		return true;

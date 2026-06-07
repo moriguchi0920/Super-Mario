@@ -5,7 +5,7 @@
 #include"componentTransform.h"
 #include"const.h"
 
-Floor::Floor(float x, float width): Object(ObjectManager::makeId())
+Floor::Floor(float x, float width) : BlockBase(Rect(Point(x, FLOOR_BASE_Y), Point(width, WINDOW_HEIGHT)))
 {
 	addComponent<ComponentTransform>(id).lock()->setScroll(true);
 	auto comT = getComponent<ComponentTransform>();
@@ -13,7 +13,7 @@ Floor::Floor(float x, float width): Object(ObjectManager::makeId())
 
 
 	Rect rect(Point(x, FLOOR_BASE_Y),Point(width, WINDOW_HEIGHT));
-	addComponent<ComponentCollisionRect>(this->id, rect).lock()->addTag(ICollisionTag::FLOOR);
+	getComponent<ComponentCollisionRect>().lock()->addTag(ICollisionTag::FLOOR);
 
 	addComponent<ComponentRenderableRect>(this->id,0.5,  rect);
 
@@ -28,6 +28,7 @@ Floor::~Floor()
 
 void Floor::update()
 {
+	BlockBase::update();
 	auto comR = getComponent<ComponentRenderableRect>();
 	auto comC = getComponent<ComponentCollisionRect>();
 
