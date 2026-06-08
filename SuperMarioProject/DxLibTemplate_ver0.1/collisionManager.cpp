@@ -191,7 +191,7 @@ void CollisionManager::updateInfo()
 					pColInfo->exitCollision();
 				}
 
-				pColInfo->setStatus(contact);
+				//pColInfo->setStatus(contact);
 				
 			}
 		}

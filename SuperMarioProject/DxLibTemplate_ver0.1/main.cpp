@@ -39,6 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	ObjectManager::getInstance();
 
+	ObjectManager::createObject<Mario>();
 	ObjectManager::createObject<Floor>(0.0f, 1000.0f);
 	ObjectManager::createObject<Floor>(1050.0f, 200.0f);
 	ObjectManager::createObject<Floor>(1300.0f, 1000.0f);
@@ -49,10 +50,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
 
-	ObjectManager::createObject<Mario>();
+
 
 
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 3, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 6, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 8, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 
 	//ObjectManager::createObject<rengablock>(80.0f, 130.0f);
 	//ObjectManager::createObject<hatenablock>(50.0f, 130.0f);

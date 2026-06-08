@@ -139,6 +139,10 @@ void Mario::update()
 									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
 									auto cur = transformG.lock()->getTranslation();
 									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+
+								}
+								if (colInfoSp->getColliding())
+								{
 									transformG.lock()->setLanding(true);
 								}
 								else if (colInfoSp->getExit())
@@ -170,6 +174,10 @@ void Mario::update()
 									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
 									auto cur = transformG.lock()->getTranslation();
 									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+
+								}
+								if (colInfoSp->getColliding())
+								{
 									transformG.lock()->setLanding(true);
 								}
 								else if (colInfoSp->getExit())
@@ -319,7 +327,7 @@ void Mario::jump()
 	auto transformG = getComponent<ComponentGravity>();
 	if (!transformG.expired())
 	{
-		//transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
+		transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
 		transformG.lock()->translate();
 
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
