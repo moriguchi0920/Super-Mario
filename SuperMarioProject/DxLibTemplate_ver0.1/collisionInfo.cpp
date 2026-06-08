@@ -12,6 +12,7 @@ CollisionInfo::CollisionInfo(std::weak_ptr<ComponentCollisionShape> pColBase, st
 	crosswise = -1;
 	isColliding = false;
 	isEnter = false;
+	isExit = false;
 	penetrateRate = 1.0f;
 	id = newInfoId;
 }
@@ -63,8 +64,6 @@ std::weak_ptr<ComponentCollisionShape> CollisionInfo::getTarget(int idBase)
 void CollisionInfo::setStatus(ContactInfo contact)
 {
 	crosswise = contact.crosswise;
-	isColliding = true;
-	isEnter = true;
 	penetrateRate = contact.penetrateRate;
 	lineColVector1 = contact.lineColVector1;
 	lineColVector2 = contact.lineColVector2;
@@ -72,11 +71,33 @@ void CollisionInfo::setStatus(ContactInfo contact)
 	rectCollideSide = contact.side;
 }
 
+void CollisionInfo::firstCollision()
+{
+	isColliding = true;
+	isEnter = true;
+	isExit = false;
+}
+
 
 void CollisionInfo::secondCollision()
 {
 	isColliding = true;
 	isEnter = false;
+	isExit = false;
+}
+
+void CollisionInfo::exitCollision()
+{
+	isColliding = false;
+	isEnter = false;
+	isExit = true;
+}
+
+void CollisionInfo::noCollide()
+{
+	isColliding = false;
+	isEnter = false;
+	isExit = false;
 }
 
 bool CollisionInfo::getEnter()
@@ -87,6 +108,11 @@ bool CollisionInfo::getEnter()
 bool CollisionInfo::getColliding()
 {
 	return isColliding;
+}
+
+bool CollisionInfo::getExit()
+{
+	return isExit;
 }
 
 Point CollisionInfo::getIntersection()

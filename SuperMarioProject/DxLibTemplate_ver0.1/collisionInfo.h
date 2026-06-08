@@ -22,12 +22,18 @@ public:
 
 	// 初期作成時値を設定する関数
 	void setStatus(ContactInfo contact);
+	void firstCollision();
 	// 二回目以降に当たった場合に、Enterをfalseにする
 	void secondCollision();
+	void exitCollision();
+
+	void noCollide();
 
 	bool getEnter();
 
 	bool getColliding();
+
+	bool getExit();
 
 	Point getIntersection();
 
@@ -50,6 +56,8 @@ private:
 	bool isColliding;
 	// 当たった瞬間かどうか
 	bool isEnter;
+	// 当たりを抜けたか
+	bool isExit;
 	// 接触点
 	Point intersection;
 	// 四角形のどの辺に当たったか

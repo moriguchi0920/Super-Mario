@@ -84,6 +84,7 @@ void CollisionManager::flexibleCollision()
 						std::shared_ptr<CollisionInfo> spInfo = std::make_shared<CollisionInfo>(vector[i].lock(), vector[j].lock(), id);
 						// 接触情報をセット
 						spInfo->setStatus(contact);
+						spInfo->firstCollision();
 						// 可変長配列に追加
 						collisionInfoArray.push_back(std::move(spInfo));
 						// CollisionInfo検索用idを当たったコンポーネント同士にセット
@@ -164,20 +165,34 @@ void CollisionManager::updateInfo()
 			// 継続して当たっていたら
 			if (pColInfo->getCol1().lock()->checkCollide(pColInfo->getCol2().lock().get(), &contact))
 			{
-
-				// 更新された接触情報で状態を上書きし、その後Enterをfalseにする
-				pColInfo->setStatus(contact);
-				pColInfo->secondCollision();
+				if (!pColInfo->getColliding())
+				{
+					pColInfo->firstCollision();
+				}
+				else
+				{
+					pColInfo->secondCollision();
+				}
 				// その他接触点などの設定
-				
+				// 更新された接触情報で状態を上書き
+				pColInfo->setStatus(contact);
+
 
 			}
 			// 当たっていない場合
 			else
 			{
-				pColInfo->getCol1().lock()->removeInfoId(pColInfo->getId());
-				pColInfo->getCol2().lock()->removeInfoId(pColInfo->getId());
-				collisionInfoArray.erase(collisionInfoArray.begin() + i);
+				if (pColInfo->getExit())
+				{
+					pColInfo->noCollide();
+				}
+				else
+				{
+					pColInfo->exitCollision();
+				}
+
+				pColInfo->setStatus(contact);
+				
 			}
 		}
 	}

@@ -133,12 +133,23 @@ void Mario::update()
 							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
 							if (targetRectComp)
 							{
-								Rect trect = targetRectComp->get();
-								transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-								auto cur = transformG.lock()->getTranslation();
-								transformG.lock()->setTranslation(Float2(cur.x,0.0f));
-
+								if (colInfoSp->getEnter())
+								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
 									transformG.lock()->setLanding(true);
+								}
+								else if (colInfoSp->getExit())
+								{
+									transformG.lock()->setLanding(false);
+								}
+								//if (colInfoSp->getEnter())
+								//{
+								//	transformG.lock()->setLanding(true);
+								//}
+
 
 								
 							}
@@ -153,12 +164,24 @@ void Mario::update()
 							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
 							if (targetRectComp)
 							{
-								Rect trect = targetRectComp->get();
-								transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-								auto cur = transformG.lock()->getTranslation();
-								transformG.lock()->setTranslation(Float2(cur.x,0.0f));
-
+								if (colInfoSp->getEnter())
+								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
 									transformG.lock()->setLanding(true);
+								}
+								else if (colInfoSp->getExit())
+								{
+									transformG.lock()->setLanding(false);
+								}
+								//if (colInfoSp->getEnter())
+								//{
+								//	transformG.lock()->setLanding(true);
+								//}
+
+									//transformG.lock()->setLanding(true);
 
 							}
 						}
@@ -168,10 +191,15 @@ void Mario::update()
 							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
 							if (targetRectComp)
 							{
-								Rect trect = targetRectComp->get();
-								transformG.lock()->setPosY(trect.begin.y + trect.size.y);
-								auto cur = transformG.lock()->getTranslation();
-								transformG.lock()->setTranslation(Float2(cur.x,0.0f));
+								if (colInfoSp->getEnter())
+								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosY(trect.begin.y + trect.size.y);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+
+								}
+
 							}
 						}
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
@@ -180,10 +208,14 @@ void Mario::update()
 							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
 							if (targetRectComp)
 							{
-								Rect trect = targetRectComp->get();
-								transformG.lock()->setPosX(trect.begin.x + trect.size.x);
-								auto cur = transformG.lock()->getTranslation();
-								transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+								if (colInfoSp->getColliding())
+								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+
+								}
 							}
 						}
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
@@ -192,10 +224,14 @@ void Mario::update()
 							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
 							if (targetRectComp)
 							{
-								Rect trect = targetRectComp->get();
-								transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
-								auto cur = transformG.lock()->getTranslation();
-								transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+								if (colInfoSp->getColliding())
+								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosX(trect.begin.x + trect.size.x);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+
+								}
 							}
 						}
 						break;
@@ -280,12 +316,12 @@ void Mario::jump()
 		}
 		
 	}
-
 	auto transformG = getComponent<ComponentGravity>();
 	if (!transformG.expired())
 	{
 		//transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
 		transformG.lock()->translate();
+
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));
