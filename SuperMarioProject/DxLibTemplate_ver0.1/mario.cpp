@@ -61,44 +61,6 @@ void Mario::update()
 	auto transformG = getComponent<ComponentGravity>();
 	auto renderRect = getComponent<ComponentRenderableRect>();
 
-
-	// 重力更新
-	transformG.lock()->gravityUpdate();
-
-
-	// 接地しているときのダッシュ、ジャンプ切り替え処理
-	if (transformG.lock()->getLanding())
-	{
-		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
-		{
-			jumpHoldCount = 0;
-			jumpTranslationY = JUMP_FIRST_SPEED;
-			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
-			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
-			transformG.lock()->setLanding(false);
-			
-		}
-		else if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT))
-		{
-
-			moveStateMachine.changeState(MOVESTATE::MOV_DASH);
-			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, 0.0f));
-		}
-		else
-		{
-
-			moveStateMachine.changeState(MOVESTATE::MOV_WALK);
-			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, 0.0f));
-		}
-
-	}
-
-
-	moveStateMachine.update(this);
-	varyStateMachine.update(this);
-	starStateMachine.update(this);
-
-
 	// 描画の座標更新
 	renderRect.lock()->syncFromTransform();
 
@@ -122,7 +84,6 @@ void Mario::update()
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP) side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM) side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
 					}
-					
 					switch (colInfoSp->getTarget(id).lock()->getTag()->tag)
 					{
 					case ICollisionTag::FLOOR:
@@ -135,17 +96,18 @@ void Mario::update()
 							{
 								if (colInfoSp->getEnter())
 								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+
 
 								}
 								if (colInfoSp->getColliding())
 								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
 									transformG.lock()->setLanding(true);
 								}
-								else if (colInfoSp->getExit())
+								else
 								{
 									transformG.lock()->setLanding(false);
 								}
@@ -170,17 +132,18 @@ void Mario::update()
 							{
 								if (colInfoSp->getEnter())
 								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+
 
 								}
 								if (colInfoSp->getColliding())
 								{
+									Rect trect = targetRectComp->get();
+									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+									auto cur = transformG.lock()->getTranslation();
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
 									transformG.lock()->setLanding(true);
 								}
-								else if (colInfoSp->getExit())
+								else if(colInfoSp->getExit())
 								{
 									transformG.lock()->setLanding(false);
 								}
@@ -249,6 +212,38 @@ void Mario::update()
 			}
 		}
 	}
+	// 重力更新
+	transformG.lock()->gravityUpdate();
+	// 接地しているときのダッシュ、ジャンプ切り替え処理
+	if (transformG.lock()->getLanding())
+	{
+		if (KeyManager::pushHitKey(KEY_INPUT_SPACE))
+		{
+			jumpHoldCount = 0;
+			jumpTranslationY = JUMP_FIRST_SPEED;
+			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
+			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
+			transformG.lock()->setLanding(false);
+
+		}
+		else if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT))
+		{
+
+			moveStateMachine.changeState(MOVESTATE::MOV_DASH);
+			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, 0.0f));
+		}
+		else
+		{
+
+			moveStateMachine.changeState(MOVESTATE::MOV_WALK);
+			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, 0.0f));
+		}
+
+	}
+
+	moveStateMachine.update(this);
+	varyStateMachine.update(this);
+	starStateMachine.update(this);
 }
 
 void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
@@ -312,22 +307,23 @@ void Mario::walk()
 
 void Mario::jump()
 {
+	auto transformG = getComponent<ComponentGravity>();
 	if (KeyManager::checkHitKey(KEY_INPUT_SPACE) && jumpHoldCount <= 30)
 	{
 		jumpHoldCount++;
 	}
 	else
 	{
-		if (jumpTranslationY <= 0)
+		if (!transformG.expired())
 		{
-			jumpTranslationY += 0.35;
+			transformG.lock()->addTranslation(Float2(0.0f, 0.35f));
 		}
 		
 	}
-	auto transformG = getComponent<ComponentGravity>();
+
 	if (!transformG.expired())
 	{
-		transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
+		//transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
 		transformG.lock()->translate();
 
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)

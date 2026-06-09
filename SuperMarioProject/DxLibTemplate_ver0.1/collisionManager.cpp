@@ -186,7 +186,7 @@ void CollisionManager::updateInfo()
 				{
 					pColInfo->noCollide();
 				}
-				else
+				else if(pColInfo->getColliding())
 				{
 					pColInfo->exitCollision();
 				}

@@ -314,7 +314,7 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 	float exitTime = min(xExit, yExit);
 
 	// Õ“Ë”»’è: entry <= exit‚©‚Â ŠÔ‹æŠÔ‚ª [0,1] ‚Æd‚È‚é‚©
-	if (entryTime <= exitTime && entryTime <=1.0f && exitTime >=0.0f)
+	if (entryTime <= exitTime && entryTime < 1.0f && exitTime >0.0f)
 	{
 		ret = true;
 
