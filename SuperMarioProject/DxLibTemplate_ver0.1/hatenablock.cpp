@@ -1,25 +1,39 @@
 #include "hatenablock.h"
 #include "objectManager.h"
-#include"componentTransform.h"
+#include "componentTransform.h"
 #include "componentRenderable.h"
+#include"scrollManager.h"
 
-hatenablock::hatenablock(float x, float y) : Object(ObjectManager::makeId())
+hatenablock::hatenablock(Rect rect) : BlockBase(rect)
 {
+    auto transform = getComponent<ComponentTransform>();
 
-    addComponent<ComponentTransform>(id).lock()->setScroll(true);
+        if (!transform.expired())
+        {
+            transform.lock()->setScroll(true);
+        }
 
-    auto comT = getComponent<ComponentTransform>();
-    comT.lock()->setPosition(Point(x, y));
+        auto colRect = getComponent<ComponentCollisionRect>();
+        if (!colRect.expired())
+        {
+            colRect.lock()->addTag(ICollisionTag::BLOCK);
+        }
 
-    // 四角描画コンポーネント追加
-    auto rect = addComponent<ComponentRenderableRect>(getId(), 0.5f, Float2(x, y), Float2(SPRITE_SIZE, SPRITE_SIZE));
+        auto renderRect = addComponent<ComponentRenderableRect>(id, 0.5, rect);
 
-    auto comR = getComponent<ComponentRenderableRect>();
-    comR.lock()->setColor(250, 220, 0);
-}
+        if (!renderRect.expired())
+        {
+            // 黄色設定
+            renderRect.lock()->setColor(250, 220, 0);
+        }
+    }
 
 void hatenablock::update()
 {
+
+    BlockBase::update();
+
     auto comR = getComponent<ComponentRenderableRect>();
     comR.lock()->syncFromTransform();
+
 }

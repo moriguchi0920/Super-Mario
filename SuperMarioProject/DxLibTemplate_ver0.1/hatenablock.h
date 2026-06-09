@@ -1,17 +1,15 @@
 #pragma once
 
 #include "entityObject.h"
+#include"blockBase.h"
 
-class hatenablock : public Object
+class hatenablock : public BlockBase
 {
 private:
-    float x;
-    float y;
 
 public:
-    hatenablock(float x, float y);
+    hatenablock(Rect rect);
 
     void update() override;
 
-    void render();
 };
