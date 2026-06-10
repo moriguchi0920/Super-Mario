@@ -76,7 +76,7 @@ public:
 	// オブジェクト生成の引数なしバージョン
 	static _T_* createObject()
 	{
-		//static_assert(std::is_base_of(Object, _T_), "Objectを継承していないクラスは生成出来ません");
+		static_assert(std::is_base_of<Object, _T_>::value, "Objectを継承していないクラスは生成出来ません");
 		auto newObject = std::make_shared<_T_>();
 		auto castedObj = std::static_pointer_cast<Object>(newObject);
 

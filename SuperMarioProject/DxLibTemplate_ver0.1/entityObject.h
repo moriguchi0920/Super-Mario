@@ -95,7 +95,7 @@ public:
 		components.clear();
 	}
 
-	inline int getId()
+	inline const int getId() const
 	{
 		return id;
 	}
@@ -155,6 +155,8 @@ public:
 	// コンポーネント取得
 	std::weak_ptr<_T_> getComponent()
 	{
+
+		static_assert(std::is_base_of<Component, _T_>::value, "Componentクラスを継承していないクラスがgetComponentに指定されています");
 		// 範囲for文でコンポーネントの配列を回し、指定された型のコンポーネントがあれば返す
 		for (auto& ptr : components)
 		{
@@ -173,6 +175,7 @@ public:
 	// 同じコンポーネントが複数ある場合のコンポーネント取得
 	std::vector<std::weak_ptr<_T_>> getComponentArray()
 	{
+		static_assert(std::is_base_of<Component, _T_>::value, "Componentクラスを継承していないクラスがgetComponentに指定されています");
 		std::vector<std::weak_ptr<_T_>> coms;
 		// 範囲for文でコンポーネントの配列を回し、指定された型のコンポーネントがあれば返す
 		for (auto& ptr : components)
@@ -195,6 +198,7 @@ public:
 	// コンポーネント削除
 	void removeComponent()
 	{
+		static_assert(std::is_base_of<Component, _T_>::value, "Componentクラスを継承していないクラスがremoveComponentに指定されています");
 		// remove_ifにラムダ式を渡し、dynamic_pointer_castの結果がnullptrでないものを削除するようにする
 		// 学習要素：ラムダ式は、[キャプチャ](引数) -> 戻り値 {関数の内容}で書くことができる。今回は、引数はshared_ptr<Component>&で、戻り値はboolで、関数の内容は、dynamic_pointer_castの結果がnullptrでないものを削除するようにする
 		// キャプチャは、[]の中に、外部の変数を指定することができる。今回は、_T_を指定することで、テンプレート引数をラムダ式の中で使えるようにする

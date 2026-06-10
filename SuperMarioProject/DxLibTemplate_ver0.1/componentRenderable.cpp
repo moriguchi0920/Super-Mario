@@ -2,9 +2,6 @@
 #include"DxLib.h"
 #include"componentTransform.h"
 
-const float ComponentRenderable::PRIORITY_DEFAULT = 0.5f;
-const float ComponentRenderable::PRIORITY_MIN = 0.0f;
-const float ComponentRenderable::PRIORITY_MAX = 1.0f;
 
 
 ComponentRenderable::ComponentRenderable(int objectId, float _priority) : Component(objectId)

@@ -15,7 +15,7 @@ Floor::Floor(float x, float width) : BlockBase(Rect(Point(x, FLOOR_BASE_Y), Poin
 	Rect rect(Point(x, FLOOR_BASE_Y),Point(width, WINDOW_HEIGHT));
 	getComponent<ComponentCollisionRect>().lock()->addTag(ICollisionTag::FLOOR);
 
-	addComponent<ComponentRenderableRect>(this->id,0.5,  rect);
+	addComponent<ComponentRenderableRect>(this->id,ComponentRenderable::PRIORITY_DEFAULT,  rect);
 
 	auto comR = getComponent<ComponentRenderableRect>();
 

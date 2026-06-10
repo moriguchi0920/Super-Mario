@@ -19,7 +19,7 @@ rengablock::rengablock(Rect rect) : BlockBase(rect)
         colRect.lock()->addTag(ICollisionTag::BLOCK);
     }
 
-    auto renderRect = addComponent<ComponentRenderableRect>(id, 0.5, rect);
+    auto renderRect = addComponent<ComponentRenderableRect>(id, ComponentRenderable::PRIORITY_DEFAULT, rect);
 
     if (!renderRect.expired())
     {

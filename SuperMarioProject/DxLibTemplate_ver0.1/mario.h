@@ -6,10 +6,11 @@ class Circle;
 class Mario : public Object
 {
 private:
+	// 移動状態変更用ステートマシン
 	StateMachine<Mario> moveStateMachine;
-
+	// デカマリオ、ファイヤーマリオ変更用ステートマシン
 	StateMachine<Mario> varyStateMachine;
-
+	// スター取得時の無敵判定用ステートマシン
 	StateMachine<Mario> starStateMachine;
 
 	float jumpTranslationY;

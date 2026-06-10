@@ -12,7 +12,7 @@ Dokan::Dokan(float x, float y): Object(ObjectManager::makeId())
     Rect rect(Point(x, 160.0f), Point(y, 50.0f));
     addComponent<ComponentCollisionRect>(this->id, rect).lock()->addTag(ICollisionTag::BLOCK);
     // 緑の四角（土管ハリボテ）
-    addComponent<ComponentRenderableRect>(this->id, 0.5, rect);
+    addComponent<ComponentRenderableRect>(this->id, ComponentRenderable::PRIORITY_DEFAULT, rect);
 
     // 緑色に設定
     auto comR = getComponent<ComponentRenderableRect>();

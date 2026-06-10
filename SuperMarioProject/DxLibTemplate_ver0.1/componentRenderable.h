@@ -29,14 +29,16 @@ public:
 		Pos center;
 	};
 
-protected :
 	// •`‰æ—Dæ‡ˆÊ‚Ì”ÍˆÍ
 	// 0.0f
-	static const float PRIORITY_MIN;
+	static constexpr float PRIORITY_MIN = 0.0f;
 	// 0.5f
-	static const float PRIORITY_MAX;
+	static constexpr float PRIORITY_DEFAULT = 0.5f;
 	// 1.0f
-	static const float PRIORITY_DEFAULT;
+	static constexpr float PRIORITY_MAX = 1.0f;
+
+protected :
+
 
 	// •`‰æ—Dæ‡ˆÊ•Ï”
 	float priority;
