@@ -171,6 +171,9 @@
     <ClCompile Include="hatenablock.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -285,6 +288,9 @@
       <Filter>System\Object</Filter>
     </ClInclude>
     <ClInclude Include="hatenablock.h">
+      <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="background.h">
       <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>

@@ -158,6 +158,7 @@
     <ClCompile Include="AnimationDataSet.cpp" />
     <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="AnimationRepository.cpp" />
+    <ClCompile Include="background.cpp" />
     <ClCompile Include="blockBase.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="componentCollision.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="AnimationDataSet.h" />
     <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="AnimationRepository.h" />
+    <ClInclude Include="background.h" />
     <ClInclude Include="blockBase.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="collisionTag.h" />
