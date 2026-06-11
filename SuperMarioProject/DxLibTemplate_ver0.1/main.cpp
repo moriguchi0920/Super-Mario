@@ -52,13 +52,52 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-
-	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 10, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE *11, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 12, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 11, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 12, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 13, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 71, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 89, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 100, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 103, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 103, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 106, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 123, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 124, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 167, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+
+
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 10, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 12, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 14, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 70, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 72, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 74, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 75, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 76, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 77, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 78, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 79, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 80, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 81, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 82, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 86, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 87, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 88, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 89, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 95, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 96, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 112, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 115, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 116, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 117, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 122, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 123, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 124, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 125, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 165, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 166, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 168, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+
 
 
 	//ObjectManager::createObject<rengablock>(80.0f, 130.0f);
