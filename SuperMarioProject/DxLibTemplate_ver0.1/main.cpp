@@ -18,6 +18,7 @@
 #include"hardBlock.h"
 #include"goomba.h"
 #include"koopaTroopa.h"
+#include"background.h"
 #include "DxLib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -42,6 +43,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	ObjectManager::getInstance();
 
+
+	Background::setNextInfo(Background::Type::CLOUD_1, Float2(160.0f, 30.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::MOUNTAIN_1, Float2(130.0f, 195.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::PLANT_3, Float2(72.0f, 200.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::PLANT_1, Float2(235.0f, 200.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::CLOUD_3, Float2(320.0f, 40.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::CLOUD_2, Float2(490.0f, 30.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::PLANT_2, Float2(580.0f, 200.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::MOUNTAIN_2, Float2(700.0f,185.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::CLOUD_1, Float2(840.0f, 30.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::PLANT_3, Float2(900.0f, 200.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::MOUNTAIN_1, Float2(960.0f, 195.0f));
+	ObjectManager::createObject<Background>();
+	Background::setNextInfo(Background::Type::CLOUD_1, Float2(1020.0f, 30.0f));
+	ObjectManager::createObject<Background>();
+
 	ObjectManager::createObject<Mario>();
 	ObjectManager::createObject<Floor>(0.0f, 1000.0f);
 	ObjectManager::createObject<Floor>(1050.0f, 200.0f);
@@ -55,6 +82,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
 
+
+	SetBackgroundColor(107, 140, 255);
 
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 11, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
