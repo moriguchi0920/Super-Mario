@@ -131,6 +131,121 @@ void Mario::update()
 						}
 						break;
 					}
+
+					// レンガブロック
+					case ICollisionTag::RENGA:
+					{
+						// 上辺
+						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+
+							if (targetRectComp)
+							{
+								if (colInfoSp->getColliding())
+								{
+									Rect trect = targetRectComp->get();
+
+									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
+
+									auto cur = transformG.lock()->getTranslation();
+
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+
+									transformG.lock()->setLanding(true);
+								}
+								else if (colInfoSp->getExit())
+								{
+									transformG.lock()->setLanding(false);
+								}
+							}
+						}
+
+						// 下辺
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+
+							if (targetRectComp)
+							{
+								if (colInfoSp->getEnter())
+								{
+									int targetId;
+
+									if (colInfoSp->getObjectIdCol1() == id)
+									{
+										targetId = colInfoSp->getObjectIdCol2();
+									}
+									else
+									{
+										targetId = colInfoSp->getObjectIdCol1();
+									}
+
+									auto targetObj = ObjectManager::getObjectById(targetId);
+
+									if (!targetObj.expired())
+									{
+										targetObj.lock()->die();
+									}
+
+									Rect trect = targetRectComp->get();
+
+									transformG.lock()->setPosY(trect.begin.y + trect.size.y);
+
+									auto cur = transformG.lock()->getTranslation();
+
+									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+								}
+							}
+						}
+
+						// 左辺
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+
+							if (targetRectComp)
+							{
+								if (colInfoSp->getColliding())
+								{
+									Rect trect = targetRectComp->get();
+
+									transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
+
+									auto cur = transformG.lock()->getTranslation();
+
+									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+								}
+							}
+						}
+
+						// 右辺
+						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
+						{
+							auto targetShape = colInfoSp->getTarget(id).lock();
+							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+
+							if (targetRectComp)
+							{
+								if (colInfoSp->getColliding())
+								{
+									Rect trect = targetRectComp->get();
+
+									transformG.lock()->setPosX(trect.begin.x + trect.size.x);
+
+									auto cur = transformG.lock()->getTranslation();
+
+									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+								}
+							}
+						}
+
+						break;
+					}
+
 					// ブロック
 					case ICollisionTag::BLOCK:
 					{
@@ -170,6 +285,7 @@ void Mario::update()
 
 							}
 						}
+
 						// 下辺
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
 						{
@@ -241,10 +357,14 @@ void Mario::update()
 						break;
 					}
 					}
+
 				}
 			}
 		}
 	}
+
+
+
 	// 重力更新
 	transformG.lock()->gravityUpdate();
 	// 接地しているときのダッシュ、ジャンプ切り替え処理

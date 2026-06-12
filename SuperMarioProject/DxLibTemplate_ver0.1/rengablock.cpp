@@ -16,7 +16,8 @@ rengablock::rengablock(Rect rect) : BlockBase(rect)
     auto colRect = getComponent<ComponentCollisionRect>();
     if (!colRect.expired())
     {
-        colRect.lock()->addTag(ICollisionTag::BLOCK);
+        colRect.lock()->addTag(ICollisionTag::RENGA);
+        printfDx("Renga Tag = %d\n", colRect.lock()->getTag()->tag);
     }
 
     auto renderRect = addComponent<ComponentRenderableRect>(id, ComponentRenderable::PRIORITY_DEFAULT, rect);

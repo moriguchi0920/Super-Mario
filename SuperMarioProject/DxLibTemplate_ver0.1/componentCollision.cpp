@@ -36,6 +36,9 @@ void ComponentCollisionShape::addTag(int _tag)
 	case ICollisionTag::TAG::BLOCK:
 		collisionTag = std::make_unique<CollisionTagBlock>();
 		break;
+	case ICollisionTag::TAG::RENGA:
+		collisionTag = std::make_unique<CollisionTagRenga>();
+		break;
 	}
 }
 
@@ -61,6 +64,9 @@ void ComponentCollisionShape::changeTag(int _tag)
 		break;
 	case ICollisionTag::TAG::BLOCK:
 		collisionTag = std::make_unique<CollisionTagBlock>();
+		break;
+	case ICollisionTag::TAG::RENGA:
+		collisionTag = std::make_unique<CollisionTagRenga>();
 		break;
 	}
 }

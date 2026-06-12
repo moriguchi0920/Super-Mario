@@ -12,6 +12,7 @@ public:
 		SHELL,
 		ENEMY,
 		BLOCK,
+		RENGA,
 		NUM
 	};
 	int tag;
@@ -53,6 +54,9 @@ public:
 		case BLOCK:
 			ret = false;
 			break;
+		case RENGA:
+			ret = false;
+			break;
 		}
 
 		return ret;
@@ -87,6 +91,9 @@ public:
 			ret = true;
 			break;
 		case BLOCK:
+			ret = true;
+			break;
+		case RENGA:
 			ret = true;
 			break;
 		}
@@ -235,7 +242,58 @@ public:
 			ret = false;
 			break;
 
+		case RENGA:
+			ret = false;
+			break;
+
 		}
 		return ret;
 	}
 };
+
+class CollisionTagRenga : public ICollisionTag
+{
+public:
+	inline CollisionTagRenga()
+	{
+		tag = TAG::RENGA;
+	}
+
+	inline bool canCollide(int othertag)
+	{
+		bool ret = false;
+
+		switch (othertag)
+		{
+		case FLOOR:
+			ret = false;
+			break;
+
+		case MARIO:
+			ret = true;
+			break;
+
+		case FIREBALL:
+			ret = true;
+			break;
+
+		case ENEMY:
+			ret = true;
+			break;
+
+		case SHELL:
+			ret = true;
+			break;
+
+		case BLOCK:
+			ret = false;
+			break;
+
+		case RENGA:
+			ret = false;
+			break;
+		}
+
+		return ret;
+	}
+}; 
