@@ -15,6 +15,9 @@
 #include "rengablock.h"
 #include "dokan.h"
 #include"hatenablock.h"
+#include"hardBlock.h"
+#include"goomba.h"
+#include"koopaTroopa.h"
 #include "DxLib.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -46,6 +49,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
 
 	ObjectManager::createObject<Dokan>(300.0f, 30.0f);
+	//ObjectManager::createObject<Goomba>(Rect(Float2(400.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<KoopaTroopa>(Rect(Float2(400.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<Dokan>(500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
@@ -99,6 +104,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 168, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 
 
+	ObjectManager::createObject<HardBlock>(Rect(Float2(SPRITE_SIZE * 10, SPRITE_SIZE * 10), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 
 	//ObjectManager::createObject<rengablock>(80.0f, 130.0f);
 	//ObjectManager::createObject<hatenablock>(50.0f, 130.0f);

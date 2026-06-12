@@ -70,6 +70,15 @@
     <Filter Include="System\Event">
       <UniqueIdentifier>{fd7de2ec-4043-42fc-9064-d62be4f52617}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Object\Block">
+      <UniqueIdentifier>{3e904670-b3c0-400b-be63-3191bfa393aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Object\Enemy">
+      <UniqueIdentifier>{f9b5e0d5-09b4-4972-9a24-7ef9faf50e75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Object\Item">
+      <UniqueIdentifier>{63aeb1b8-3648-483c-8aad-a79fff0fb2f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,9 +156,6 @@
     <ClCompile Include="componentGravity.cpp">
       <Filter>System\Component\Gravity</Filter>
     </ClCompile>
-    <ClCompile Include="blockBase.cpp">
-      <Filter>System\Object</Filter>
-    </ClCompile>
     <ClCompile Include="mario.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
@@ -162,14 +168,29 @@
     <ClCompile Include="eventServer.cpp">
       <Filter>System\Event</Filter>
     </ClCompile>
-    <ClCompile Include="rengablock.cpp">
-      <Filter>System\Object</Filter>
-    </ClCompile>
     <ClCompile Include="dokan.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
-    <ClCompile Include="hatenablock.cpp">
+    <ClCompile Include="background.cpp">
       <Filter>System\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="blockBase.cpp">
+      <Filter>System\Object\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="hatenablock.cpp">
+      <Filter>System\Object\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="rengablock.cpp">
+      <Filter>System\Object\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="hardBlock.cpp">
+      <Filter>System\Object\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="goomba.cpp">
+      <Filter>System\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="koopaTroopa.cpp">
+      <Filter>System\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,9 +278,6 @@
     <ClInclude Include="StateMachine.h">
       <Filter>System\Object\State</Filter>
     </ClInclude>
-    <ClInclude Include="blockBase.h">
-      <Filter>System\Object</Filter>
-    </ClInclude>
     <ClInclude Include="collisionTag.h">
       <Filter>System\Component\Collision</Filter>
     </ClInclude>
@@ -278,14 +296,29 @@
     <ClInclude Include="eventServer.h">
       <Filter>System\Event</Filter>
     </ClInclude>
-    <ClInclude Include="rengablock.h">
-      <Filter>System\Object</Filter>
-    </ClInclude>
     <ClInclude Include="dokan.h">
       <Filter>System\Object</Filter>
     </ClInclude>
-    <ClInclude Include="hatenablock.h">
+    <ClInclude Include="background.h">
       <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="blockBase.h">
+      <Filter>System\Object\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="hatenablock.h">
+      <Filter>System\Object\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="rengablock.h">
+      <Filter>System\Object\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="hardBlock.h">
+      <Filter>System\Object\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="goomba.h">
+      <Filter>System\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="koopaTroopa.h">
+      <Filter>System\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -37,3 +37,15 @@ void hatenablock::update()
     comR.lock()->syncFromTransform();
 
 }
+
+void hatenablock::activateProc()
+{
+}
+
+void hatenablock::deactivateProc()
+{
+}
+
+void hatenablock::deathProc()
+{
+}

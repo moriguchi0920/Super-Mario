@@ -158,6 +158,7 @@
     <ClCompile Include="AnimationDataSet.cpp" />
     <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="AnimationRepository.cpp" />
+    <ClCompile Include="background.cpp" />
     <ClCompile Include="blockBase.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="componentCollision.cpp" />
@@ -174,9 +175,12 @@
     <ClCompile Include="eventServer.cpp" />
     <ClCompile Include="Float2.cpp" />
     <ClCompile Include="floor.cpp" />
+    <ClCompile Include="goomba.cpp" />
+    <ClCompile Include="hardBlock.cpp" />
     <ClCompile Include="hatenablock.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="koopaTroopa.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mario.cpp" />
@@ -194,6 +198,7 @@
     <ClInclude Include="AnimationDataSet.h" />
     <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="AnimationRepository.h" />
+    <ClInclude Include="background.h" />
     <ClInclude Include="blockBase.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="collisionTag.h" />
@@ -213,9 +218,12 @@
     <ClInclude Include="eventServer.h" />
     <ClInclude Include="Float2.h" />
     <ClInclude Include="floor.h" />
+    <ClInclude Include="goomba.h" />
+    <ClInclude Include="hardBlock.h" />
     <ClInclude Include="hatenablock.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="koopaTroopa.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="mario.h" />
     <ClInclude Include="objectManager.h" />

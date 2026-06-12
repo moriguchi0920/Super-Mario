@@ -39,6 +39,32 @@ void ComponentCollisionShape::addTag(int _tag)
 	}
 }
 
+void ComponentCollisionShape::changeTag(int _tag)
+{
+	collisionTag.reset();
+	switch (_tag)
+	{
+	case ICollisionTag::TAG::FLOOR:
+		collisionTag = std::make_unique<CollisionTagFloor>();
+		break;
+	case ICollisionTag::TAG::MARIO:
+		collisionTag = std::make_unique<CollisionTagMario>();
+		break;
+	case ICollisionTag::TAG::FIREBALL:
+		collisionTag = std::make_unique<CollisionTagFireBall>();
+		break;
+	case ICollisionTag::TAG::ENEMY:
+		collisionTag = std::make_unique<CollisionTagEnemy>();
+		break;
+	case ICollisionTag::TAG::SHELL:
+		collisionTag = std::make_unique<CollisionTagShell>();
+		break;
+	case ICollisionTag::TAG::BLOCK:
+		collisionTag = std::make_unique<CollisionTagBlock>();
+		break;
+	}
+}
+
 ICollisionTag* ComponentCollisionShape::getTag()
 {
 	return collisionTag.get();

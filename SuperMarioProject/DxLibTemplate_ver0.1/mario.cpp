@@ -25,11 +25,6 @@ Mario::Mario() : Object(ObjectManager::makeId())
 
 	// 当たり判定コンポーネント追加(タグも追加しないと動作がうまくいかない)
 	this->addComponent<ComponentCollisionRect>(id, rect).lock()->addTag(ICollisionTag::MARIO);
-
-	//Circle cirTop(Point(0, 0 - MARIO_RADIUS), MARIO_COL_TOP_RADIUS);
-	//this->addComponent<ComponentCollisionCircle>(id, cirTop).lock()->addTag(ICollisionTag::MARIO);
-
-	
 	// 描画コンポーネント追加
 	this->addComponent<ComponentRenderableRect>(id,ComponentRenderable::PRIORITY_DEFAULT, rect);
 
@@ -300,6 +295,18 @@ void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> da
 
 }
 
+void Mario::activateProc()
+{
+}
+
+void Mario::deactivateProc()
+{
+}
+
+void Mario::deathProc()
+{
+}
+
 void Mario::walk()
 {
 
@@ -339,6 +346,11 @@ void Mario::walk()
 
 
 		transformG.lock()->translate();
+		if (transformG.lock()->getPosition().x <= 0.0f)
+		{
+			transformG.lock()->setPosition(Point(0.0f, transformG.lock()->getPosition().y));
+		}
+
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));
@@ -373,6 +385,10 @@ void Mario::jump()
 	{
 		//transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
 		transformG.lock()->translate();
+		if (transformG.lock()->getPosition().x <= 0.0f)
+		{
+			transformG.lock()->setPosition(Point(0.0f, transformG.lock()->getPosition().y));
+		}
 
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
@@ -428,6 +444,11 @@ void Mario::dash()
 
 
 		transformG.lock()->translate();
+		if (transformG.lock()->getPosition().x <= 0.0f)
+		{
+			transformG.lock()->setPosition(Point(0.0f, transformG.lock()->getPosition().y));
+		}
+
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));

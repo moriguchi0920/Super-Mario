@@ -12,4 +12,10 @@ public:
 
     void update() override;
 
+    void activateProc() override;
+
+    void deactivateProc() override;
+
+    void deathProc() override;
+
 };
