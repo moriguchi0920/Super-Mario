@@ -53,6 +53,10 @@ Background::Background() : Object(ObjectManager::makeId())
 	{
 		imgHandle = LoadGraph("Stage/Background_Plant_3.png");
 	}
+	else if (g_nextType == CASTLE)
+	{
+		imgHandle = LoadGraph("Stage/Castle.png");
+	}
 
 	this->addComponent<ComponentRenderableImage>(this->id, ComponentRenderable::PRIORITY_MIN, imgHandle);
 

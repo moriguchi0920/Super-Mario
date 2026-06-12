@@ -14,6 +14,7 @@ public:
 		PLANT_1,
 		PLANT_2,
 		PLANT_3,
+		CASTLE
 	};
 
 	Background();
