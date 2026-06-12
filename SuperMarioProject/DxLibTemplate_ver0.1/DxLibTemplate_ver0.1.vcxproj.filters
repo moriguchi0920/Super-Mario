@@ -186,6 +186,12 @@
     <ClCompile Include="hardBlock.cpp">
       <Filter>System\Object\Block</Filter>
     </ClCompile>
+    <ClCompile Include="goomba.cpp">
+      <Filter>System\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="koopaTroopa.cpp">
+      <Filter>System\Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -307,6 +313,12 @@
     </ClInclude>
     <ClInclude Include="hardBlock.h">
       <Filter>System\Object\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="goomba.h">
+      <Filter>System\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="koopaTroopa.h">
+      <Filter>System\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

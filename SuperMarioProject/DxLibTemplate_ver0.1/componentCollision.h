@@ -58,6 +58,8 @@ protected:
 public:
 	void addTag(int _tag);
 
+	void changeTag(int _tag);
+
 	ICollisionTag* getTag();
 
 	// ‚Ç‚ñ‚ÈŒ`‚ğ‚µ‚Ä‚¢‚é‚©‚ğ•Ô‚·ŠÖ”

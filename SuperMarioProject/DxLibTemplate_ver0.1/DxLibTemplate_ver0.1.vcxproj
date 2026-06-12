@@ -180,6 +180,7 @@
     <ClCompile Include="hatenablock.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="koopaTroopa.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mario.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="hatenablock.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="koopaTroopa.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="mario.h" />
     <ClInclude Include="objectManager.h" />
