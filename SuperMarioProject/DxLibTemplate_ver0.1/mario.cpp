@@ -339,6 +339,11 @@ void Mario::walk()
 
 
 		transformG.lock()->translate();
+		if (transformG.lock()->getPosition().x <= 0.0f)
+		{
+			transformG.lock()->setPosition(Point(0.0f, transformG.lock()->getPosition().y));
+		}
+
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));
@@ -373,6 +378,10 @@ void Mario::jump()
 	{
 		//transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
 		transformG.lock()->translate();
+		if (transformG.lock()->getPosition().x <= 0.0f)
+		{
+			transformG.lock()->setPosition(Point(0.0f, transformG.lock()->getPosition().y));
+		}
 
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
@@ -428,6 +437,11 @@ void Mario::dash()
 
 
 		transformG.lock()->translate();
+		if (transformG.lock()->getPosition().x <= 0.0f)
+		{
+			transformG.lock()->setPosition(Point(0.0f, transformG.lock()->getPosition().y));
+		}
+
 		if (WINDOW_WIDTH / 2 <= transformG.lock()->getPosition().x + SPRITE_SIZE / 2)
 		{
 			transformG.lock()->setPosition(Point(WINDOW_WIDTH / 2.0f - SPRITE_SIZE / 2, transformG.lock()->getPosition().y));

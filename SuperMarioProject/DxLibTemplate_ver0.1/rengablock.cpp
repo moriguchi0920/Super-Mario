@@ -49,3 +49,7 @@ void rengablock::update()
     comR.lock()->syncFromTransform();
 
 }
+
+void rengablock::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
+{
+}
