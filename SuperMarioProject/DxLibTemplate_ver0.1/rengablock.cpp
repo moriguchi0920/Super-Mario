@@ -53,3 +53,15 @@ void rengablock::update()
 void rengablock::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 {
 }
+
+void rengablock::activateProc()
+{
+}
+
+void rengablock::deactivateProc()
+{
+}
+
+void rengablock::deathProc()
+{
+}

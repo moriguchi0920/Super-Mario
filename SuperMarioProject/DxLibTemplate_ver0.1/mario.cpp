@@ -25,11 +25,6 @@ Mario::Mario() : Object(ObjectManager::makeId())
 
 	// 当たり判定コンポーネント追加(タグも追加しないと動作がうまくいかない)
 	this->addComponent<ComponentCollisionRect>(id, rect).lock()->addTag(ICollisionTag::MARIO);
-
-	//Circle cirTop(Point(0, 0 - MARIO_RADIUS), MARIO_COL_TOP_RADIUS);
-	//this->addComponent<ComponentCollisionCircle>(id, cirTop).lock()->addTag(ICollisionTag::MARIO);
-
-	
 	// 描画コンポーネント追加
 	this->addComponent<ComponentRenderableRect>(id,ComponentRenderable::PRIORITY_DEFAULT, rect);
 
@@ -298,6 +293,18 @@ void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> da
 {
 
 
+}
+
+void Mario::activateProc()
+{
+}
+
+void Mario::deactivateProc()
+{
+}
+
+void Mario::deathProc()
+{
 }
 
 void Mario::walk()
