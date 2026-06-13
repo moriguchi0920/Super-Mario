@@ -187,7 +187,80 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 168, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 
 
-	ObjectManager::createObject<HardBlock>(Rect(Float2(SPRITE_SIZE * 10, SPRITE_SIZE * 10), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	for (int y = 0; y < 4; y++)
+	{
+		for (int x = 0; x <= y; x++)
+		{
+			ObjectManager::createObject<HardBlock>(
+				Rect(
+					Float2(
+						SPRITE_SIZE * (130 -  x) , SPRITE_SIZE * (9 + y)
+					),
+					Float2(SPRITE_SIZE, SPRITE_SIZE)
+				)
+			);
+		}
+	}
+
+	for (int y = 0; y < 4; y++)
+	{
+		for (int x = 0; x <= y; x++)
+		{
+			ObjectManager::createObject<HardBlock>(
+				Rect(
+					Float2(
+						SPRITE_SIZE * (133 + x), SPRITE_SIZE * (9 + y)
+					),
+					Float2(SPRITE_SIZE, SPRITE_SIZE)
+				)
+			);
+		}
+	}
+
+	for (int y = 1; y < 5; y++)
+	{
+		for (int x = 0; x <= y; x++)
+		{
+			ObjectManager::createObject<HardBlock>(
+				Rect(
+					Float2(
+						SPRITE_SIZE * (145 - x), SPRITE_SIZE * (8 + y)
+					),
+					Float2(SPRITE_SIZE, SPRITE_SIZE)
+				)
+			);
+		}
+	}
+
+	for (int y = 0; y < 4; y++)
+	{
+		for (int x = 0; x <= y; x++)
+		{
+			ObjectManager::createObject<HardBlock>(
+				Rect(
+					Float2(
+						SPRITE_SIZE * (148 + x), SPRITE_SIZE * (9 + y)
+					),
+					Float2(SPRITE_SIZE, SPRITE_SIZE)
+				)
+			);
+		}
+	}
+
+	for (int y = 0; y < 8; y++)
+	{
+		for (int x = 0; x <= y; x++)
+		{
+			ObjectManager::createObject<HardBlock>(
+				Rect(
+					Float2(
+						SPRITE_SIZE * ( 190 - x), SPRITE_SIZE * (5 + y)
+					),
+					Float2(SPRITE_SIZE, SPRITE_SIZE)
+				)
+			);
+		}
+	}
 
 	//ObjectManager::createObject<rengablock>(80.0f, 130.0f);
 	//ObjectManager::createObject<hatenablock>(50.0f, 130.0f);
