@@ -153,7 +153,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(2500.0f, 30.0f);
-	ObjectManager::createObject<Dokan>(2898.0f, 30.0f);
+	ObjectManager::createObject<Dokan>(2890.0f, 30.0f);
 
 
 	SetBackgroundColor(107, 140, 255);

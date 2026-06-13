@@ -12,7 +12,7 @@
 Mario::Mario() : Object(ObjectManager::makeId())
 {
 	// とりあえず座標は0,0で初期化
-	Rect rect(Point(0, 0), Point(MARIO_SIZE, MARIO_SIZE ));
+	Rect rect(Point(0, -6.0f), Point(MARIO_SIZE, MARIO_SIZE ));
 
 	// 重力込み移動コンポーネント追加
 	this->addComponent<ComponentGravity>(id);
@@ -75,206 +75,110 @@ void Mario::update()
 	}
 
 	// -------------------------------------------------------------------------
-	// 1. 当たり判定座標更新と当たった時の処理 (ループ内のアニメ処理は下に移動)
+	// 1. 当たり判定座標更新と当たった時の処理
 	// -------------------------------------------------------------------------
 	if (colRect.lock())
 	{
 		colRect.lock()->update();
+
+		bool isTouchingTop = false;
+
+		// すべての衝突情報を1つのループでシンプルかつ確実に処理する
 		for (auto& colInfo : colRect.lock()->getInfo())
 		{
-			if (!colInfo.expired())
+			if (colInfo.expired()) continue;
+			auto colInfoSp = colInfo.lock();
+			if (colInfoSp->getTarget(id).expired()) continue;
+			if (!colInfoSp->getColliding()) continue; 
+
+			
+			int side = colInfoSp->getRectCollideSide();
+			if (colInfoSp->getObjectIdCol1() != id)
 			{
-				auto colInfoSp = colInfo.lock();
-				if (!colInfoSp->getTarget(id).expired())
+				if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT;
+				else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
+				else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP) side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
+				else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM) side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+			}
+
+			auto targetTag = colInfoSp->getTarget(id).lock()->getTag()->tag;
+
+		
+			if (targetTag == ICollisionTag::FLOOR || targetTag == ICollisionTag::RENGA || targetTag == ICollisionTag::BLOCK)
+			{
+				auto targetShape = colInfoSp->getTarget(id).lock();
+				auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
+				if (targetRectComp)
 				{
-					int side = colInfoSp->getRectCollideSide();
-					if (colInfoSp->getObjectIdCol1() != id)
+					Rect trect = targetRectComp->get();
+
+					
+					float marioBottom = transformG.lock()->getPosition().y + MARIO_SIZE;
+					float marioLeft = transformG.lock()->getPosition().x;
+					float marioRight = marioLeft + MARIO_SIZE;
+
+					
+					if (fabsf(marioBottom - 5.5f - trect.begin.y) < 6.0f)
 					{
-						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT;
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP) side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM) side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+
+						if (marioRight > trect.begin.x - 1.5f && marioLeft < trect.begin.x + trect.size.x + 1.5f)
+						{
+							side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+						}
 					}
 
-					switch (colInfoSp->getTarget(id).lock()->getTag()->tag)
+					
+					if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
 					{
-					case ICollisionTag::FLOOR:
-					{
-						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getColliding())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
-									transformG.lock()->setLanding(true);
-								}
-								else
-								{
-									transformG.lock()->setLanding(false);
-								}
-							}
-						}
-						break;
+						transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE + 5.5f);
+						auto cur = transformG.lock()->getTranslation();
+						transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+						transformG.lock()->setLanding(true);
+						isTouchingTop = true;
 					}
-					case ICollisionTag::RENGA:
+				
+					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
 					{
-						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
+						if (colInfoSp->getEnter()) // ぶつかった瞬間のみ
 						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
+							if (targetTag == ICollisionTag::RENGA)
 							{
-								if (colInfoSp->getColliding())
+								int targetId = (colInfoSp->getObjectIdCol1() == id) ? colInfoSp->getObjectIdCol2() : colInfoSp->getObjectIdCol1();
+								auto targetObj = ObjectManager::getObjectById(targetId);
+								if (!targetObj.expired())
 								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
-									transformG.lock()->setLanding(true);
-								}
-								else if (colInfoSp->getExit())
-								{
-									transformG.lock()->setLanding(false);
+									targetObj.lock()->die();
 								}
 							}
+							transformG.lock()->setPosY(trect.begin.y + trect.size.y);
+							auto cur = transformG.lock()->getTranslation();
+							transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
 						}
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getEnter())
-								{
-									int targetId = (colInfoSp->getObjectIdCol1() == id) ? colInfoSp->getObjectIdCol2() : colInfoSp->getObjectIdCol1();
-									auto targetObj = ObjectManager::getObjectById(targetId);
-									if (!targetObj.expired())
-									{
-										targetObj.lock()->die();
-									}
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y + trect.size.y);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
-								}
-							}
-						}
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getColliding())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
-								}
-							}
-						}
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getColliding())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosX(trect.begin.x + trect.size.x);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
-								}
-							}
-						}
-						break;
 					}
-					case ICollisionTag::BLOCK:
+					
+					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
 					{
-						if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getColliding())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
-									transformG.lock()->setLanding(true);
-								}
-								else if (colInfoSp->getExit())
-								{
-									transformG.lock()->setLanding(false);
-								}
-							}
-						}
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getEnter())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosY(trect.begin.y + trect.size.y);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
-								}
-							}
-						}
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getColliding())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
-								}
-							}
-						}
-						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
-						{
-							auto targetShape = colInfoSp->getTarget(id).lock();
-							auto targetRectComp = std::dynamic_pointer_cast<ComponentCollisionRect>(targetShape);
-							if (targetRectComp)
-							{
-								if (colInfoSp->getColliding())
-								{
-									Rect trect = targetRectComp->get();
-									transformG.lock()->setPosX(trect.begin.x + trect.size.x);
-									auto cur = transformG.lock()->getTranslation();
-									transformG.lock()->setTranslation(Float2(0.0f, cur.y));
-								}
-							}
-						}
-						break;
+						transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
+						auto cur = transformG.lock()->getTranslation();
+						transformG.lock()->setTranslation(Float2(0.0f, cur.y));
 					}
+					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
+					{
+						transformG.lock()->setPosX(trect.begin.x + trect.size.x);
+						auto cur = transformG.lock()->getTranslation();
+						transformG.lock()->setTranslation(Float2(0.0f, cur.y));
 					}
 				}
 			}
 		}
+
+		
+		if (!isTouchingTop)
+		{
+			transformG.lock()->setLanding(false);
+		}
 	}
 
-	// -------------------------------------------------------------------------
-	// 2. 移動ステートマシンの事前入力チェック（無駄なchangeStateを防ぐ）
-	// -------------------------------------------------------------------------
 	transformG.lock()->gravityUpdate();
 
 	if (transformG.lock()->getLanding())
@@ -289,7 +193,6 @@ void Mario::update()
 		}
 		else if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT))
 		{
-			// 現在ダッシュ状態でなければ切り替える
 			if (moveStateMachine.getStateId() != MOVESTATE::MOV_DASH)
 			{
 				moveStateMachine.changeState(MOVESTATE::MOV_DASH);
@@ -298,7 +201,6 @@ void Mario::update()
 		}
 		else
 		{
-			// 現在歩き状態でなければ切り替える
 			if (moveStateMachine.getStateId() != MOVESTATE::MOV_WALK)
 			{
 				moveStateMachine.changeState(MOVESTATE::MOV_WALK);
@@ -307,16 +209,12 @@ void Mario::update()
 		}
 	}
 
-	// -------------------------------------------------------------------------
-	// 3. 各状態の計算処理（ここで walk() などが走り、摩擦により速度が減速される）
-	// -------------------------------------------------------------------------
+	
 	moveStateMachine.update(this);
 	varyStateMachine.update(this);
 	starStateMachine.update(this);
 
-	// -------------------------------------------------------------------------
-	// 4. ドリフト停止処理（確定した速度が極小なら完全に0にする）
-	// -------------------------------------------------------------------------
+	
 	if (!transformG.expired())
 	{
 		Float2 v = transformG.lock()->getTranslation();
@@ -329,14 +227,12 @@ void Mario::update()
 
 		transformG.lock()->setTranslation(v);
 	}
-	// -------------------------------------------------------------------------
-	// 5. アニメーションの決定と更新（すべての座標・速度が『確定した後』に実行する）
-	// -------------------------------------------------------------------------
+
+	
 	animTimer++;
 
 	if (colRect.lock())
 	{
-		
 		int currentStart = idleStart;
 		int currentCount = idleCount;
 
@@ -351,34 +247,30 @@ void Mario::update()
 
 		float speedX = fabsf(vel.x);
 
-	
 		if (!isGrounded)
 		{
-			currentStart = jumpStart; 
+			currentStart = jumpStart;
 			currentCount = jumpCount;
 		}
 		else
 		{
-			
 			if (speedX < 0.1f)
 			{
 				currentStart = idleStart;
-				currentCount = idleCount; 
+				currentCount = idleCount;
 			}
 			else
 			{
-				
-				currentStart = walkStart; 
-				currentCount = walkCount; 
+				currentStart = walkStart;
+				currentCount = walkCount;
 			}
 		}
 
-		
 		if (currentCount > 0)
 		{
 			if (currentCount == 1)
 			{
-				animFrame = 0; 
+				animFrame = 0;
 			}
 			else if (animTimer % 3 == 0)
 			{
@@ -391,12 +283,11 @@ void Mario::update()
 
 			if (!renderImage.expired())
 			{
-
 				renderImage.lock()->setImage(marioImages[targetImageIndex]);
 			}
 		}
 	}
-} // update()の終わり
+}
 void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 {
 
