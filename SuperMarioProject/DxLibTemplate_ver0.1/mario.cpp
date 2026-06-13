@@ -7,6 +7,7 @@
 #include"objectManager.h"
 #include"scrollManager.h"
 #include"DxLib.h"
+#include"soundManager.h"
 
 
 Mario::Mario() : Object(ObjectManager::makeId())
@@ -190,6 +191,14 @@ void Mario::update()
 			moveStateMachine.changeState(MOVESTATE::MOV_JUMP);
 			transformG.lock()->setTranslation(Float2(transformG.lock()->getTranslation().x, jumpTranslationY));
 			transformG.lock()->setLanding(false);
+
+			int jumpHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::SE_JUMP);
+			if (jumpHandle != -1)
+			{
+				// 効果音（SE）なので、1回だけ流す「DX_PLAYTYPE_BACK」を指定します
+				PlaySoundMem(jumpHandle, DX_PLAYTYPE_BACK);
+			}
+
 		}
 		else if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT))
 		{

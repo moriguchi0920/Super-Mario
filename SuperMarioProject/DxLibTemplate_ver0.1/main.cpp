@@ -37,7 +37,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SoundManager* pSound = SoundManager::getInstance();
 	pSound->setSoundInfo(SoundManager::PB_PLAY_BGM, "Sound/stage.wav");
-	pSound->setSoundInfo(SoundManager::SE_JUMP, "bin/Sound/jump.wav");
+	pSound->setSoundInfo(SoundManager::SE_JUMP, "Sound/jump.wav");
 	pSound->setSoundInfo(SoundManager::SE_BREAK, "bin/Sound/break.wav");
 
 	// “o˜^‚µ‚½‚à‚Ì‚ğ¡‚·‚®ƒ[ƒh‚·‚éI

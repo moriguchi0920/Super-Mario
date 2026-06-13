@@ -7,7 +7,13 @@ SoundManager::SoundManager()
 {
 	initSoundManager();
 
-	setSoundInfo(PB_PLAY_BGM, "Sound/stage.wav");
+	setSoundInfo(PB_PLAY_BGM, "Sound/stage.wav");//BGM
+	setSoundInfo(SE_JUMP, "Sound/jump.wav");//ジャンプ
+	setSoundInfo(SE_BREAK, "Sound/break.wav");//ブロック破壊
+	setSoundInfo(SE_PUCH, "Sound/puch.wav");//ブロック押す
+	setSoundInfo(SE_DEATH, "Sound/jump.wav");//死亡
+
+
 	//setSoundInfo(SE_FALLBALL, "bin/Sound/fall.wav");
 	//setSoundInfo(SE_SHOT, "bin/Sound/shot.wav");
 }
