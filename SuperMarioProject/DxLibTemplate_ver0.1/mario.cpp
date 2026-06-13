@@ -159,21 +159,51 @@ void Mario::update()
 					
 					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
 					{
-						transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
-						auto cur = transformG.lock()->getTranslation();
-						transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+						
+						float marioBottom = transformG.lock()->getPosition().y + MARIO_SIZE;
+						float cornerBuffer = 6.0f; 
+
+						if (marioBottom - 5.5f > trect.begin.y && (marioBottom - 5.5f - trect.begin.y) < cornerBuffer)
+						{
+							transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE + 5.5f);
+							auto cur = transformG.lock()->getTranslation();
+							transformG.lock()->setTranslation(Float2(cur.x, cur.y)); // Y速度（ジャンプの勢い）は殺さない！
+							transformG.lock()->setLanding(true);
+							isTouchingTop = true;
+						}
+						else
+						{
+							
+							transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
+							auto cur = transformG.lock()->getTranslation();
+							transformG.lock()->setTranslation(Float2(0.0f, cur.y)); // ここでもY速度は殺さず維持！
+						}
 					}
 					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
 					{
-						transformG.lock()->setPosX(trect.begin.x + trect.size.x);
-						auto cur = transformG.lock()->getTranslation();
-						transformG.lock()->setTranslation(Float2(0.0f, cur.y));
+						
+						float marioBottom = transformG.lock()->getPosition().y + MARIO_SIZE;
+						float cornerBuffer = 6.0f;
+
+						if (marioBottom - 5.5f > trect.begin.y && (marioBottom - 5.5f - trect.begin.y) < cornerBuffer)
+						{
+							transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE + 5.5f);
+							auto cur = transformG.lock()->getTranslation();
+							transformG.lock()->setTranslation(Float2(cur.x, cur.y));
+							transformG.lock()->setLanding(true);
+							isTouchingTop = true;
+						}
+						else
+						{
+							transformG.lock()->setPosX(trect.begin.x + trect.size.x);
+							auto cur = transformG.lock()->getTranslation();
+							transformG.lock()->setTranslation(Float2(0.0f, cur.y)); // Y速度は維持！
+						}
 					}
 				}
 			}
-		}
+		} 
 
-		
 		if (!isTouchingTop)
 		{
 			transformG.lock()->setLanding(false);
