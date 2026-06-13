@@ -93,9 +93,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Background>();
 	Background::setNextInfo(Background::Type::CLOUD_2, Float2(2000.0f, 45.0f));
 	ObjectManager::createObject<Background>();
-	Background::setNextInfo(Background::Type::PLANT_2, Float2(2135.0f, 200.0f));
+	Background::setNextInfo(Background::Type::PLANT_2, Float2(2111.5f, 200.0f));
 	ObjectManager::createObject<Background>();
-	Background::setNextInfo(Background::Type::MOUNTAIN_2, Float2(2255.0f, 185.0f));
+	Background::setNextInfo(Background::Type::MOUNTAIN_2, Float2(2225.0f, 185.0f));
 	ObjectManager::createObject<Background>();
 	Background::setNextInfo(Background::Type::CLOUD_1, Float2(2390.0f, 70.0f));
 	ObjectManager::createObject<Background>();
