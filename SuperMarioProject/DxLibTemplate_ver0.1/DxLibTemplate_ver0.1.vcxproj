@@ -175,6 +175,7 @@
     <ClCompile Include="eventServer.cpp" />
     <ClCompile Include="Float2.cpp" />
     <ClCompile Include="floor.cpp" />
+    <ClCompile Include="goal.cpp" />
     <ClCompile Include="goomba.cpp" />
     <ClCompile Include="hardBlock.cpp" />
     <ClCompile Include="hatenablock.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="eventServer.h" />
     <ClInclude Include="Float2.h" />
     <ClInclude Include="floor.h" />
+    <ClInclude Include="goal.h" />
     <ClInclude Include="goomba.h" />
     <ClInclude Include="hardBlock.h" />
     <ClInclude Include="hatenablock.h" />

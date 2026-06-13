@@ -192,6 +192,9 @@
     <ClCompile Include="koopaTroopa.cpp">
       <Filter>System\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="goal.cpp">
+      <Filter>System\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="koopaTroopa.h">
       <Filter>System\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="goal.h">
+      <Filter>System\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
