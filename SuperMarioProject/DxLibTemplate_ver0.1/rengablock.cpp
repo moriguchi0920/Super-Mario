@@ -7,6 +7,7 @@
 rengablock::rengablock(Rect rect) : BlockBase(rect)
 {
     auto transform = getComponent<ComponentTransform>();
+    int blockImage = LoadGraph("Stage/Brock_3.png");
 
     if (!transform.expired())
     {
@@ -20,12 +21,13 @@ rengablock::rengablock(Rect rect) : BlockBase(rect)
         printfDx("Renga Tag = %d\n", colRect.lock()->getTag()->tag);
     }
 
-    auto renderRect = addComponent<ComponentRenderableRect>(id, ComponentRenderable::PRIORITY_DEFAULT, rect);
+    auto renderImage = addComponent<ComponentRenderableImage>(id,ComponentRenderable::PRIORITY_DEFAULT,blockImage
+    );
 
-    if (!renderRect.expired())
+
+    if (!transform.expired() && !renderImage.expired())
     {
-        // ’ƒFÝ’è
-        renderRect.lock()->setColor(139, 69, 19);
+        renderImage.lock()->bindToTransform(transform);
     }
 }
 //rengablock::rengablock(float x, float y) : Object(ObjectManager::makeId())
@@ -43,12 +45,24 @@ rengablock::rengablock(Rect rect) : BlockBase(rect)
 
 void rengablock::update()
 {
-
     BlockBase::update();
 
-    auto comR = getComponent<ComponentRenderableRect>();
-    comR.lock()->syncFromTransform();
+    auto comR = getComponent<ComponentRenderableImage>();
 
+    if (!comR.expired())
+    {
+        comR.lock()->syncFromTransform();
+
+        float offset = SPRITE_SIZE / 2.0f; 
+
+        auto transform = getComponent<ComponentTransform>();
+        if (!transform.expired())
+        {
+         
+            Float2 basePos = transform.lock()->getPosition(); 
+            comR.lock()->setPos(Float2(basePos.x + offset, basePos.y + offset));
+        }
+    }
 }
 
 void rengablock::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
