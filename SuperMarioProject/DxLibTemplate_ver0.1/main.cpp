@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowSizeExtendRate(EXTEND_RATE);
 
 	SoundManager* pSound = SoundManager::getInstance();
-	pSound->setSoundInfo(SoundManager::PB_PLAY_BGM, "bin/Sound/stage.mp3");
+	pSound->setSoundInfo(SoundManager::PB_PLAY_BGM, "Sound/stage.wav");
 	pSound->setSoundInfo(SoundManager::SE_JUMP, "bin/Sound/jump.wav");
 	pSound->setSoundInfo(SoundManager::SE_BREAK, "bin/Sound/break.wav");
 
@@ -330,9 +330,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//{
 		//	DrawString(0, 0, "スペースキーが離された瞬間", GetColor(255, 255, 255));
 		//}
-		// 画面にハンドル番号を表示してみる（ループ処理の中に書く）
-		int debugHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::PB_PLAY_BGM);
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "BGM Handle: %d", debugHandle);
+		
 
 		ScreenFlip();
 	}

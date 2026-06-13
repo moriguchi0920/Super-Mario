@@ -7,6 +7,7 @@ SoundManager::SoundManager()
 {
 	initSoundManager();
 
+	setSoundInfo(PB_PLAY_BGM, "Sound/stage.wav");
 	//setSoundInfo(SE_FALLBALL, "bin/Sound/fall.wav");
 	//setSoundInfo(SE_SHOT, "bin/Sound/shot.wav");
 }
@@ -15,7 +16,7 @@ SoundManager::SoundManager()
 // 音源IDの正当性チェック関数
 static bool checkSoundId(int soundId)
 {
-	if (soundId < 0 || SOUND_INFO_LENGTH < soundId)
+	if (soundId < 0 || SOUND_INFO_LENGTH <= soundId)
 	{
 		return false;
 	}
@@ -40,21 +41,16 @@ SoundManager* SoundManager::getInstance()
 }
 
 
-// 音源マネージャーに管理してほしい音源ファイルの場所(ファイル名)を設定
 bool SoundManager::setSoundInfo(int soundId, const char* soundPath)
 {
 	// 音源IDの正当性チェック
 	if (checkSoundId(soundId) == false)
 	{
-		// 見てはいけない要素番号を指定しているので、
-		// これ以上登録処理葉できないということでfalseを返す
 		return false;
 	}
 
-	// 音源ファイルのパスを登録
+	// 音源ファイルのパスを登録（これだけにします！）
 	soundInfoArray[soundId].soundPath = soundPath;
-	//soundInfoArray[PB_PLAY_BGM].soundPath = "bin/Sound/stage.mp3";
-
 
 	return true;
 }
@@ -84,6 +80,12 @@ void SoundManager::loadSoundAll()
 		// まだ音源が読み込まれていないということなので、
 		// ここで音源を読み込んでやる。
 		pSoundInfo->soundHandle = LoadSoundMem(pSoundInfo->soundPath);
+
+		printfDx(
+			"LoadSoundMem : %s -> %d\n",
+			pSoundInfo->soundPath,
+			pSoundInfo->soundHandle
+		);
 	}
 }
 
