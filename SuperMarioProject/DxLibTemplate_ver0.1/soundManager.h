@@ -26,11 +26,14 @@ private:
 public:
 	enum SOUNDNAME
 	{
-		PB_PLAY_BGM,
-		SE_JUMP,
-		SE_BREAK,
-		SE_FALLBALL,
-		SE_SHOT,
+		PB_PLAY_BGM,//BGM
+		SE_JUMP,//ジャンプ
+		SE_BREAK,//ブロック破壊音
+		SE_PUCH,//ブロック押す
+		SE_DEATH,//死亡
+		SE_COIN,//コイン
+		SE_STEPON,//踏む
+
 	};
 
 	static SoundManager* getInstance();
