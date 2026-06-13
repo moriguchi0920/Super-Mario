@@ -10,8 +10,19 @@ SoundManager::SoundManager()
 	setSoundInfo(PB_PLAY_BGM, "Sound/stage.wav");//BGM
 	setSoundInfo(SE_JUMP, "Sound/jump.wav");//ジャンプ
 	setSoundInfo(SE_BREAK, "Sound/break.wav");//ブロック破壊
-	setSoundInfo(SE_PUCH, "Sound/puch.wav");//ブロック押す
-	setSoundInfo(SE_DEATH, "Sound/jump.wav");//死亡
+	setSoundInfo(SE_PUSH, "Sound/puch.wav");//ブロック押す
+	setSoundInfo(SE_DEATH, "Sound/death.wav");//死亡
+	setSoundInfo(SE_DEATH, "Sound/coin.wav");//コイン
+	setSoundInfo(SE_DEATH, "Sound/stepon.wav");//踏む
+	setSoundInfo(SE_DEATH, "Sound/nokonoko01.wav");//ノコノコ蹴る音
+	setSoundInfo(SE_DEATH, "Sound/nokonoko02.wav");//ノコノコが跳ね返る音
+	setSoundInfo(SE_DEATH, "Sound/flagpole.wav");//ポール
+	//setSoundInfo(SE_DEATH, "Sound/.wav");//ゴールSE
+	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//キノコ
+	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//でかくなる時の音
+	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//ファイヤーボール
+	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//スター
+	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//１UPキノコ
 
 
 	//setSoundInfo(SE_FALLBALL, "bin/Sound/fall.wav");
