@@ -237,6 +237,11 @@ void ComponentRenderableLine::render()
 	DrawLine(line.begin.x, line.begin.y, line.end.x, line.end.y, GetColor(color.r, color.g, color.b), 1);
 }
 
+void ComponentRenderableImage::setImage(int handle)
+{
+	imageHandle = handle;
+}
+
 void ComponentRenderableLine::syncFromTransform()
 {
 	if (!transformRef.expired())
@@ -247,6 +252,8 @@ void ComponentRenderableLine::syncFromTransform()
 		line.begin = beginPos;
 		line.end = endPos;
 	}
+
+
 
 
 

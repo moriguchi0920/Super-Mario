@@ -121,10 +121,11 @@ protected:
 	Float2 pos;
 	float rotation;
 
-public :
+public:
 	ComponentRenderableImage(int objectId, float _priority, int _imageHandle);
 	void setPos(Float2 _pos);
 	void setRot(float _rot);
+	void setImage(int handle);
 	virtual void render() override;
 	void syncFromTransform()override;
 };
