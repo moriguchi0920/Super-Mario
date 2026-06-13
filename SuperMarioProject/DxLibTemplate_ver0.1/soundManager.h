@@ -27,8 +27,8 @@ public:
 	enum SOUNDNAME
 	{
 		PB_PLAY_BGM,
-		SE_ADSORPTION,
-		SE_BURST,
+		SE_JUMP,
+		SE_BREAK,
 		SE_FALLBALL,
 		SE_SHOT,
 	};

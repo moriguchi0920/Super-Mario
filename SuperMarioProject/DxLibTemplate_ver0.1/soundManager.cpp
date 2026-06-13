@@ -6,6 +6,9 @@
 SoundManager::SoundManager()
 {
 	initSoundManager();
+
+	//setSoundInfo(SE_FALLBALL, "bin/Sound/fall.wav");
+	//setSoundInfo(SE_SHOT, "bin/Sound/shot.wav");
 }
 
 
@@ -50,6 +53,7 @@ bool SoundManager::setSoundInfo(int soundId, const char* soundPath)
 
 	// 音源ファイルのパスを登録
 	soundInfoArray[soundId].soundPath = soundPath;
+	//soundInfoArray[PB_PLAY_BGM].soundPath = "bin/Sound/stage.mp3";
 
 
 	return true;

@@ -20,6 +20,7 @@
 #include"koopaTroopa.h"
 #include"background.h"
 #include "DxLib.h"
+#include "soundManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -34,6 +35,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetWindowSizeExtendRate(EXTEND_RATE);
 
+	SoundManager* pSound = SoundManager::getInstance();
+	pSound->setSoundInfo(SoundManager::PB_PLAY_BGM, "bin/Sound/stage.mp3");
+	pSound->setSoundInfo(SoundManager::SE_JUMP, "bin/Sound/jump.wav");
+	pSound->setSoundInfo(SoundManager::SE_BREAK, "bin/Sound/break.wav");
+
+	// 登録したものを今すぐロードする！
+	pSound->loadSoundAll();
+
+	// BGMの再生
+	int bgmHandle = pSound->getSoundHandle(SoundManager::PB_PLAY_BGM);
+	if (bgmHandle != -1)
+	{
+		PlaySoundMem(bgmHandle, DX_PLAYTYPE_LOOP, FALSE);
+	}
+
 	//---------------------------------------
 	// 変数の作成や初期化、その他初期設定
 	// ↓ システム初期化 ↓
@@ -42,6 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//---------------------------------------
 	
 	ObjectManager::getInstance();
+
 
 
 	Background::setNextInfo(Background::Type::CLOUD_1, Float2(160.0f, 45.0f));
@@ -267,7 +284,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//ObjectManager::createObject<rengablock>(80.0f, 130.0f);
 	//ObjectManager::createObject<hatenablock>(50.0f, 130.0f);
 
-	
+
+
+
+	//// 2. マネージャーからBGMのハンドルを取得する
+	//int bgmHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::PB_PLAY_BGM);
+
+	//// 3. BGMが正常に読み込めていたら、ループ再生を開始する
+	//if (bgmHandle != -1)
+	//{
+	//	// 第2引数に DX_PLAYTYPE_LOOP を渡すことで、曲が終わっても自動で最初から流れます
+	//	PlaySoundMem(bgmHandle, DX_PLAYTYPE_LOOP, FALSE);
+	//}
 
 
 
@@ -284,6 +312,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EventServer::getInstance()->dequeueEventsAll();
 		CollisionManager::getInstance()->collisionUpdate();
 		ScrollManager::getInstance()->scrollAll();
+		//SoundManager::getInstance()->loadSoundAll();	// 1. まず全音源を読み込む（さっきのCPPで登録したファイルが読み込まれます）
+
+
+
 
 		//---------------------------------------
 		// 描画
@@ -298,6 +330,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//{
 		//	DrawString(0, 0, "スペースキーが離された瞬間", GetColor(255, 255, 255));
 		//}
+		// 画面にハンドル番号を表示してみる（ループ処理の中に書く）
+		int debugHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::PB_PLAY_BGM);
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "BGM Handle: %d", debugHandle);
 
 		ScreenFlip();
 	}
