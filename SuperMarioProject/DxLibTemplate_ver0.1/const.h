@@ -30,5 +30,6 @@ const int MARIO_COL_TOP_RADIUS = 8;
 const int MARIO_COL_BOTTOM_RADIUS = 8;
 
 const float GOOMBA_SPEED = 0.5f;
+const float ITEM_SPEED = 0.5f;
 
 #endif

@@ -195,6 +195,9 @@
     <ClCompile Include="goal.cpp">
       <Filter>System\Object</Filter>
     </ClCompile>
+    <ClCompile Include="superMushroom.cpp">
+      <Filter>System\Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="goal.h">
       <Filter>System\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="superMushroom.h">
+      <Filter>System\Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

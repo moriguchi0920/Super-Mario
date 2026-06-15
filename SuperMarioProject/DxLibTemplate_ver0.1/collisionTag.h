@@ -12,6 +12,7 @@ public:
 		SHELL,
 		ENEMY,
 		BLOCK,
+		ITEM,
 		RENGA,
 		NUM
 	};
