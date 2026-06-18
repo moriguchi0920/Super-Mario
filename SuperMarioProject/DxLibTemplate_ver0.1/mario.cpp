@@ -330,6 +330,23 @@ void Mario::update()
 void Mario::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 {
 
+	if (name == "Grow")
+	{
+		varyStateMachine.changeState(VARYSTATE::VARY_TALL);
+		auto colRect = getComponent<ComponentCollisionRect>();
+		if (!colRect.expired())
+		{
+			ShapeSetParam param(ShapeSetParam::ParamType::PT_RECT);
+			param.param.paramPoint2.point1 = colRect.lock()->get().begin;
+			param.param.paramPoint2.point2 = colRect.lock()->get().size;
+			param.param.paramPoint2.point2.y = MARIO_SIZE * 2;
+			colRect.lock()->paramUpdate(&param);
+
+		}
+
+	}
+
+
 
 }
 

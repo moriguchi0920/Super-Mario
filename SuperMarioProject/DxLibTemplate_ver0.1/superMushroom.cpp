@@ -227,6 +227,12 @@ void SuperMushroom::update()
 							// “–‚½‚Á‚½(uŠÔ)
 							if (colInfoSp->getEnter())
 							{
+								Event event;
+								event.from = id;
+								event.to = colInfoSp->getTarget(id).lock()->getParentId();
+								event.eventName = "Grow";
+								EventServer::getInstance()->enqueueEvent(event);
+
 								die();
 
 							}
