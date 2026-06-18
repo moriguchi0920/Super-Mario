@@ -12,11 +12,11 @@ SoundManager::SoundManager()
 	setSoundInfo(SE_BREAK, "Sound/break.wav");//ブロック破壊
 	setSoundInfo(SE_PUSH, "Sound/puch.wav");//ブロック押す
 	setSoundInfo(SE_DEATH, "Sound/death.wav");//死亡
-	setSoundInfo(SE_DEATH, "Sound/coin.wav");//コイン
-	setSoundInfo(SE_DEATH, "Sound/stepon.wav");//踏む
-	setSoundInfo(SE_DEATH, "Sound/nokonoko01.wav");//ノコノコ蹴る音
-	setSoundInfo(SE_DEATH, "Sound/nokonoko02.wav");//ノコノコが跳ね返る音
-	setSoundInfo(SE_DEATH, "Sound/flagpole.wav");//ポール
+	setSoundInfo(SE_COIN, "Sound/coin.wav");//コイン
+	setSoundInfo(SE_STEPON, "Sound/stepon.wav");//踏む
+	setSoundInfo(SE_NOKO01, "Sound/nokonoko01.wav");//ノコノコ蹴る音
+	setSoundInfo(SE_NOKO02, "Sound/nokonoko02.wav");//ノコノコが跳ね返る音
+	setSoundInfo(SE_GOALPOLE, "Sound/flagpole.wav");//ポール
 	//setSoundInfo(SE_DEATH, "Sound/.wav");//ゴールSE
 	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//キノコ
 	//setSoundInfo(SE_DEATH, "Sound/jump.wav");//でかくなる時の音

@@ -37,9 +37,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowSizeExtendRate(EXTEND_RATE);
 
 	SoundManager* pSound = SoundManager::getInstance();
-	pSound->setSoundInfo(SoundManager::PB_PLAY_BGM, "Sound/stage.wav");
-	pSound->setSoundInfo(SoundManager::SE_JUMP, "Sound/jump.wav");
-	pSound->setSoundInfo(SoundManager::SE_BREAK, "bin/Sound/break.wav");
+	pSound->setSoundInfo(SoundManager::PB_PLAY_BGM, "Sound/stage.wav");//BGM
+	pSound->setSoundInfo(SoundManager::SE_JUMP, "Sound/jump.wav");//ƒWƒƒƒ“ƒv
+	pSound->setSoundInfo(SoundManager::SE_BREAK, "Sound/break.wav");//ƒuƒƒbƒN”j‰ó
+	pSound->setSoundInfo(SoundManager::SE_PUSH, "Sound/push.wav");//ƒuƒƒbƒN‰Ÿ‚·
+	pSound->setSoundInfo(SoundManager::SE_DEATH, "Sound/death.wav");//Ž€–S
+	pSound->setSoundInfo(SoundManager::SE_COIN, "Sound/coin.wav");//ƒRƒCƒ“
+	pSound->setSoundInfo(SoundManager::SE_STEPON, "Sound/stepon.wav");//“¥‚Þ
+	pSound->setSoundInfo(SoundManager::SE_NOKO01, "Sound/nokonoko01.wav");//ƒmƒRƒmƒRR‚é‰¹
+	pSound->setSoundInfo(SoundManager::SE_NOKO02, "Sound/nokonoko02.wav");//ƒmƒRƒmƒR‚ª’µ‚Ë•Ô‚é‰¹
+	pSound->setSoundInfo(SoundManager::SE_GOALPOLE, "Sound/flagpole.wav");//ƒ|[ƒ‹
+
+
 
 	// “o˜^‚µ‚½‚à‚Ì‚ð¡‚·‚®ƒ[ƒh‚·‚éI
 	pSound->loadSoundAll();
