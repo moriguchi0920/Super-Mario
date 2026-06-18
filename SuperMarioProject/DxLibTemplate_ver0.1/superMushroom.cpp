@@ -37,8 +37,6 @@ void SuperMushroom::update()
 	auto transformG = getComponent<ComponentGravity>();
 	auto renderRect = getComponent<ComponentRenderableRect>();
 
-	// 描画の座標更新
-	renderRect.lock()->syncFromTransform();
 
 	// 当たり判定座標更新と当たった時の処理
 	// 当たり判定更新
@@ -243,6 +241,9 @@ void SuperMushroom::update()
 	// 重力更新
 	transformG.lock()->gravityUpdate();
 	transformG.lock()->translate();
+
+	// 描画の座標更新
+	renderRect.lock()->syncFromTransform();
 }
 
 void SuperMushroom::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)

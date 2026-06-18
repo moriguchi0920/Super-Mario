@@ -216,6 +216,38 @@ bool CheckBoxHit(Rect b1, Rect b2, Point translationB1, Point translationB2, Con
 				side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
 			}
 
+			if (top == right || bottom == right || top == left || bottom == left)
+			{
+				// X方向の押し込み量とY方向の押し込み量が同じ場合は、移動方向に対して垂直な方を優先する
+				float relX = translationB1.x - translationB2.x;
+				float relY = translationB1.y - translationB2.y;
+				if (fabsf(relX) > fabsf(relY))
+				{
+					if (relY < 0.0f)
+					{
+						side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
+					}
+					else
+					{
+						side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+					}
+
+				}
+				else if (fabsf(relY) > fabsf(relX))
+				{
+					if (relX < 0.0f)
+					{
+						side = ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT;
+					}
+					else
+					{
+						side = ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
+					}
+				}
+				// 完全に同じ場合は左を優先(SIDE_LEFTのまま)
+			}
+
+
 			pContact->side = side;
 
 			// 接触位置は重複領域の中心を使う

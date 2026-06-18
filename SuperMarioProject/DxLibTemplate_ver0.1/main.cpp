@@ -48,7 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int bgmHandle = pSound->getSoundHandle(SoundManager::PB_PLAY_BGM);
 	if (bgmHandle != -1)
 	{
-		PlaySoundMem(bgmHandle, DX_PLAYTYPE_LOOP, FALSE);
+		//PlaySoundMem(bgmHandle, DX_PLAYTYPE_LOOP, FALSE);
 	}
 
 	//---------------------------------------
@@ -148,7 +148,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
 
 	ObjectManager::createObject<Dokan>(300.0f, 30.0f);
-	//ObjectManager::createObject<Goomba>(Rect(Float2(400.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<Goomba>(Rect(Float2(100.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<KoopaTroopa>(Rect(Float2(400.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<Dokan>(500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
@@ -160,7 +160,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetBackgroundColor(107, 140, 255);
 
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-	ObjectManager::createObject<SuperMushroom>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 8), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<SuperMushroom>(Rect(Float2(SPRITE_SIZE * 11, SPRITE_SIZE * 8), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 11, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 12, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 13, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
