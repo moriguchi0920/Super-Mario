@@ -8,10 +8,24 @@
 Goal::Goal(const Rect& rect) : Object(ObjectManager::makeId())
 {
 	this->addComponent<ComponentTransform>(this->id);
-	auto transform = this->getComponent<ComponentTransform>();
-	transform.lock()->setPosition(rect.begin);
-	
-	this->addComponent<ComponentCollisionRect>(this->id, rect);
+	auto transform = this->getComponent<ComponentTransform>().lock();
+
+	if (transform)
+	{
+		transform->setScroll(true); 
+		transform->setPosition(rect.begin);
+	}
+
+
+
+	int goalImage = LoadGraph("Stage/Goal_1_1.png");
+	auto renderImage = addComponent<ComponentRenderableImage>(id, ComponentRenderable::PRIORITY_DEFAULT, goalImage);
+
+	auto renderable = this->getComponent<ComponentRenderableImage>().lock();
+	if (renderable && transform)
+	{
+		renderable->bindToTransform(transform);
+	}
 }
 
 Goal::~Goal()
@@ -20,6 +34,12 @@ Goal::~Goal()
 
 void Goal::update()
 {
+
+	auto renderable = this->getComponent<ComponentRenderableImage>().lock();
+	if (renderable)
+	{
+		renderable->syncFromTransform();
+	}
 
 
 

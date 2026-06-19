@@ -19,6 +19,7 @@
 #include"goomba.h"
 #include"koopaTroopa.h"
 #include"background.h"
+#include"goal.h"
 #include "DxLib.h"
 #include "soundManager.h"
 #include"superMushroom.h"
@@ -137,9 +138,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Background>();
 	Background::setNextInfo(Background::Type::CLOUD_3, Float2(2720.0f, 70.0f));
 	ObjectManager::createObject<Background>();
-	Background::setNextInfo(Background::Type::CLOUD_2, Float2(2810.0f, 45.0f));
+	Background::setNextInfo(Background::Type::CLOUD_2, Float2(2860.0f, 45.0f));
 	ObjectManager::createObject<Background>();
-	Background::setNextInfo(Background::Type::MOUNTAIN_2, Float2(3065.0f, 185.0f));
+	Background::setNextInfo(Background::Type::MOUNTAIN_2, Float2(3105.0f, 185.0f));
 	ObjectManager::createObject<Background>();
 	Background::setNextInfo(Background::Type::CLOUD_1, Float2(3200.0f, 45.0f));
 	ObjectManager::createObject<Background>();
@@ -165,6 +166,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Dokan>(2500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(2890.0f, 30.0f);
 
+	
+	ObjectManager::createObject<Goal>(Rect(Float2(3155.0f, 120.0f), Float2(160.0f, 16.0f)));
 
 	SetBackgroundColor(107, 140, 255);
 
