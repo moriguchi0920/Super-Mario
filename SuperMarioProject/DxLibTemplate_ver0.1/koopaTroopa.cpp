@@ -1,6 +1,8 @@
 #include "koopaTroopa.h"
 #include"objectManager.h"
 #include"collisionManager.h"
+#include"soundManager.h"
+
 
 KoopaTroopa::KoopaTroopa(Rect rect) : Object(ObjectManager::makeId())
 {

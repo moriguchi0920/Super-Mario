@@ -1,6 +1,8 @@
 #include "goomba.h"
 #include"objectManager.h"
 #include"collisionManager.h"
+#include"soundManager.h"
+
 
 Goomba::Goomba(Rect rect) : Object(ObjectManager::makeId())
 {
@@ -65,6 +67,14 @@ void Goomba::update()
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT) side = ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT;
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP) side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM) side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
+
+						//int SteponHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::SE_STEPON);
+						//if (SteponHandle != -1)
+						//{
+						//	// 効果音（SE）なので、1回だけ流す「DX_PLAYTYPE_BACK」を指定します
+						//	PlaySoundMem(SteponHandle, DX_PLAYTYPE_BACK);
+						//}
+
 					}
 					// タグで区別
 					switch (colInfoSp->getTarget(id).lock()->getTag()->tag)
