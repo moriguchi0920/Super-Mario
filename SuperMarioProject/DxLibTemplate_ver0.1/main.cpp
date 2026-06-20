@@ -54,6 +54,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 登録したものを今すぐロードする！
 	pSound->loadSoundAll();
 
+	//踏む音の音量調節
+	int steponHandle = pSound->getSoundHandle(SoundManager::SE_STEPON);
+	if (steponHandle != -1)
+	{
+		ChangeVolumeSoundMem(255, steponHandle);
+	}
+
+	//ジャンプ音の音量調節
+	int jumpHandle = pSound->getSoundHandle(SoundManager::SE_JUMP);
+	if (jumpHandle != -1)
+	{
+		// 120だと元の音量の半分くらいになります。小さすぎたら数値を上げて調整してください
+		ChangeVolumeSoundMem(100, jumpHandle);
+	}
+
 	// BGMの再生
 	int bgmHandle = pSound->getSoundHandle(SoundManager::PB_PLAY_BGM);
 	if (bgmHandle != -1)
