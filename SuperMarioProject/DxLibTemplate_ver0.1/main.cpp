@@ -62,7 +62,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_KOOPA_TROOPA, "enemy/nokonoko.png");
 	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_BRICK, "Stage/Block.png");
 	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_QUESTION, "Stage/Block_Hatena_1.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_HARD, "Stage/Block.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_HARD, "Stage/Block_2.png");
 	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_FLOOR, "Stage/Brock_3.png");
 
 	pImageManager->loadImageAll();

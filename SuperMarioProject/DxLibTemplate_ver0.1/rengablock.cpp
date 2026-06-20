@@ -60,7 +60,7 @@ void rengablock::update()
         {
          
             Float2 basePos = transform.lock()->getPosition(); 
-            comR.lock()->setPos(basePos);
+            comR.lock()->setPos(basePos + Float2(offset, offset));
         }
     }
 }
