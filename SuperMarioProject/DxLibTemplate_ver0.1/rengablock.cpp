@@ -4,7 +4,7 @@
 #include "componentRenderable.h"
 #include"scrollManager.h"
 
-rengablock::rengablock(Rect rect) : BlockBase(rect)
+rengablock::rengablock(Rect rect, BLOCK_ITEM_TYPE type) : BlockBase(rect)
 {
     auto transform = getComponent<ComponentTransform>();
     int blockImage = LoadGraph("Stage/Brock_3.png");

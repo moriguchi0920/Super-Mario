@@ -3,6 +3,7 @@
 #include "componentTransform.h"
 #include "componentRenderable.h"
 #include "superMushroom.h" 
+#include "coin.h"
 #include "const.h"
 #include "scrollManager.h"
 
@@ -85,16 +86,14 @@ void hatenablock::hitFromBottom()
     {
     case BLOCK_ITEM_TYPE::MUSHROOM:
         // キノコを生成する
-        ObjectManager::createObject<SuperMushroom>(
-            Rect(
-                Float2(pos.x, pos.y - SPRITE_SIZE),
-                Float2(SPRITE_SIZE, SPRITE_SIZE)
-            )
-        );
+        ObjectManager::createObject<SuperMushroom>(Rect(Float2(pos.x, pos.y - SPRITE_SIZE),Float2(SPRITE_SIZE, SPRITE_SIZE)));
+
         break;
 
     case BLOCK_ITEM_TYPE::COIN:
-       
+       // コインを生成
+        ObjectManager::createObject<Coin>(Rect(Float2(pos.x, pos.y - SPRITE_SIZE), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+
         break;
 
     case BLOCK_ITEM_TYPE::FLOWER:

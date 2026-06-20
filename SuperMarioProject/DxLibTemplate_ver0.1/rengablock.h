@@ -2,13 +2,14 @@
 
 #include "entityObject.h"
 #include"blockBase.h"
+#include "hatenablock.h"
 
 class rengablock : public BlockBase
 {
 private:
 
 public:
-    rengablock(Rect rect);
+    rengablock(Rect rect, BLOCK_ITEM_TYPE type = BLOCK_ITEM_TYPE::COIN);
 
     void update() override;
 
