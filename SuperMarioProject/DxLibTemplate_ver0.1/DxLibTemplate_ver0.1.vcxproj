@@ -161,6 +161,7 @@
     <ClCompile Include="background.cpp" />
     <ClCompile Include="blockBase.cpp" />
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="componentCollision.cpp" />
     <ClCompile Include="collisionInfo.cpp" />
     <ClCompile Include="collisionManager.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="background.h" />
     <ClInclude Include="blockBase.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="collisionTag.h" />
     <ClInclude Include="componentCollision.h" />
     <ClInclude Include="collisionInfo.h" />
