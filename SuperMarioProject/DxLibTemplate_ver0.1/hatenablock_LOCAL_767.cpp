@@ -4,15 +4,11 @@
 #include "imageManager.h"
 #include "componentRenderable.h"
 #include "superMushroom.h" 
-#include "coin.h"
 #include "const.h"
-#include "scrollManager.h"
+#include"scrollManager.h"
 
-
-hatenablock::hatenablock(Rect rect, BLOCK_ITEM_TYPE type) : BlockBase(rect)
+hatenablock::hatenablock(Rect rect) : BlockBase(rect)
 {
-    myItemType = type;
-
     auto transform = getComponent<ComponentTransform>();
 
         if (!transform.expired())
@@ -30,18 +26,19 @@ hatenablock::hatenablock(Rect rect, BLOCK_ITEM_TYPE type) : BlockBase(rect)
 
         if (!renderImage.expired())
         {
+            // 黄色設定
             renderImage.lock()->setPos(rect.begin);
         }
-
-}
+    }
 
 void hatenablock::update()
 {
-    BlockBase::update();
 
+    BlockBase::update();
 
     auto comR = getComponent<ComponentRenderableImage>();
     comR.lock()->syncFromTransform();
+
 }
 
 void hatenablock::activateProc()
@@ -65,14 +62,8 @@ void hatenablock::hitFromBottom()
 
     m_used = true;
 
-  
-    auto comR = getComponent<ComponentRenderableRect>();
-    if (!comR.expired())
-    {
-        comR.lock()->setColor(150, 100, 50); 
-    }
-
     auto transform = getComponent<ComponentTransform>();
+
     if (transform.expired())
     {
         return;
@@ -80,23 +71,11 @@ void hatenablock::hitFromBottom()
 
     Float2 pos = transform.lock()->getPosition();
 
-    
-    switch (myItemType)
-    {
-    case BLOCK_ITEM_TYPE::MUSHROOM:
-        // キノコを生成する
-        ObjectManager::createObject<SuperMushroom>(Rect(Float2(pos.x, pos.y - SPRITE_SIZE),Float2(SPRITE_SIZE, SPRITE_SIZE)));
-
-        break;
-
-    case BLOCK_ITEM_TYPE::COIN:
-       // コインを生成
-        ObjectManager::createObject<Coin>(Rect(Float2(pos.x, pos.y - SPRITE_SIZE), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-
-        break;
-
-    case BLOCK_ITEM_TYPE::FLOWER:
-       
-        break;
-    }
+    ObjectManager::createObject<SuperMushroom>(
+        Rect(
+            Float2(pos.x, pos.y - SPRITE_SIZE),
+            Float2(SPRITE_SIZE, SPRITE_SIZE)
+        )
+    );
 }
+

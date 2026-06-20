@@ -1,10 +1,8 @@
 #include "hatenablock.h"
 #include "objectManager.h"
 #include "componentTransform.h"
-#include "imageManager.h"
 #include "componentRenderable.h"
 #include "superMushroom.h" 
-#include "coin.h"
 #include "const.h"
 #include "scrollManager.h"
 
@@ -15,33 +13,35 @@ hatenablock::hatenablock(Rect rect, BLOCK_ITEM_TYPE type) : BlockBase(rect)
 
     auto transform = getComponent<ComponentTransform>();
 
-        if (!transform.expired())
-        {
-            transform.lock()->setScroll(true);
-        }
+    if (!transform.expired())
+    {
+        transform.lock()->setScroll(true);
+    }
 
-        auto colRect = getComponent<ComponentCollisionRect>();
-        if (!colRect.expired())
-        {
-            colRect.lock()->addTag(ICollisionTag::BLOCK);
-        }
+    auto colRect = getComponent<ComponentCollisionRect>();
+    if (!colRect.expired())
+    {
+        colRect.lock()->addTag(ICollisionTag::BLOCK);
+    }
 
-        auto renderImage = addComponent<ComponentRenderableImage>(id, 0.5, ImageManager::getInstance()->getImageHandle(ImageManager::IMAGENAME::IMAGE_BLOCK_QUESTION));
+    auto renderRect = addComponent<ComponentRenderableRect>(id, 0.5, rect);
 
-        if (!renderImage.expired())
-        {
-            renderImage.lock()->setPos(rect.begin);
-        }
-
+    if (!renderRect.expired())
+    {
+        
+        renderRect.lock()->setColor(250, 220, 0);
+    }
 }
 
 void hatenablock::update()
 {
     BlockBase::update();
 
-
-    auto comR = getComponent<ComponentRenderableImage>();
-    comR.lock()->syncFromTransform();
+    auto comR = getComponent<ComponentRenderableRect>();
+    if (!comR.expired()) 
+    {
+        comR.lock()->syncFromTransform();
+    }
 }
 
 void hatenablock::activateProc()
@@ -85,14 +85,16 @@ void hatenablock::hitFromBottom()
     {
     case BLOCK_ITEM_TYPE::MUSHROOM:
         // キノコを生成する
-        ObjectManager::createObject<SuperMushroom>(Rect(Float2(pos.x, pos.y - SPRITE_SIZE),Float2(SPRITE_SIZE, SPRITE_SIZE)));
-
+        ObjectManager::createObject<SuperMushroom>(
+            Rect(
+                Float2(pos.x, pos.y - SPRITE_SIZE),
+                Float2(SPRITE_SIZE, SPRITE_SIZE)
+            )
+        );
         break;
 
     case BLOCK_ITEM_TYPE::COIN:
-       // コインを生成
-        ObjectManager::createObject<Coin>(Rect(Float2(pos.x, pos.y - SPRITE_SIZE), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-
+       
         break;
 
     case BLOCK_ITEM_TYPE::FLOWER:

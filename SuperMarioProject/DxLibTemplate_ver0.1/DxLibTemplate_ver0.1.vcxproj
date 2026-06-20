@@ -192,6 +192,7 @@
     <ClCompile Include="sampleObject.cpp" />
     <ClCompile Include="scrollManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="stageGenerator.cpp" />
     <ClCompile Include="superMushroom.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -237,8 +238,12 @@
     <ClInclude Include="sampleObject.h" />
     <ClInclude Include="scrollManager.h" />
     <ClInclude Include="soundManager.h" />
+    <ClInclude Include="stageGenerator.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="superMushroom.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="1-1_data.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
