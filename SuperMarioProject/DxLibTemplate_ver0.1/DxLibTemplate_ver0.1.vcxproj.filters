@@ -204,6 +204,9 @@
     <ClCompile Include="stageGenerator.cpp">
       <Filter>System\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>System\Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationData.h">
@@ -340,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="stageGenerator.h">
       <Filter>System\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>System\Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
