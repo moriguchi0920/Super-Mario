@@ -14,7 +14,7 @@
 Mario::Mario() : Object(ObjectManager::makeId())
 {
 	// とりあえず座標は0,0で初期化
-	Rect rect(Point(0, -6.0f), Point(MARIO_SIZE, MARIO_SIZE ));
+	Rect rect(Point(0, -6.0f), Point(MARIO_SIZE, MARIO_SIZE));
 
 	// 重力込み移動コンポーネント追加
 	this->addComponent<ComponentGravity>(id);
@@ -91,9 +91,9 @@ void Mario::update()
 			if (colInfo.expired()) continue;
 			auto colInfoSp = colInfo.lock();
 			if (colInfoSp->getTarget(id).expired()) continue;
-			if (!colInfoSp->getColliding()) continue; 
+			if (!colInfoSp->getColliding()) continue;
 
-			
+
 			int side = colInfoSp->getRectCollideSide();
 			if (colInfoSp->getObjectIdCol1() != id)
 			{
@@ -105,7 +105,7 @@ void Mario::update()
 
 			auto targetTag = colInfoSp->getTarget(id).lock()->getTag()->tag;
 
-		
+
 			if (targetTag == ICollisionTag::FLOOR || targetTag == ICollisionTag::RENGA || targetTag == ICollisionTag::BLOCK)
 			{
 				auto targetShape = colInfoSp->getTarget(id).lock();
@@ -114,13 +114,13 @@ void Mario::update()
 				{
 					Rect trect = targetRectComp->get();
 
-					
+
 					float marioBottom = transformG.lock()->getPosition().y + MARIO_SIZE;
 					float marioLeft = transformG.lock()->getPosition().x;
 					float marioRight = marioLeft + MARIO_SIZE;
 
-					
-					if (marioBottom <= trect.begin.y + 8.0f &&marioBottom >= trect.begin.y - 8.0f)
+
+					if (marioBottom <= trect.begin.y + 8.0f && marioBottom >= trect.begin.y - 8.0f)
 					{
 
 						if (marioRight > trect.begin.x - 1.5f && marioLeft < trect.begin.x + trect.size.x + 1.5f)
@@ -129,7 +129,7 @@ void Mario::update()
 						}
 					}
 
-					
+
 					if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP)
 					{
 						transformG.lock()->setPosY(trect.begin.y - MARIO_SIZE + 5.5f);
@@ -138,9 +138,33 @@ void Mario::update()
 						transformG.lock()->setLanding(true);
 						isTouchingTop = true;
 					}
-				
+
 					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
 					{
+						
+						// ブロックの下端（trect.begin.y + trect.size.y）にマリオの頭の座標を合わせる
+						transformG.lock()->setPosY(trect.begin.y + trect.size.y);
+
+						
+						auto cur = transformG.lock()->getTranslation();
+						if (cur.y < 0.0f) // 上に向かって移動中なら
+						{
+							transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+						}
+
+						
+						if (moveStateMachine.getStateId() == MOVESTATE::MOV_JUMP)
+						{
+							if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT)) {
+								moveStateMachine.changeState(MOVESTATE::MOV_DASH);
+							}
+							else {
+								moveStateMachine.changeState(MOVESTATE::MOV_WALK);
+							}
+						}
+						
+
+						// ここから下は元々あったアイテムを出す処理
 						if (colInfoSp->getEnter()) // ぶつかった瞬間のみ
 						{
 							if (targetTag == ICollisionTag::RENGA)
@@ -180,12 +204,12 @@ void Mario::update()
 							}
 						}
 					}
-					
+
 					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_LEFT)
 					{
-						
+
 						float marioBottom = transformG.lock()->getPosition().y + MARIO_SIZE;
-						float cornerBuffer = 6.0f; 
+						float cornerBuffer = 6.0f;
 
 						if (marioBottom - 5.5f > trect.begin.y && (marioBottom - 5.5f - trect.begin.y) < cornerBuffer)
 						{
@@ -197,7 +221,7 @@ void Mario::update()
 						}
 						else
 						{
-							
+
 							transformG.lock()->setPosX(trect.begin.x - MARIO_SIZE);
 							auto cur = transformG.lock()->getTranslation();
 							transformG.lock()->setTranslation(Float2(0.0f, cur.y)); // ここでもY速度は殺さず維持！
@@ -205,7 +229,7 @@ void Mario::update()
 					}
 					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_RIGHT)
 					{
-						
+
 						float marioBottom = transformG.lock()->getPosition().y + MARIO_SIZE;
 						float cornerBuffer = 6.0f;
 
@@ -226,7 +250,7 @@ void Mario::update()
 					}
 				}
 			}
-		} 
+		}
 
 		if (!isTouchingTop)
 		{
@@ -272,12 +296,12 @@ void Mario::update()
 		}
 	}
 
-	
+
 	moveStateMachine.update(this);
 	varyStateMachine.update(this);
 	starStateMachine.update(this);
 
-	
+
 	if (!transformG.expired())
 	{
 		Float2 v = transformG.lock()->getTranslation();
@@ -291,7 +315,7 @@ void Mario::update()
 		transformG.lock()->setTranslation(v);
 	}
 
-	
+
 	animTimer++;
 
 	if (colRect.lock())
@@ -346,7 +370,14 @@ void Mario::update()
 
 			if (!renderImage.expired())
 			{
-				renderImage.lock()->setImage(marioImages[targetImageIndex]);
+
+				auto renderImgSp = renderImage.lock();
+
+				// 画像ハンドルをセット
+				renderImgSp->setImage(marioImages[targetImageIndex]);
+
+				// マリオの向きの状態（isLeft）をセット
+				renderImgSp->setTurn(isLeft);
 			}
 		}
 	}
@@ -380,6 +411,13 @@ void Mario::walk()
 	bool left = KeyManager::checkHitKey(KEY_INPUT_A);
 	bool right = KeyManager::checkHitKey(KEY_INPUT_D);
 
+	if (left) {
+		isLeft = true;
+	}
+	else if (right) {
+		isLeft = false;
+	}
+
 	auto gravity = getComponent<ComponentGravity>();
 	bool isGrounded = (!gravity.expired() && gravity.lock()->getLanding());
 
@@ -393,7 +431,7 @@ void Mario::walk()
 	float vx = vel.x;
 	float vy = vel.y;
 
-	
+
 	if (left)
 	{
 		if (vx > -MARIO_WALK_SPEED_MAX)
@@ -448,7 +486,7 @@ void Mario::jump()
 		{
 			transformG.lock()->addTranslation(Float2(0.0f, 0.35f));
 		}
-		
+
 	}
 
 	if (!transformG.expired())
@@ -475,6 +513,15 @@ void Mario::jump()
 
 void Mario::dash()
 {
+
+	if (KeyManager::checkHitKey(KEY_INPUT_A))
+	{
+		isLeft = true;
+	}
+	else if (KeyManager::checkHitKey(KEY_INPUT_D))
+	{
+		isLeft = false;
+	}
 
 	auto transformG = this->getComponent<ComponentGravity>();
 

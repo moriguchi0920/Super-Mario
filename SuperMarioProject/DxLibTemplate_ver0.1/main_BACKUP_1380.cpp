@@ -54,6 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 登録したものを今すぐロードする！
 	pSound->loadSoundAll();
 
+<<<<<<< HEAD
 	ImageManager* pImageManager = ImageManager::getInstance();
 
 	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_MARIO_SMALL, "mario/mario01-01.png");
@@ -66,6 +67,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_FLOOR, "Stage/Brock_3.png");
 
 	pImageManager->loadImageAll();
+=======
 	//踏む音の音量調節
 	int steponHandle = pSound->getSoundHandle(SoundManager::SE_STEPON);
 	if (steponHandle != -1)
@@ -80,6 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 120だと元の音量の半分くらいになります。小さすぎたら数値を上げて調整してください
 		ChangeVolumeSoundMem(100, jumpHandle);
 	}
+>>>>>>> f2a0b2159efe47697f5f6799055f32d14a2e7c6d
 
 	// BGMの再生
 	int bgmHandle = pSound->getSoundHandle(SoundManager::PB_PLAY_BGM);

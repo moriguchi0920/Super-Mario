@@ -37,7 +37,7 @@ public:
 	// 1.0f
 	static constexpr float PRIORITY_MAX = 1.0f;
 
-protected :
+protected:
 
 
 	// ï`âÊóDêÊèáà ïœêî
@@ -48,7 +48,7 @@ protected :
 
 	std::weak_ptr<ComponentTransform> transformRef;
 
-public :
+public:
 	ComponentRenderable(int objectId, float _priority = 0.0f);
 	virtual ~ComponentRenderable();
 	void setPriority(float newPriority);
@@ -120,12 +120,16 @@ protected:
 	int imageHandle;
 	Float2 pos;
 	float rotation;
+	bool isTurn = false;
 
 public:
 	ComponentRenderableImage(int objectId, float _priority, int _imageHandle);
 	void setPos(Float2 _pos);
 	void setRot(float _rot);
 	void setImage(int handle);
+
+	void setTurn(bool _isTurn) { isTurn = _isTurn; }
+
 	virtual void render() override;
 	void syncFromTransform()override;
 };
@@ -137,10 +141,10 @@ protected:
 	AnimationPlayer AP;
 	Float2 pos;
 	Float2 base;
-public :
+public:
 	ComponentRenderableAnimation(int objectId, float _priority, AnimationDataSet* pAdc);
 	void setBase(Float2 _base);
-	void setPos(Float2 _pos);	
+	void setPos(Float2 _pos);
 	AnimationPlayer& getAP();
 	virtual void render() override;
 	void syncFromTransform()override;

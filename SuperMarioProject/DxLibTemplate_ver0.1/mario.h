@@ -17,6 +17,8 @@ private:
 
 	int jumpHoldCount;
 
+	bool isLeft;
+
 public:
 	Mario();
 	~Mario();
@@ -83,13 +85,13 @@ public:
 	int jumpAnim[1];
 	int idleAnim[1];
 
-	int walkStart = 1;  
-	int walkCount = 3;  
-	int jumpStart = 5;  
-	int jumpCount = 1;  
+	int walkStart = 1;
+	int walkCount = 3;
+	int jumpStart = 5;
+	int jumpCount = 1;
 
-	int idleStart = 0; 
-	int idleCount = 1;  
+	int idleStart = 0;
+	int idleCount = 1;
 
 	// アニメーション用変数
 	int animFrame = 0;
