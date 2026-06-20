@@ -67,8 +67,6 @@ void ComponentRenderableImage::setRot(float _rot)
 void ComponentRenderableImage::render()
 {
 
-	DrawGraph(pos.x, pos.y, imageHandle, true);
-
 	DrawRotaGraph(pos.x, pos.y, 1.0, rotation, imageHandle, true, isTurn ? TRUE : FALSE);
 }
 
