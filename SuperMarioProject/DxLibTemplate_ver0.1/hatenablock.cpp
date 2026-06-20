@@ -2,6 +2,8 @@
 #include "objectManager.h"
 #include "componentTransform.h"
 #include "componentRenderable.h"
+#include "superMushroom.h" 
+#include "const.h"
 #include"scrollManager.h"
 
 hatenablock::hatenablock(Rect rect) : BlockBase(rect)
@@ -49,3 +51,30 @@ void hatenablock::deactivateProc()
 void hatenablock::deathProc()
 {
 }
+
+void hatenablock::hitFromBottom()
+{
+    if (m_used)
+    {
+        return;
+    }
+
+    m_used = true;
+
+    auto transform = getComponent<ComponentTransform>();
+
+    if (transform.expired())
+    {
+        return;
+    }
+
+    Float2 pos = transform.lock()->getPosition();
+
+    ObjectManager::createObject<SuperMushroom>(
+        Rect(
+            Float2(pos.x, pos.y - SPRITE_SIZE),
+            Float2(SPRITE_SIZE, SPRITE_SIZE)
+        )
+    );
+}
+

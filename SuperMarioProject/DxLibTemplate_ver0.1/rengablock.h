@@ -19,4 +19,6 @@ public:
     void deactivateProc() override;
 
     void deathProc() override;
+
+    void hitFromBottom();
 };
