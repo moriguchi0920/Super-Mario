@@ -68,13 +68,6 @@ void Goomba::update()
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_TOP) side = ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM;
 						else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM) side = ContactInfo::RECTCOLLIDESIDE::SIDE_TOP;
 
-						//int SteponHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::SE_STEPON);
-						//if (SteponHandle != -1)
-						//{
-						//	// 効果音（SE）なので、1回だけ流す「DX_PLAYTYPE_BACK」を指定します
-						//	PlaySoundMem(SteponHandle, DX_PLAYTYPE_BACK);
-						//}
-
 					}
 					// タグで区別
 					switch (colInfoSp->getTarget(id).lock()->getTag()->tag)
@@ -242,6 +235,15 @@ void Goomba::update()
 								// 当たった(瞬間)
 								if (colInfoSp->getEnter())
 								{
+									int SteponHandle = SoundManager::getInstance()->getSoundHandle(SoundManager::SE_STEPON);
+										if (SteponHandle != -1)
+										{
+											// 効果音（SE）なので、1回だけ流す「DX_PLAYTYPE_BACK」を指定します
+												PlaySoundMem(SteponHandle, DX_PLAYTYPE_BACK);
+										}
+
+
+
 									die();
 
 								}
