@@ -23,7 +23,6 @@
 #include "DxLib.h"
 #include "soundManager.h"
 #include"superMushroom.h"
-#include "dokanimage.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -55,18 +54,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// “o˜^‚µ‚½‚à‚Ì‚ð¡‚·‚®ƒ[ƒh‚·‚éI
 	pSound->loadSoundAll();
 
-	ImageManager* pImageManager = ImageManager::getInstance();
-
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_MARIO_SMALL, "mario/mario01-01.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_MARIO_TALL, "mario/mario02-01.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_GOOMBA, "enemy/kuribo.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_KOOPA_TROOPA, "enemy/nokonoko.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_BRICK, "Stage/Block.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_QUESTION, "Stage/Block_Hatena_1.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_HARD, "Stage/Block_2.png");
-	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_FLOOR, "Stage/Brock_3.png");
-
-	pImageManager->loadImageAll();
 	//“¥‚Þ‰¹‚Ì‰¹—Ê’²ß
 	int steponHandle = pSound->getSoundHandle(SoundManager::SE_STEPON);
 	if (steponHandle != -1)
@@ -186,39 +173,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
 
 	ObjectManager::createObject<Dokan>(300.0f, 30.0f);
-	ObjectManager::createObject<Dokanimage>(300.0f, 30.0f);
 	ObjectManager::createObject<Goomba>(Rect(Float2(100.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<KoopaTroopa>(Rect(Float2(400.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<Dokan>(500.0f, 30.0f);
-	ObjectManager::createObject<Dokanimage>(500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
-	ObjectManager::createObject<Dokanimage>(630.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
-	ObjectManager::createObject<Dokanimage>(830.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(2500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(2890.0f, 30.0f);
-	ObjectManager::createObject<Dokanimage>(2500.0f, 30.0f);
-	ObjectManager::createObject<Dokanimage>(2890.0f, 30.0f);
 
 	
 	ObjectManager::createObject<Goal>(Rect(Float2(3155.0f, 120.0f), Float2(160.0f, 16.0f)));
 
 	SetBackgroundColor(107, 140, 255);
 
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 7, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<SuperMushroom>(Rect(Float2(SPRITE_SIZE * 11, SPRITE_SIZE * 8), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 11, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::MUSHROOM);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 12, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 13, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 12, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 13, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 71, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::MUSHROOM);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 89, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 100, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)),BLOCK_ITEM_TYPE::COIN);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 103, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 89, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 100, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 103, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 103, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::MUSHROOM);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 106, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 123, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 124, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
-	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 167, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 106, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 123, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 124, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
+	ObjectManager::createObject<hatenablock>(Rect(Float2(SPRITE_SIZE * 167, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 
 
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 10, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
@@ -238,7 +219,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 86, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 87, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 88, SPRITE_SIZE * 6), Float2(SPRITE_SIZE, SPRITE_SIZE)));
-	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 89, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)), BLOCK_ITEM_TYPE::COIN);
+	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 89, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 95, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 96, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<rengablock>(Rect(Float2(SPRITE_SIZE * 112, SPRITE_SIZE * 9), Float2(SPRITE_SIZE, SPRITE_SIZE)));

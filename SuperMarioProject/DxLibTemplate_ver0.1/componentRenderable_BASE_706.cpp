@@ -66,8 +66,7 @@ void ComponentRenderableImage::setRot(float _rot)
 
 void ComponentRenderableImage::render()
 {
-
-	DrawRotaGraph(pos.x, pos.y, 1.0, rotation, imageHandle, true, isTurn ? TRUE : FALSE);
+	DrawRotaGraph(pos.x, pos.y, 1.0, rotation , imageHandle, true);
 }
 
 void ComponentRenderableImage::syncFromTransform()
@@ -92,7 +91,7 @@ void ComponentRenderableAnimation::setBase(Float2 _base)
 void ComponentRenderableAnimation::setPos(Float2 _pos)
 {
 	pos = _pos;
-	AP.x = (int)pos.x;
+	AP.x = (int)pos.x;	
 	AP.y = (int)pos.y;
 }
 
@@ -209,7 +208,7 @@ ComponentRenderableLine::ComponentRenderableLine(int objectId) : ComponentRender
 	priority = PRIORITY_DEFAULT;
 }
 
-ComponentRenderableLine::ComponentRenderableLine(int objectId, float _priority, Float2 _begin, Float2 _end) : ComponentRenderable(objectId, _priority), line(_begin, _end)
+ComponentRenderableLine::ComponentRenderableLine(int objectId, float _priority, Float2 _begin, Float2 _end): ComponentRenderable(objectId, _priority), line(_begin, _end)
 {
 }
 

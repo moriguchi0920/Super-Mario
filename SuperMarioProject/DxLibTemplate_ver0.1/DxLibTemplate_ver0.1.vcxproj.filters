@@ -79,6 +79,9 @@
     <Filter Include="System\Object\Item">
       <UniqueIdentifier>{63aeb1b8-3648-483c-8aad-a79fff0fb2f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Stage">
+      <UniqueIdentifier>{ae03eb0b-5c87-4971-8083-de14d55569bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -196,6 +199,12 @@
       <Filter>System\Object</Filter>
     </ClCompile>
     <ClCompile Include="superMushroom.cpp">
+      <Filter>System\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="stageGenerator.cpp">
+      <Filter>System\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
       <Filter>System\Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,5 +341,16 @@
     <ClInclude Include="superMushroom.h">
       <Filter>System\Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="stageGenerator.h">
+      <Filter>System\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>System\Object\Item</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="1-1_data.inc">
+      <Filter>System\Stage</Filter>
+    </None>
   </ItemGroup>
 </Project>

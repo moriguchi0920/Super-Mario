@@ -4,9 +4,21 @@
 
 class Floor : public BlockBase
 {
-public:
-    Floor(float x, float width);
-    virtual ~Floor();
+	enum Type {
+		Ground1,
+		Ground2,
+		Ground3,
+		Ground4
+	};
 
-    void update() override;
+public:
+	Floor(float x, float width);
+	virtual ~Floor();
+
+	void update() override;
+
+private:
+	static Type g_nextType;
+	static Point g_nextPos;
+
 };

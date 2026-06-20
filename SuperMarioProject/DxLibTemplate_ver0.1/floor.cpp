@@ -10,6 +10,33 @@ Floor::Floor(float x, float width) : BlockBase(Rect(Point(x, FLOOR_BASE_Y), Poin
 	addComponent<ComponentTransform>(id).lock()->setScroll(true);
 	auto comT = getComponent<ComponentTransform>();
 	comT.lock()->setPosition(Point(x, FLOOR_BASE_Y));
+	auto transform = this->getComponent<ComponentTransform>().lock();
+	if (transform)
+	{
+		transform->setScroll(true);
+		transform->setPosition(g_nextPos);
+	}
+
+	int imgHandle = 0;
+
+
+	if (g_nextType == Ground1)
+	{
+		imgHandle = LoadGraph("Stage/Ground_1.png");
+	}
+	else if (g_nextType == Ground2)
+	{
+		imgHandle = LoadGraph("Stage/Ground_2.png");
+	}
+	else if (g_nextType == Ground3)
+	{
+		imgHandle = LoadGraph("Stage/Ground_3.png");
+	}
+	else if (g_nextType == Ground4)
+	{
+		imgHandle = LoadGraph("Stage/Ground_4.png");
+	}
+
 
 
 	Rect rect(Point(x, FLOOR_BASE_Y),Point(width, WINDOW_HEIGHT));

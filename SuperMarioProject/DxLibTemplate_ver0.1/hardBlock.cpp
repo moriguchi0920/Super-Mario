@@ -1,5 +1,5 @@
 #include"hardBlock.h"
-
+#include"imageManager.h"
 
 HardBlock::HardBlock(Rect rect) : BlockBase(rect)
 {
@@ -16,12 +16,11 @@ HardBlock::HardBlock(Rect rect) : BlockBase(rect)
         colRect.lock()->addTag(ICollisionTag::BLOCK);
     }
 
-    auto renderRect = addComponent<ComponentRenderableRect>(id, ComponentRenderable::PRIORITY_DEFAULT, rect);
+    auto renderRect = addComponent<ComponentRenderableImage>(id, ComponentRenderable::PRIORITY_DEFAULT, ImageManager::getInstance()->getImageHandle(ImageManager::IMAGENAME::IMAGE_BLOCK_HARD));
 
     if (!renderRect.expired())
     {
-        // ’ƒFÝ’è
-        renderRect.lock()->setColor(128, 54, 16);
+        renderRect.lock()->setPos(rect.begin + rect.size * 0.5f);
     }
 }
 
@@ -29,8 +28,22 @@ void HardBlock::update()
 {
     BlockBase::update();
 
-    auto comR = getComponent<ComponentRenderableRect>();
-    comR.lock()->syncFromTransform();
+    auto comR = getComponent<ComponentRenderableImage>();
+
+    if (!comR.expired())
+    {
+        comR.lock()->syncFromTransform();
+
+        float offset = SPRITE_SIZE / 2.0f;
+
+        auto transform = getComponent<ComponentTransform>();
+        if (!transform.expired())
+        {
+
+            Float2 basePos = transform.lock()->getPosition();
+            comR.lock()->setPos(basePos + Float2(offset, offset));
+        }
+    }
 }
 
 void HardBlock::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
