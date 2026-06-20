@@ -54,6 +54,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// “o˜^‚µ‚½‚à‚Ì‚ð¡‚·‚®ƒ[ƒh‚·‚éI
 	pSound->loadSoundAll();
 
+	ImageManager* pImageManager = ImageManager::getInstance();
+
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_MARIO_SMALL, "mario/mario01-01.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_MARIO_TALL, "mario/mario02-01.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_GOOMBA, "enemy/kuribo.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_KOOPA_TROOPA, "enemy/nokonoko.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_BRICK, "Stage/Block.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_QUESTION, "Stage/Block_Hatena_1.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_HARD, "Stage/Block.png");
+	pImageManager->setImageInfo(ImageManager::IMAGENAME::IMAGE_BLOCK_FLOOR, "Stage/Brock_3.png");
+
+	pImageManager->loadImageAll();
+
 	// BGM‚ÌÄ¶
 	int bgmHandle = pSound->getSoundHandle(SoundManager::PB_PLAY_BGM);
 	if (bgmHandle != -1)

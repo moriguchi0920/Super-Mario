@@ -1,5 +1,5 @@
 #include"hardBlock.h"
-
+#include"imageManager.h"
 
 HardBlock::HardBlock(Rect rect) : BlockBase(rect)
 {
@@ -16,12 +16,11 @@ HardBlock::HardBlock(Rect rect) : BlockBase(rect)
         colRect.lock()->addTag(ICollisionTag::BLOCK);
     }
 
-    auto renderRect = addComponent<ComponentRenderableRect>(id, ComponentRenderable::PRIORITY_DEFAULT, rect);
+    auto renderRect = addComponent<ComponentRenderableImage>(id, ComponentRenderable::PRIORITY_DEFAULT, ImageManager::getInstance()->getImageHandle(ImageManager::IMAGENAME::IMAGE_BLOCK_HARD));
 
     if (!renderRect.expired())
     {
-        // ’ƒFÝ’è
-        renderRect.lock()->setColor(128, 54, 16);
+
     }
 }
 
@@ -29,7 +28,7 @@ void HardBlock::update()
 {
     BlockBase::update();
 
-    auto comR = getComponent<ComponentRenderableRect>();
+    auto comR = getComponent<ComponentRenderableImage>();
     comR.lock()->syncFromTransform();
 }
 

@@ -3,11 +3,11 @@
 #include "componentTransform.h"
 #include "componentRenderable.h"
 #include"scrollManager.h"
+#include"imageManager.h"
 
 rengablock::rengablock(Rect rect) : BlockBase(rect)
 {
     auto transform = getComponent<ComponentTransform>();
-    int blockImage = LoadGraph("Stage/Brock_3.png");
 
     if (!transform.expired())
     {
@@ -21,7 +21,7 @@ rengablock::rengablock(Rect rect) : BlockBase(rect)
         //printfDx("Renga Tag = %d\n", colRect.lock()->getTag()->tag);
     }
 
-    auto renderImage = addComponent<ComponentRenderableImage>(id,ComponentRenderable::PRIORITY_DEFAULT,blockImage
+    auto renderImage = addComponent<ComponentRenderableImage>(id,ComponentRenderable::PRIORITY_DEFAULT,ImageManager::getInstance()->getImageHandle(ImageManager::IMAGENAME::IMAGE_BLOCK_BRICK)
     );
 
 
@@ -60,7 +60,7 @@ void rengablock::update()
         {
          
             Float2 basePos = transform.lock()->getPosition(); 
-            comR.lock()->setPos(Float2(basePos.x + offset, basePos.y + offset));
+            comR.lock()->setPos(basePos);
         }
     }
 }

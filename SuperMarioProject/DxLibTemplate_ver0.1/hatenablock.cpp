@@ -1,6 +1,7 @@
 #include "hatenablock.h"
 #include "objectManager.h"
 #include "componentTransform.h"
+#include "imageManager.h"
 #include "componentRenderable.h"
 #include "superMushroom.h" 
 #include "const.h"
@@ -21,12 +22,12 @@ hatenablock::hatenablock(Rect rect) : BlockBase(rect)
             colRect.lock()->addTag(ICollisionTag::BLOCK);
         }
 
-        auto renderRect = addComponent<ComponentRenderableRect>(id, 0.5, rect);
+        auto renderImage = addComponent<ComponentRenderableImage>(id, 0.5, ImageManager::getInstance()->getImageHandle(ImageManager::IMAGENAME::IMAGE_BLOCK_QUESTION));
 
-        if (!renderRect.expired())
+        if (!renderImage.expired())
         {
             // ‰©FÝ’è
-            renderRect.lock()->setColor(250, 220, 0);
+            renderImage.lock()->setPos(rect.begin);
         }
     }
 
@@ -35,7 +36,7 @@ void hatenablock::update()
 
     BlockBase::update();
 
-    auto comR = getComponent<ComponentRenderableRect>();
+    auto comR = getComponent<ComponentRenderableImage>();
     comR.lock()->syncFromTransform();
 
 }
