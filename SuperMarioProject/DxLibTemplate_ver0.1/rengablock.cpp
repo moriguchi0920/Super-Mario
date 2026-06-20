@@ -5,7 +5,7 @@
 #include"scrollManager.h"
 #include"imageManager.h"
 
-rengablock::rengablock(Rect rect) : BlockBase(rect)
+rengablock::rengablock(Rect rect, BLOCK_ITEM_TYPE type) : BlockBase(rect)
 {
     auto transform = getComponent<ComponentTransform>();
 
