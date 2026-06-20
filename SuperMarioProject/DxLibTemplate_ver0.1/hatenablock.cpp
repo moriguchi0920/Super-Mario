@@ -30,7 +30,7 @@ hatenablock::hatenablock(Rect rect, BLOCK_ITEM_TYPE type) : BlockBase(rect)
 
         if (!renderImage.expired())
         {
-            renderImage.lock()->setPos(rect.begin);
+            renderImage.lock()->setPos(rect.begin + rect.size * 0.5f);
         }
 
 }
@@ -41,7 +41,22 @@ void hatenablock::update()
 
 
     auto comR = getComponent<ComponentRenderableImage>();
-    comR.lock()->syncFromTransform();
+
+    if (!comR.expired())
+    {
+        comR.lock()->syncFromTransform();
+
+        float offset = SPRITE_SIZE / 2.0f;
+
+        auto transform = getComponent<ComponentTransform>();
+        if (!transform.expired())
+        {
+
+            Float2 basePos = transform.lock()->getPosition();
+            comR.lock()->setPos(basePos + Float2(offset, offset));
+        }
+    }
+
 }
 
 void hatenablock::activateProc()
