@@ -25,7 +25,7 @@ Coin::Coin(Rect rect) : Object(ObjectManager::makeId())
 	
 	if (transformG && !renderImage.expired())
 	{
-		renderImage.lock()->bindToTransform(transformG);
+		renderImage.lock()->bindToTransform(transformG );
 	}
 }
 
