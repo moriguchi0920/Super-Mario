@@ -23,6 +23,7 @@
 #include "DxLib.h"
 #include "soundManager.h"
 #include"superMushroom.h"
+#include "dokanimage.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -158,13 +159,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjectManager::createObject<Floor>(2350.0f, 600.0f);
 
 	ObjectManager::createObject<Dokan>(300.0f, 30.0f);
+	ObjectManager::createObject<Dokanimage>(300.0f, 30.0f);
 	ObjectManager::createObject<Goomba>(Rect(Float2(100.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<KoopaTroopa>(Rect(Float2(400.0f, 144.0f), Float2(SPRITE_SIZE, SPRITE_SIZE)));
 	ObjectManager::createObject<Dokan>(500.0f, 30.0f);
+	ObjectManager::createObject<Dokanimage>(500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(630.0f, 30.0f);
+	ObjectManager::createObject<Dokanimage>(630.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(830.0f, 30.0f);
+	ObjectManager::createObject<Dokanimage>(830.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(2500.0f, 30.0f);
 	ObjectManager::createObject<Dokan>(2890.0f, 30.0f);
+	ObjectManager::createObject<Dokanimage>(2500.0f, 30.0f);
+	ObjectManager::createObject<Dokanimage>(2890.0f, 30.0f);
 
 	
 	ObjectManager::createObject<Goal>(Rect(Float2(3155.0f, 120.0f), Float2(160.0f, 16.0f)));
