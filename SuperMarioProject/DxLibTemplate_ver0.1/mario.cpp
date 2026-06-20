@@ -141,6 +141,30 @@ void Mario::update()
 
 					else if (side == ContactInfo::RECTCOLLIDESIDE::SIDE_BOTTOM)
 					{
+						
+						// ブロックの下端（trect.begin.y + trect.size.y）にマリオの頭の座標を合わせる
+						transformG.lock()->setPosY(trect.begin.y + trect.size.y);
+
+						
+						auto cur = transformG.lock()->getTranslation();
+						if (cur.y < 0.0f) // 上に向かって移動中なら
+						{
+							transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+						}
+
+						
+						if (moveStateMachine.getStateId() == MOVESTATE::MOV_JUMP)
+						{
+							if (KeyManager::checkHitKey(KEY_INPUT_LSHIFT)) {
+								moveStateMachine.changeState(MOVESTATE::MOV_DASH);
+							}
+							else {
+								moveStateMachine.changeState(MOVESTATE::MOV_WALK);
+							}
+						}
+						
+
+						// ここから下は元々あったアイテムを出す処理
 						if (colInfoSp->getEnter()) // ぶつかった瞬間のみ
 						{
 							if (targetTag == ICollisionTag::RENGA)
