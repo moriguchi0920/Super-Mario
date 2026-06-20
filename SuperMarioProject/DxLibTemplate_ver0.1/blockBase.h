@@ -11,6 +11,7 @@ public:
 
 	virtual void update() override;
 	virtual void eventProc(int from, std::string name, std::vector<Event::DataMap> datas) override;
+	virtual void hitFromBottom();
 
 };
 

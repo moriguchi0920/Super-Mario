@@ -29,3 +29,7 @@ void BlockBase::update()
 void BlockBase::eventProc(int from, std::string name, std::vector<Event::DataMap> datas)
 {
 }
+
+void BlockBase::hitFromBottom()
+{
+}

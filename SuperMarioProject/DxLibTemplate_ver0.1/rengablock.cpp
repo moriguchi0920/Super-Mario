@@ -80,3 +80,8 @@ void rengablock::deactivateProc()
 void rengablock::deathProc()
 {
 }
+
+void rengablock::hitFromBottom()
+{
+    die();
+}

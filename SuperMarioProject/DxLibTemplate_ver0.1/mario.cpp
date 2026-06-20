@@ -6,6 +6,7 @@
 #include"floor.h"
 #include"objectManager.h"
 #include"scrollManager.h"
+#include "hatenablock.h"
 #include"DxLib.h"
 #include"soundManager.h"
 
@@ -119,7 +120,7 @@ void Mario::update()
 					float marioRight = marioLeft + MARIO_SIZE;
 
 					
-					if (fabsf(marioBottom - 5.5f - trect.begin.y) < 6.0f)
+					if (marioBottom <= trect.begin.y + 8.0f &&marioBottom >= trect.begin.y - 8.0f)
 					{
 
 						if (marioRight > trect.begin.x - 1.5f && marioLeft < trect.begin.x + trect.size.x + 1.5f)
@@ -144,16 +145,39 @@ void Mario::update()
 						{
 							if (targetTag == ICollisionTag::RENGA)
 							{
-								int targetId = (colInfoSp->getObjectIdCol1() == id) ? colInfoSp->getObjectIdCol2() : colInfoSp->getObjectIdCol1();
+								int targetId =
+									(colInfoSp->getObjectIdCol1() == id)
+									? colInfoSp->getObjectIdCol2()
+									: colInfoSp->getObjectIdCol1();
+
 								auto targetObj = ObjectManager::getObjectById(targetId);
+
 								if (!targetObj.expired())
 								{
 									targetObj.lock()->die();
 								}
 							}
-							transformG.lock()->setPosY(trect.begin.y + trect.size.y);
-							auto cur = transformG.lock()->getTranslation();
-							transformG.lock()->setTranslation(Float2(cur.x, 0.0f));
+							else if (targetTag == ICollisionTag::BLOCK)
+							{
+								int targetId =
+									(colInfoSp->getObjectIdCol1() == id)
+									? colInfoSp->getObjectIdCol2()
+									: colInfoSp->getObjectIdCol1();
+
+								auto targetObj = ObjectManager::getObjectById(targetId);
+
+								if (!targetObj.expired())
+								{
+									auto hatena =
+										std::dynamic_pointer_cast<hatenablock>(
+											targetObj.lock());
+
+									if (hatena)
+									{
+										hatena->hitFromBottom();
+									}
+								}
+							}
 						}
 					}
 					

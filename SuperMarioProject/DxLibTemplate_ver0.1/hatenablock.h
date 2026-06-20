@@ -5,8 +5,6 @@
 
 class hatenablock : public BlockBase
 {
-private:
-
 public:
     hatenablock(Rect rect);
 
@@ -17,5 +15,10 @@ public:
     void deactivateProc() override;
 
     void deathProc() override;
+
+    void hitFromBottom();
+
+private:
+    bool m_used = false;
 
 };
